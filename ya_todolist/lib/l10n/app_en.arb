@@ -1,0 +1,17 @@
+{
+  "title": "My tasks",
+  "filterButton": "Filter",
+  "editButton": "Edit",
+  "closeButton": "Close",
+  "newTaskField": "New",
+  "tasksCompletedCount": "Completed - ",
+  "addTask": "New",
+  "delete": "Delete",
+  "save": "SAVE",
+  "editorHintText": "Need to do...",
+  "priority": "Priority",
+  "priorityBasic": "No",
+  "priorityLow": "Low",
+  "priorityHigh": "!! High",
+  "deadlineTitle": "Do untill"
+}

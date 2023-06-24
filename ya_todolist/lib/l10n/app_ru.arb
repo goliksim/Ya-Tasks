@@ -1,0 +1,17 @@
+{
+  "title": "Мои дела",
+  "filterButton": "Фильтр",
+  "editButton": "Изменить",
+  "closeButton": "Закрыть",
+  "newTaskField": "Новое",
+  "tasksCompletedCount": "Выполнено - ",
+  "addTask": "Добавить",
+  "delete": "Удалить",
+  "save": "СОХРАНИТЬ",
+  "editorHintText": "Что нужно сделать...",
+  "priority": "Важность",
+  "priorityBasic": "Нет",
+  "priorityLow": "Низкая",
+  "priorityHigh": "!! Высокая",
+  "deadlineTitle": "Сделать до"
+}
