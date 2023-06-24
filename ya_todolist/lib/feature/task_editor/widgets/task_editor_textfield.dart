@@ -17,9 +17,6 @@ class EditorTextField extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: TextField(
           controller: controller,
-          //initialValue: widget.thisTask.text,
-          //expands: true,
-          //onChanged: (value) => (widget.thisTask.text = value),
           decoration: InputDecoration(
             hintStyle: myTextTheme.subtitle1!
                 .copyWith(color: Theme.of(context).colorScheme.tertiary),
