@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
-import 'package:ya_todolist/common/utils.dart';
-
-import '../domain/task_entitiy.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../domain/task_model.dart';
 
 class TaskText extends StatelessWidget {
   const TaskText({super.key, required this.task});
@@ -18,20 +18,21 @@ class TaskText extends StatelessWidget {
           maxLines: 3,
           softWrap: true,
           overflow: TextOverflow.ellipsis,
-          style: myTextTheme.subtitle1!.copyWith(
+          style: MyTheme.myTextTheme.subtitle1!.copyWith(
             decoration:
                 task.done ? TextDecoration.lineThrough : TextDecoration.none,
             color: !task.done
-                ? Theme.of(context).colorScheme.onBackground
-                : Theme.of(context).colorScheme.tertiary,
+                ? context.myColors!.labelPrimary
+                : context.myColors!.tertiary,
           ),
         ),
         if (task.deadline != null) const SizedBox(height: 4),
         if (task.deadline != null)
           Text(
-            printDate(task.deadline),
-            style: myTextTheme.headline3!
-                .copyWith(color: Theme.of(context).colorScheme.tertiary),
+            DateFormat.yMMMMd(AppLocalizations.of(context).localeName)
+                .format(task.deadline!), //date
+            style: MyTheme.myTextTheme.headline3!
+                .copyWith(color: context.myColors!.tertiary),
           ),
       ],
     );

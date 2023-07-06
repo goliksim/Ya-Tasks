@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../task/domain/task_entitiy.dart';
-import '../../task_editor/task_editor_page.dart';
+import 'package:ya_todolist/feature/task/bloc/tasks_bloc.dart';
 
 class MyFloatingButton extends StatelessWidget {
   const MyFloatingButton({super.key});
@@ -10,13 +10,10 @@ class MyFloatingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FloatingActionButton(
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                TaskEditorPage(thisTask: Task(), editMode: false),
-          ),
-        );
+        BlocProvider.of<TasksBloc>(context)
+            .state
+            .routerDelegate
+            .showTaskEditor(null);
       },
       tooltip: AppLocalizations.of(context).addTask,
       child: const Icon(Icons.add),

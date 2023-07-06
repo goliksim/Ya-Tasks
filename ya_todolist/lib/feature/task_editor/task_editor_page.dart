@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ya_todolist/feature/task/bloc/tasks_bloc.dart';
-import 'package:ya_todolist/feature/task/domain/task_entitiy.dart';
+import 'package:ya_todolist/feature/task/domain/task_model.dart';
 import 'package:ya_todolist/feature/task_editor/widgets/task_editor_appbar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import '../../common/logger.dart';
 import '../../common/theme_constants.dart';
 import 'bloc/editor_bloc.dart';
 import 'bloc/editor_state.dart';
@@ -12,10 +13,8 @@ import 'widgets/task_editor_textfield.dart';
 import 'widgets/task_priority_changer.dart';
 
 class TaskEditorPage extends StatefulWidget {
-  const TaskEditorPage(
-      {super.key, required this.thisTask, required this.editMode});
-  final Task thisTask;
-  final bool editMode;
+  const TaskEditorPage({super.key, this.taskID});
+  final String? taskID;
 
   @override
   State<TaskEditorPage> createState() => _TaskEditorPageState();
@@ -23,11 +22,46 @@ class TaskEditorPage extends StatefulWidget {
 
 class _TaskEditorPageState extends State<TaskEditorPage> {
   final TextEditingController controller = TextEditingController();
+  Task thisTask = Task();
+  bool editMode = false;
+
+  void waitTasks(BuildContext context) async {
+    if (!BlocProvider.of<TasksBloc>(context).state.loaded) {
+      await Future.doWhile(() async {
+        bool loading = !BlocProvider.of<TasksBloc>(context).state.loaded;
+        await Future.delayed(const Duration(milliseconds: 500));
+        return loading;
+      });
+    }
+    if (!mounted) {
+      //Logs.logImpl.writeLog('Mounted in Editor');
+      return;
+    }
+    if (widget.taskID != null) {
+      if (BlocProvider.of<TasksBloc>(context)
+          .state
+          .myTasks
+          .any((e) => e.id == widget.taskID)) {
+        thisTask = BlocProvider.of<TasksBloc>(context)
+            .state
+            .myTasks
+            .where((e) => e.id == widget.taskID)
+            .first;
+        //BlocProvider.of<EditorBloc>(context).add(EditorUpdatePriority(priority: thisTask.importance));
+        //BlocProvider.of<EditorBloc>(context).add(EditorUpdateDeadline(deadline: thisTask.deadline!));
+
+        editMode = true;
+      }
+      setState(() {
+        controller.value = TextEditingValue(text: thisTask.text);
+      });
+    }
+  }
 
   @override
   void initState() {
-    controller.value = TextEditingValue(text: widget.thisTask.text);
     super.initState();
+    waitTasks(context);
   }
 
   void saveTask(BuildContext context) {
@@ -36,26 +70,28 @@ class _TaskEditorPageState extends State<TaskEditorPage> {
         .task
         .copyWith(text: controller.text);
     if (tempTask.text.isNotEmpty) {
-      if (widget.editMode == true) {
+      if (editMode == true) {
         BlocProvider.of<TasksBloc>(context).add(UpdateTask(
             task:
-                tempTask)); //widget.thisTask.copyWith(text: controller.text, priority: dropdownvalue, deadlineDate: deadlineDate)
+                tempTask)); //thisTask.copyWith(text: controller.text, priority: dropdownvalue, deadlineDate: deadlineDate)
       } else {
         BlocProvider.of<TasksBloc>(context).add(AddTask(task: tempTask));
       }
-      Navigator.pop(context);
+      BlocProvider.of<TasksBloc>(context).state.routerDelegate.popRoute(); //pop
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    Logs.logImpl.writeLog('How often check $thisTask');
     return BlocProvider(
-      create: (context) => EditorBloc(currentTask: widget.thisTask),
+      key: UniqueKey(),
+      create: (context) => EditorBloc(currentTask: thisTask),
       child: BlocBuilder<EditorBloc, EditorState>(
         builder: (context, state) {
           return Scaffold(
             resizeToAvoidBottomInset: false,
-            backgroundColor: Theme.of(context).colorScheme.background,
+            backgroundColor: context.myColors!.backPrimary,
             appBar: EditorAppbar(saveTask: saveTask),
             body: Column(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -70,7 +106,7 @@ class _TaskEditorPageState extends State<TaskEditorPage> {
                       Divider(
                         height: 0,
                         thickness: 1,
-                        color: Theme.of(context).colorScheme.outline,
+                        color: context.myColors!.separator,
                       ),
                       DeadLineSwitch(
                         deadlineDate: state.task.deadline,
@@ -82,23 +118,24 @@ class _TaskEditorPageState extends State<TaskEditorPage> {
                 Divider(
                   height: 0,
                   thickness: 1,
-                  color: Theme.of(context).colorScheme.outline,
+                  color: context.myColors!.separator,
                 ),
                 const SizedBox(height: 8),
                 TextButton(
                   style: TextButton.styleFrom(
-                    foregroundColor: (widget.editMode)
-                        ? Theme.of(context).colorScheme.error
-                        : Theme.of(context).colorScheme.tertiary,
+                    foregroundColor: (editMode)
+                        ? context.myColors!.red
+                        : context.myColors!.tertiary,
                     padding: EdgeInsets.zero,
                     backgroundColor: Colors.transparent,
                   ),
                   onPressed: () {
-                    if (widget.editMode) {
-                      context
-                          .read<TasksBloc>()
-                          .add(DeleteTask(task: widget.thisTask));
-                      Navigator.of(context).pop();
+                    if (editMode) {
+                      context.read<TasksBloc>().add(DeleteTask(task: thisTask));
+                      BlocProvider.of<TasksBloc>(context)
+                          .state
+                          .routerDelegate
+                          .popRoute(); //pop
                     }
                   },
                   child: SizedBox(
@@ -112,19 +149,19 @@ class _TaskEditorPageState extends State<TaskEditorPage> {
                         children: [
                           Icon(
                             Icons.delete,
-                            color: (widget.editMode)
-                                ? Theme.of(context).colorScheme.error
-                                : Theme.of(context).colorScheme.tertiary,
+                            color: (editMode)
+                                ? context.myColors!.red
+                                : context.myColors!.tertiary,
                           ),
                           const SizedBox(
                             width: 12,
                           ),
                           Text(
                             AppLocalizations.of(context).delete,
-                            style: myTextTheme.subtitle1!.copyWith(
-                              color: (widget.editMode)
-                                  ? Theme.of(context).colorScheme.error
-                                  : Theme.of(context).colorScheme.tertiary,
+                            style: MyTheme.myTextTheme.subtitle1!.copyWith(
+                              color: (editMode)
+                                  ? context.myColors!.red
+                                  : context.myColors!.tertiary,
                             ),
                           ),
                         ],

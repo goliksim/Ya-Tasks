@@ -11,22 +11,22 @@ class EditorTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surface,
+          color: context.myColors!.backSecondary,
           borderRadius: BorderRadius.circular(8.0)),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
         child: TextField(
           controller: controller,
           decoration: InputDecoration(
-            hintStyle: myTextTheme.subtitle1!
-                .copyWith(color: Theme.of(context).colorScheme.tertiary),
+            hintStyle: MyTheme.myTextTheme.subtitle1!
+                .copyWith(color: context.myColors!.tertiary),
             hintText: AppLocalizations.of(context).editorHintText,
             border: InputBorder.none,
           ),
           minLines: 3,
           maxLines: 7,
-          style: myTextTheme.subtitle1!
-              .copyWith(color: Theme.of(context).colorScheme.onBackground),
+          style: MyTheme.myTextTheme.subtitle1!
+              .copyWith(color: context.myColors!.labelPrimary),
           textAlignVertical: TextAlignVertical.bottom,
         ),
       ),

@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ya_todolist/feature/task/data/storage/storage.dart';
-import 'package:ya_todolist/feature/task/domain/task_entitiy.dart';
-
+import 'package:ya_todolist/feature/task/domain/task_model.dart';
+import 'package:ya_todolist/common/logger.dart';
 import 'editor_events.dart';
 import 'editor_state.dart';
 
@@ -22,7 +21,7 @@ class EditorBloc extends Bloc<EditorEvent, EditorState> {
       ),
       
     );
-    logs.writeLog('Update text: ${event.text}');
+    Logs.logImpl.writeLog('Update text: ${event.text}');
   }*/
 
   Future<void> _editorUpdatePriority(
@@ -32,7 +31,7 @@ class EditorBloc extends Bloc<EditorEvent, EditorState> {
         task: state.task.copyWith(priority: event.priority),
       ),
     );
-    logs.writeLog('Update priority: ${event.priority}');
+    Logs.logImpl.writeLog('Update priority: ${event.priority}');
   }
 
   Future<void> _editorUpdateDeadline(
@@ -42,7 +41,7 @@ class EditorBloc extends Bloc<EditorEvent, EditorState> {
         task: state.task.copyWith(deadline: event.deadline),
       ),
     );
-    logs.writeLog('Update deadlineDate: ${event.deadline}');
+    Logs.logImpl.writeLog('Update deadlineDate: ${event.deadline}');
   }
 
   Future<void> _editorDeleteDeadline(
@@ -52,6 +51,6 @@ class EditorBloc extends Bloc<EditorEvent, EditorState> {
         task: state.task.copyWith(deleteDeadline: true),
       ),
     );
-    logs.writeLog('Delete deadlineDate');
+    Logs.logImpl.writeLog('Delete deadlineDate');
   }
 }

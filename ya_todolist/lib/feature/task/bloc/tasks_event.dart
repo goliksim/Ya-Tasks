@@ -8,9 +8,7 @@ abstract class TasksEvent extends Equatable {
 }
 
 class LoadTasks extends TasksEvent {
-  final List<Task> tasks;
-  final ApiUtil apiUtil;
-  const LoadTasks({required this.tasks, required this.apiUtil});
+  const LoadTasks();
 }
 
 class InsertTask extends TasksEvent {

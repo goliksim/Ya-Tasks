@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../task/domain/task_entitiy.dart';
+import '../../task/domain/task_model.dart';
 import '../bloc/editor_bloc.dart';
 import '../bloc/editor_events.dart';
 
@@ -13,7 +13,8 @@ class PriorityChanger extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PopupMenuButton<Importance>(
-      color: Theme.of(context).colorScheme.onSurfaceVariant,
+      tooltip: '',
+      color: context.myColors!.backSecondary,
       initialValue: dropdownvalue,
       onSelected: (value) {
         BlocProvider.of<EditorBloc>(context)
@@ -29,8 +30,8 @@ class PriorityChanger extends StatelessWidget {
           children: [
             Text(
               AppLocalizations.of(context).priority,
-              style: myTextTheme.subtitle1!
-                  .copyWith(color: Theme.of(context).colorScheme.onBackground),
+              style: MyTheme.myTextTheme.subtitle1!
+                  .copyWith(color: context.myColors!.labelPrimary),
             ),
             priorityText(dropdownvalue, context),
           ],
@@ -61,19 +62,19 @@ Widget priorityText(Importance priority, BuildContext context) {
   switch (priority) {
     case Importance.basic:
       return Text(AppLocalizations.of(context).priorityBasic,
-          style: myTextTheme.subtitle1!
-              .copyWith(color: Theme.of(context).colorScheme.tertiary));
+          style: MyTheme.myTextTheme.subtitle1!
+              .copyWith(color: context.myColors!.tertiary));
     case Importance.low:
       return Text(AppLocalizations.of(context).priorityLow,
-          style: myTextTheme.subtitle1!
-              .copyWith(color: Theme.of(context).colorScheme.onBackground));
+          style: MyTheme.myTextTheme.subtitle1!
+              .copyWith(color: context.myColors!.labelPrimary));
     case Importance.important:
       return Text(AppLocalizations.of(context).priorityHigh,
-          style: myTextTheme.subtitle1!
-              .copyWith(color: Theme.of(context).colorScheme.error));
+          style: MyTheme.myTextTheme.subtitle1!
+              .copyWith(color: context.myColors!.red));
     default:
       return Text(AppLocalizations.of(context).priorityBasic,
-          style: myTextTheme.subtitle1!
-              .copyWith(color: Theme.of(context).colorScheme.tertiary));
+          style: MyTheme.myTextTheme.subtitle1!
+              .copyWith(color: context.myColors!.tertiary));
   }
 }

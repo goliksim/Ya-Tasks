@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ya_todolist/feature/task/domain/task_entitiy.dart';
+import 'package:ya_todolist/common/theme_constants.dart';
+import 'package:ya_todolist/feature/task/domain/task_model.dart';
 
 import 'bloc/tasks_bloc.dart';
 import 'widgets/checkbox.dart';
@@ -38,26 +39,24 @@ class _TaskWidgetState extends State<TaskWidget> {
       },
       key: ValueKey(widget.task),
       background: Container(
-        color: Theme.of(context).colorScheme.onError,
+        color: context.myColors!.green,
         padding: const EdgeInsets.only(left: 24),
         alignment: Alignment.centerLeft,
         child: SizedBox(
           width: 24,
           height: 24,
-          child:
-              Icon(Icons.check, color: Theme.of(context).colorScheme.onPrimary),
+          child: Icon(Icons.check, color: context.myColors!.white),
         ),
       ),
       secondaryBackground: Container(
-        color: Theme.of(context).colorScheme.error,
+        color: context.myColors!.red,
         padding: const EdgeInsets.only(right: 24),
         alignment: Alignment.centerRight,
         // ignore: sized_box_for_whitespace
         child: SizedBox(
           width: 24,
           height: 24,
-          child: Icon(Icons.delete,
-              color: Theme.of(context).colorScheme.onPrimary),
+          child: Icon(Icons.delete, color: context.myColors!.white),
         ),
       ),
       child: Padding(

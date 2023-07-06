@@ -30,7 +30,7 @@ class _MySliverAppBarState extends State<MySliverAppBar> {
     return BlocBuilder<TasksBloc, TasksState>(
       builder: (context, state) {
         return SliverAppBar(
-          backgroundColor: Theme.of(context).colorScheme.background,
+          backgroundColor: context.myColors!.backPrimary,
           pinned: true,
           snap: false,
           floating: true,
@@ -55,15 +55,15 @@ class _MySliverAppBarState extends State<MySliverAppBar> {
                         children: [
                           Text(
                             AppLocalizations.of(context).title,
-                            style: myTextTheme.headline1!.copyWith(
-                              color: Theme.of(context).colorScheme.onBackground,
+                            style: MyTheme.myTextTheme.headline1!.copyWith(
+                              color: context.myColors!.labelPrimary,
                             ),
                           ),
                           const SizedBox(height: 6),
                           Text(
                             '${AppLocalizations.of(context).tasksCompletedCount} ${state.myTasks.where((e) => e.done).length}',
-                            style: myTextTheme.subtitle1!.copyWith(
-                              color: Theme.of(context).colorScheme.tertiary,
+                            style: MyTheme.myTextTheme.subtitle1!.copyWith(
+                              color: context.myColors!.tertiary,
                             ),
                           ),
                         ],
@@ -84,8 +84,8 @@ class _MySliverAppBarState extends State<MySliverAppBar> {
                         height: widget._toolbarHeight,
                         child: Text(
                           AppLocalizations.of(context).title,
-                          style: myTextTheme.headline2!.copyWith(
-                            color: Theme.of(context).colorScheme.onBackground,
+                          style: MyTheme.myTextTheme.headline2!.copyWith(
+                            color: context.myColors!.white,
                           ),
                         ),
                       ),
@@ -111,7 +111,7 @@ class _MySliverAppBarState extends State<MySliverAppBar> {
                             state.hideDone
                                 ? Icons.visibility
                                 : Icons.visibility_off,
-                            color: Theme.of(context).colorScheme.primary,
+                            color: context.myColors!.blue,
                           ),
                         ),
                       ),

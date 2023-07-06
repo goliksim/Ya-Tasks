@@ -63,3 +63,69 @@
 
 
 </details>
+
+## **Homework3** Created by goliksim on 06.07.2023 
+<details>
+<summary><b>Посмотреть описание</b> </summary>
+
+<br/>
+
+**APK** -> https://drive.google.com/file/d/17t50uBCNJJ3f57fKEtuUbwXU6hjc1Jos/view?usp=sharing
+
+**Список изменений:**
+- Работа с данными теперь происходит в репозитории `repository.dart`.
+- При запуске приложения все также смотрит на revision версию локального хранилища и бекенда. Где выше версия, то и гружу. Все действия сохраняю автоматически и там, и там. 
+- Исправлены мелкие баги.
+- Навигация переписана на `Navigator 2.0`.
+- Реализована поддержка `DeepLink` как при **горячем**, там и при **холодном** запуске. Поддерживаются следующие URI:
+- - ya://todolist.com
+- - ya://todolist.com/task
+- - ya://todolist.com/task/<uuid> (если uuid не найдена, то страница перейдет в режим новой таски).
+- Для темы был добавлен `Theme.extesion`. Теперь нейминг цветов такой же как и в figma.
+
+**Работа deeplink:**
+```cmd
+PS C:\Users\golev\source\repos\MobileApp\Yandex\NDA\YaFlutter\my_app\ya_todolist> 
+adb shell am start -W -a android.intent.action.VIEW -d ya://todolist.com/
+Starting: Intent { act=android.intent.action.VIEW dat=ya://todolist.com/ }      
+Status: ok
+LaunchState: UNKNOWN (0)
+Activity: com.goliksim.yatodo.ya_todolist/.MainActivity
+TotalTime: 0
+WaitTime: 3
+Complete
+```
+<center>
+<img src="screens/Screenshot_1688622442.png" alt="drawing" width="175"/>
+</center>
+
+```cmd
+PS C:\Users\golev\source\repos\MobileApp\Yandex\NDA\YaFlutter\my_app\ya_todolist> 
+adb shell am start -W -a android.intent.action.VIEW -d ya://todolist.com/task
+Starting: Intent { act=android.intent.action.VIEW dat=ya://todolist.com/task }    
+Status: ok
+LaunchState: UNKNOWN (0)
+Activity: com.goliksim.yatodo.ya_todolist/.MainActivity
+TotalTime: 0
+WaitTime: 9
+Complete
+```
+<center>
+<img src="screens/Screenshot_1688622452.png" alt="drawing" width="175"/>
+</center>
+
+`Работа на холодную с uuid`
+```cmd
+PS C:\Users\golev\source\repos\MobileApp\Yandex\NDA\YaFlutter\my_app\ya_todolist> 
+adb shell am start -W -a android.intent.action.VIEW -d ya://todolist.com/task/a943fbf7-c1e6-4efd-a9dd-796a441c89dd
+Starting: Intent { act=android.intent.action.VIEW dat=ya://todolist.com/task/a943fbf7-c1e6-4efd-a9dd-796a441c89dd }
+Status: ok
+LaunchState: COLD
+Activity: com.goliksim.yatodo.ya_todolist/.MainActivity
+TotalTime: 3821
+WaitTime: 3822
+Complete
+```
+<center>
+<img src="screens/Screenshot_1688622462.png" alt="drawing" width="175"/>
+</center>

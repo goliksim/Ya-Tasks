@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-import '../../task/domain/task_entitiy.dart';
+import '../../task/domain/task_model.dart';
 
 abstract class EditorEvent extends Equatable {
   const EditorEvent();

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:ya_todolist/feature/task/data/storage/storage.dart';
-import '../../task_editor/task_editor_page.dart';
-import '../domain/task_entitiy.dart';
+import 'package:ya_todolist/common/theme_constants.dart';
+import 'package:ya_todolist/feature/task/bloc/tasks_bloc.dart';
+import '../domain/task_model.dart';
 
 class TaskInfoButton extends StatelessWidget {
   const TaskInfoButton({super.key, required this.task});
@@ -18,18 +19,14 @@ class TaskInfoButton extends StatelessWidget {
         splashRadius: 1,
         padding: EdgeInsets.zero,
         onPressed: () {
-          logs.writeLog('TO EDIT -> ${task.show()}');
-
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) =>
-                  TaskEditorPage(thisTask: task.copyWith(), editMode: true),
-            ),
-          );
+          BlocProvider.of<TasksBloc>(context)
+              .state
+              .routerDelegate
+              .showTaskEditor(task.id);
         },
         icon: Icon(
           Icons.info_outline,
-          color: Theme.of(context).colorScheme.tertiary,
+          color: context.myColors!.tertiary,
         ),
       ),
     );

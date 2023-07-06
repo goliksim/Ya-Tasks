@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ya_todolist/common/theme_constants.dart';
 
 import '../bloc/tasks_bloc.dart';
-import '../domain/task_entitiy.dart';
+import '../domain/task_model.dart';
 
 class MyCheckBox extends StatelessWidget {
   const MyCheckBox({super.key, required this.task});
@@ -20,9 +21,9 @@ class MyCheckBox extends StatelessWidget {
           }
           return !task.done
               ? (task.importance == Importance.important
-                  ? Theme.of(context).colorScheme.error
-                  : Theme.of(context).colorScheme.outline)
-              : Theme.of(context).colorScheme.onError;
+                  ? context.myColors!.red
+                  : context.myColors!.separator)
+              : context.myColors!.green;
         }),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
         value: task.done,

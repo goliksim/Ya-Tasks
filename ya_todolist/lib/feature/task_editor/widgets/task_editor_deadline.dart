@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
-import 'package:ya_todolist/common/utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../bloc/editor_bloc.dart';
 import '../bloc/editor_events.dart';
@@ -42,7 +42,7 @@ class _DeadLineSwitchState extends State<DeadLineSwitch> {
   Widget build(BuildContext context) {
     return TextButton(
       style: TextButton.styleFrom(
-        foregroundColor: Theme.of(context).colorScheme.tertiary,
+        foregroundColor: context.myColors!.tertiary,
         padding: EdgeInsets.zero,
         backgroundColor: Colors.transparent,
       ),
@@ -64,24 +64,24 @@ class _DeadLineSwitchState extends State<DeadLineSwitch> {
                 children: [
                   Text(
                     AppLocalizations.of(context).deadlineTitle,
-                    style: myTextTheme.subtitle1!.copyWith(
-                        color: Theme.of(context).colorScheme.onBackground),
+                    style: MyTheme.myTextTheme.subtitle1!
+                        .copyWith(color: context.myColors!.labelPrimary),
                   ),
                   //SizedBox(height: 4,),
                   if (widget.deadlineDate != null)
                     Text(
-                      printDate(widget.deadlineDate),
-                      style: myTextTheme.headline3!.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
+                      DateFormat.yMMMMd(AppLocalizations.of(context).localeName)
+                          .format(widget.deadlineDate!), //date
+                      style: MyTheme.myTextTheme.headline3!.copyWith(
+                        color: context.myColors!.blue,
                       ),
                     ),
                 ],
               ),
               // Deadline switch
               Switch(
-                activeColor: Theme.of(context).colorScheme.primary,
-                inactiveThumbColor:
-                    Theme.of(context).colorScheme.onSurfaceVariant,
+                activeColor: context.myColors!.blue,
+                inactiveThumbColor: context.myColors!.backSecondary,
                 value: widget.deadlineDate != null,
                 onChanged: (value) async {
                   updateDeadline(context, !value);

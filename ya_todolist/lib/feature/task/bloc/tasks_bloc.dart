@@ -2,21 +2,22 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ya_todolist/feature/task/data/storage/storage.dart';
-
-import '../data/api/api_util.dart';
-import '../domain/task_entitiy.dart';
+import 'package:ya_todolist/common/logger.dart';
+import 'package:ya_todolist/common/routes/router_delegate.dart';
+import 'package:ya_todolist/feature/task/data/repository/repository.dart';
+import '../domain/task_model.dart';
 
 part 'tasks_event.dart';
 part 'tasks_state.dart';
 
 class TasksBloc extends Bloc<TasksEvent, TasksState> {
-  TasksBloc()
+  TasksBloc({required routerDelegate, required repository})
       : super(TasksState(
             hideDone: true,
             myTasks: const <Task>[],
             loaded: false,
-            apiUtil: ApiUtil())) {
+            rep: repository,
+            routerDelegate: routerDelegate)) {
     on<LoadTasks>(_loadTasks);
     on<AddTask>(_addTask);
     on<InsertTask>(_insertTask);
@@ -26,43 +27,65 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   }
 
   Future<void> _loadTasks(LoadTasks event, Emitter<TasksState> emit) async {
+    await state.rep.init();
+    await state.rep.syncStorages();
+
+    final finalList = await state.rep.getTasks();
+    /*ApiUtil apiUtil = state.apiUtil;
+    //Получаем ревизию сервера
+    int apiRev = await apiUtil.networkManager.getRevision();
+    //Получаем ревизию локального хранилища
+    int storageRev = await tasksStorage.readRev();
+
+    List<Task> finalList = [];
+    if (apiRev > storageRev) {
+      Logs.logImpl.writeLog('LOAD FROM API ${state.loaded}');
+      finalList = await apiUtil.getTaskList();
+    } else {
+      Logs.logImpl.writeLog('LOAD FROM STORAGE');
+      if (apiRev != 0) {
+        storageRev = apiRev;
+        tasksStorage.writeRev(storageRev);
+      }
+      finalList = await tasksStorage.readTasks();
+    }*/
+
     emit(
-      TasksState(
+      TasksStateLoading(
           hideDone: state.hideDone,
-          myTasks: event.tasks,
-          loaded: true,
-          apiUtil: event.apiUtil),
+          myTasks: finalList!,
+          //apiUtil: state.apiUtil,
+          rep: state.rep,
+          routerDelegate: state.routerDelegate),
     );
-    logs.writeLog('Load tasks: ${event.tasks.join('\n')}');
+    Logs.logImpl.writeLog('Load tasks to bloc: ${finalList.join('\n')}');
   }
 
   Future<void> _insertTask(InsertTask event, Emitter<TasksState> emit) async {
     final updatedTasks = List<Task>.from(state.myTasks)
       ..insert(event.index, event.task);
     emit(
-      TasksState(
+      TasksStateUpdate(
           hideDone: state.hideDone,
           myTasks: updatedTasks,
-          loaded: state.loaded,
-          apiUtil: state.apiUtil),
+          //apiUtil: state.apiUtil,
+          rep: state.rep,
+          routerDelegate: state.routerDelegate),
     );
-    logs.writeLog('Insert task: ${event.task}');
-    state.apiUtil.patchData(updatedTasks);
-    tasksStorage.writeTasks(updatedTasks, state.apiUtil.revVersion + 1);
+    Logs.logImpl.writeLog('Insert task: ${event.task}');
   }
 
   Future<void> _addTask(AddTask event, Emitter<TasksState> emit) async {
     final updatedTasks = List<Task>.from(state.myTasks)..add(event.task);
     emit(
-      TasksState(
+      TasksStateUpdate(
           hideDone: state.hideDone,
           myTasks: updatedTasks,
-          loaded: state.loaded,
-          apiUtil: state.apiUtil),
+          //apiUtil: state.apiUtil,
+          rep: state.rep,
+          routerDelegate: state.routerDelegate),
     );
-    logs.writeLog('Add task: ${event.task}');
-    state.apiUtil.patchData(updatedTasks);
-    tasksStorage.writeTasks(updatedTasks, state.apiUtil.revVersion + 1);
+    Logs.logImpl.writeLog('Add task: ${event.task}');
   }
 
   Future<void> _updateTask(UpdateTask event, Emitter<TasksState> emit) async {
@@ -71,30 +94,28 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     }).toList();
     //print(updatedTasks);
     emit(
-      TasksState(
+      TasksStateUpdate(
           hideDone: state.hideDone,
           myTasks: updatedTasks,
-          loaded: state.loaded,
-          apiUtil: state.apiUtil),
+          //apiUtil: state.apiUtil,
+          rep: state.rep,
+          routerDelegate: state.routerDelegate),
     );
-    logs.writeLog('Update task: ${event.task}');
-    state.apiUtil.patchData(updatedTasks);
-    tasksStorage.writeTasks(updatedTasks, state.apiUtil.revVersion + 1);
+    Logs.logImpl.writeLog('Update task: ${event.task}');
   }
 
   Future<void> _deleteTask(DeleteTask event, Emitter<TasksState> emit) async {
     final updatedTasks =
         state.myTasks.where((task) => task.id != event.task.id).toList();
     emit(
-      TasksState(
+      TasksStateUpdate(
           hideDone: state.hideDone,
           myTasks: updatedTasks,
-          loaded: state.loaded,
-          apiUtil: state.apiUtil),
+          //apiUtil: state.apiUtil,
+          rep: state.rep,
+          routerDelegate: state.routerDelegate),
     );
-    logs.writeLog('Delete task: ${event.task}');
-    state.apiUtil.patchData(updatedTasks);
-    tasksStorage.writeTasks(updatedTasks, state.apiUtil.revVersion + 1);
+    Logs.logImpl.writeLog('Delete task: ${event.task}');
   }
 
   Future<void> _doneFilter(DoneFilter event, Emitter<TasksState> emit) async {
@@ -103,9 +124,11 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
           hideDone: !state.hideDone,
           myTasks: state.myTasks,
           loaded: state.loaded,
-          apiUtil: state.apiUtil),
+          //apiUtil: state.apiUtil,
+          rep: state.rep,
+          routerDelegate: state.routerDelegate),
     );
-    logs.writeLog(
+    Logs.logImpl.writeLog(
         'Done filter: completed myTasks ${!state.hideDone ? 'show' : 'unshow'}');
   }
 }

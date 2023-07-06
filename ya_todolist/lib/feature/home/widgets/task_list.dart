@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ya_todolist/common/theme_constants.dart';
 import 'package:ya_todolist/feature/task/bloc/tasks_bloc.dart';
-import 'package:ya_todolist/feature/task/domain/task_entitiy.dart';
+import 'package:ya_todolist/feature/task/domain/task_model.dart';
 import 'package:ya_todolist/feature/task/task_widget.dart';
 
 import 'new_task_field.dart';
@@ -24,7 +25,7 @@ class _MySliverListState extends State<MySliverList> {
             padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
             child: Material(
               elevation: 2,
-              color: Theme.of(context).colorScheme.surface,
+              color: context.myColors!.backSecondary,
               borderRadius: BorderRadius.circular(8),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
@@ -33,6 +34,7 @@ class _MySliverListState extends State<MySliverList> {
                   child: Column(
                     children: [
                       ReorderableListView.builder(
+                        //buildDefaultDragHandles: false,
                         //reverse: true,
                         onReorder: (oldIndex, newIndex) {
                           if (oldIndex < newIndex) {

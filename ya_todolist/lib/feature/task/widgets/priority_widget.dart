@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ya_todolist/common/theme_constants.dart';
 
-import '../domain/task_entitiy.dart';
+import '../domain/task_model.dart';
 
 class PriorityWidget extends StatelessWidget {
   const PriorityWidget({super.key, required this.priority});
@@ -17,7 +18,7 @@ class PriorityWidget extends StatelessWidget {
                   ? Text(
                       '!!',
                       style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
+                        color: context.myColors!.red,
                         fontSize: 25,
                         fontWeight: FontWeight.w900,
                       ),

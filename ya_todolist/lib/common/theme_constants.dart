@@ -1,16 +1,144 @@
 import 'package:flutter/material.dart';
 
-const TextTheme myTextTheme = TextTheme(
-  headline1:
-      TextStyle(fontSize: 32, height: 1.1875, fontWeight: FontWeight.w500),
-  headline2: TextStyle(fontSize: 20, height: 1.6, fontWeight: FontWeight.w500),
-  button: TextStyle(fontSize: 14, height: 1.714, fontWeight: FontWeight.w500),
-  subtitle1: TextStyle(fontSize: 16, height: 1.25, fontWeight: FontWeight.w400),
-  headline3:
-      TextStyle(fontSize: 14, height: 1.429, fontWeight: FontWeight.w400),
-);
+extension MyThemeBuilder on BuildContext {
+  MyColors? get myColors => Theme.of(this).extension<MyColors>();
+}
 
+class MyColors extends ThemeExtension<MyColors> {
+  const MyColors({
+    required this.separator,
+    required this.overlay,
+    required this.labelPrimary,
+    required this.labelSecondary,
+    required this.tertiary,
+    required this.disable,
+    required this.red,
+    required this.green,
+    required this.blue,
+    required this.gray,
+    required this.grayLight,
+    required this.white,
+    required this.backPrimary,
+    required this.backSecondary,
+    required this.elevated,
+  });
+
+  final Color separator;
+  final Color overlay;
+  final Color labelPrimary;
+  final Color labelSecondary;
+  final Color tertiary;
+  final Color disable;
+  final Color red;
+  final Color green;
+  final Color blue;
+  final Color gray;
+  final Color grayLight;
+  final Color white;
+  final Color backPrimary;
+  final Color backSecondary;
+  final Color elevated;
+
+  @override
+  MyColors copyWith() {
+    return this;
+  }
+
+  @override
+  MyColors lerp(ThemeExtension<MyColors>? other, double t) {
+    return this;
+  }
+}
+
+abstract class MyTheme {
+  static ThemeData get lightData => ThemeData.light().copyWith(
+        extensions: <ThemeExtension<dynamic>>[
+          const MyColors(
+            separator: Color(0x33000000),
+            overlay: Color(0x0F000000),
+            labelPrimary: Color(0xFF000000),
+            labelSecondary: Color(0x99000000),
+            tertiary: Color(0x4D000000),
+            disable: Color(0x26000000),
+            red: Color(0xFFFF3B30),
+            green: Color(0xFF34C759),
+            blue: Color(0xFF007AFF),
+            gray: Color(0xFF8E8E93),
+            grayLight: Color(0xFFD1D1D6),
+            white: Color(0xFFFFFFFF),
+            backPrimary: Color(0xFFF7F6F2),
+            backSecondary: Color(0xFFFFFFFF),
+            elevated: Color(0xFFFFFFFF),
+          ),
+        ],
+        colorScheme: const ColorScheme.light(
+          primary: Color(0xFF007AFF), // header background color
+          onPrimary: Color(0xFFFFFFFF), // header text color
+          onSurface: Color(0xFF000000), // body text color
+        ),
+        splashColor: const Color(0x4D000000), //tertiary
+        //textTheme: myTextTheme.apply(fontFamily: 'Roboto'),
+        floatingActionButtonTheme:
+            const FloatingActionButtonThemeData().copyWith(
+          foregroundColor: const Color(0xFFFFFFFF),
+          backgroundColor: const Color(0xFF007AFF), //blue
+        ),
+      );
+
+  static ThemeData get darkData => ThemeData.dark().copyWith(
+        extensions: <ThemeExtension<dynamic>>[
+          const MyColors(
+            separator: Color(0x33FFFFFF),
+            overlay: Color(0x52000000),
+            labelPrimary: Color(0xFFFFFFFF),
+            labelSecondary: Color(0x99FFFFFF),
+            tertiary: Color(0x66FFFFFF),
+            disable: Color(0x26FFFFFF),
+            red: Color(0xFFFF453A),
+            green: Color(0xFF32D74B),
+            blue: Color(0xFF0A84FF),
+            gray: Color(0xFF8E8E93),
+            grayLight: Color(0xFF48484A),
+            white: Color(0xFFFFFFFF),
+            backPrimary: Color(0xFF161618),
+            backSecondary: Color(0xFF252528),
+            elevated: Color(0xFF3C3C3F),
+          ),
+        ],
+        colorScheme: const ColorScheme.light(
+          primary: Color(0xFF0A84FF), // header background color
+          onPrimary: Color(0xFFFFFFFF), // header text color
+          onSurface: Color(0xFFFFFFFF), // body text color
+        ),
+        splashColor: const Color(0x66FFFFFF), //tertiary
+        dialogBackgroundColor: const Color(0xFF252528), // backSecondary
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(backgroundColor: const Color(0xFF252528)),
+        ), //backSecondary
+        //textTheme: myTextTheme.apply(fontFamily: 'Roboto'),
+        floatingActionButtonTheme:
+            const FloatingActionButtonThemeData().copyWith(
+          foregroundColor: const Color(0xFFFFFFFF),
+          backgroundColor: const Color(0xFF0A84FF), //blue
+        ),
+      );
+
+  static TextTheme myTextTheme = const TextTheme(
+    headline1:
+        TextStyle(fontSize: 32, height: 1.1875, fontWeight: FontWeight.w500),
+    headline2:
+        TextStyle(fontSize: 20, height: 1.6, fontWeight: FontWeight.w500),
+    button: TextStyle(fontSize: 14, height: 1.714, fontWeight: FontWeight.w500),
+    subtitle1:
+        TextStyle(fontSize: 16, height: 1.25, fontWeight: FontWeight.w400),
+    headline3:
+        TextStyle(fontSize: 14, height: 1.429, fontWeight: FontWeight.w400),
+  );
+}
+
+/*
 ThemeData myLightTheme = ThemeData.light().copyWith(
+  //extensions: ,
   splashColor: const Color(0x4D000000),
   colorScheme: const ColorScheme.light(
       outline: Color(0x33000000), //separation
@@ -60,62 +188,7 @@ ThemeData myDarkTheme = ThemeData.dark().copyWith(
     backgroundColor: const Color(0xFF007AFF),
   ),
 );
-
-
-/*
-class Light {
-  static const support = {
-    'separator': Color(0x33000000),
-    'overlay': Color(0x0F000000),
-  };
-  static const label = {
-    'primary': Color(0xFF000000),
-    'secondary': Color(0x99000000),
-    'tertiary': Color(0x4D000000),
-    'disable': Color(0x26000000)
-  };
-  static const color = {
-    'red': Color(0xFFFF3B30),
-    'green': Color(0xFF34C759),
-    'blue': Color(0xFF007AFF),
-    'gray': Color(0xFF8E8E93),
-    'gray light': Color(0xFFD1D1D6),
-    'white': Color(0xFFFFFFFF)
-  };
-  static const back = {
-    'primary': Color(0xFFF7F6F2),
-    'secondary': Color(0xFFFFFFFF),
-    'elevated': Color(0xFFFFFFFF)
-  };
-}
-
-class Dark {
-  static const support = {
-    'separator': Color(0x33FFFFFF),
-    'overlay': Color(0x52000000),
-  };
-  static const label = {
-    'primary': Color(0xFFFFFFFF),
-    'secondary': Color(0x99FFFFFF),
-    'tertiary': Color(0x66FFFFFF),
-    'disable': Color(0x26FFFFFF)
-  };
-  static const color = {
-    'red': Color(0xFFFF453A),
-    'green': Color(0xFF32D74B),
-    'blue': Color(0xFF0A84FF),
-    'gray': Color(0xFF8E8E93),
-    'gray light': Color(0xFF48484A),
-    'white': Color(0xFFFFFFFF)
-  };
-  static const back = {
-    'primary': Color(0xFF161618),
-    'secondary': Color(0xFF252528),
-    'elevated': Color(0xFF3C3C3F)
-  };
-}
 */
-
 
 /* 
 //FOR MANUAL SWITCH
