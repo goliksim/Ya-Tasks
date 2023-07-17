@@ -1,4 +1,4 @@
-# ToDoList Architecture
+# Repository Architecture
 ```mermaid
 flowchart TD
 	subgraph   
@@ -16,8 +16,8 @@ flowchart TD
 	end;
 	
 	subgraph  
-	LS --- LS_dis[Содержит Database\nОписывает функции для работы с базой данных.];
-	LS_dis --> BD([Database]);
+	LS --- LS_dis[Содержит LocalSettings\nОписывает функции для работы с базой данных.];
+	LS_dis --> BD([LocalSettings]);
 	BD --- BD_dis[Cодержит методы создания и обновления бд.];
 	end;
     

@@ -10,7 +10,7 @@ void main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   late RepositoryMock repositoryMock;
   setUp(() {
-    registerFallbackValue(TaskListTestConstants.taskList.first);
+    registerFallbackValue(TaskListTestConstants.taskList[0]);
     repositoryMock = RepositoryMock();
   });
 

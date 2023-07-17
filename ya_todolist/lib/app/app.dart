@@ -26,6 +26,7 @@ class _MyAppState extends State<MyApp> {
   //final _routerDelegate = MyRouterDelegate();
   String? priorityColor;
   final _routeInformationParser = MyRouteInformationParser();
+  final firebaseConfig = FirebaseConfig();
 
   @override
   void initState() {
@@ -33,13 +34,17 @@ class _MyAppState extends State<MyApp> {
     getConfigColor();
   }
 
+  void updateValues(String color) {
+    setState(() {
+      if (color.length <= 6) {
+        color = 'FF$color';
+      }
+      priorityColor = '0x$color';
+    });
+  }
+
   Future<void> getConfigColor() async {
-    var tmp = await FirebaseConfig().initializeConfig();
-    if (tmp.length <= 6) {
-      tmp = 'FF$tmp';
-    }
-    priorityColor = '0x$tmp';
-    setState(() {});
+    await firebaseConfig.remoteConfigUpdate(updateValues);
   }
 
   @override

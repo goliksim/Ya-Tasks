@@ -27,7 +27,7 @@ class EditorBloc extends Bloc<EditorEvent, EditorState> {
       ),
       
     );
-    Logs.logImpl.writeLog('Update text: ${event.text}');
+    Logs.logImpl.logImpl.writeLog('Update text: ${event.text}');
   }*/
 
   Future<void> _editorUpdatePriority(
@@ -37,7 +37,7 @@ class EditorBloc extends Bloc<EditorEvent, EditorState> {
         task: state.task.copyWith(importance: event.priority),
       ),
     );
-    Logs.logIns.writeLog('Update priority: ${event.priority}');
+    Logs.logImpl.logg('EditorBloc: update priority: ${event.priority}');
   }
 
   Future<void> _editorUpdateDeadline(
@@ -47,7 +47,7 @@ class EditorBloc extends Bloc<EditorEvent, EditorState> {
         task: state.task.copyWith(deadline: event.deadline),
       ),
     );
-    Logs.logIns.writeLog('Update deadlineDate: ${event.deadline}');
+    Logs.logImpl.logg('EditorBloc: update deadlineDate: ${event.deadline}');
   }
 
   Future<void> _editorDeleteDeadline(
@@ -57,6 +57,6 @@ class EditorBloc extends Bloc<EditorEvent, EditorState> {
         task: state.task.copyWith(deadline: null),
       ),
     );
-    Logs.logIns.writeLog('Delete deadlineDate');
+    Logs.logImpl.logg('EditorBloc: delete deadlineDate');
   }
 }

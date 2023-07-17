@@ -16,10 +16,10 @@ class NavigationState {
       Locator.analytics.logEvent(name: 'page_changed', parameters: {
         'current_page': 'root',
       }).then((_) {
-        Logs.logIns.writeLog('Logged rootPage to firebase');
+        Logs.logImpl.logg('Analytics: rootPage is logged to Firebase');
       });
     } catch (e) {
-      Logs.logIns.writeLog('Doesnt init Firebase');
+      Logs.logImpl.warning('Analytics: Firebase not initialized');
     }
   }
 
@@ -28,22 +28,22 @@ class NavigationState {
       Locator.analytics.logEvent(name: 'page_changed', parameters: {
         'current_page': 'edit',
       }).then((_) {
-        Logs.logIns.writeLog('Logged itemPage to firebase');
+        Logs.logImpl.logg('Analytics: Logged itemPage is logged to Firebase');
       });
     } catch (e) {
-      Logs.logIns.writeLog('Doesnt init Firebase');
+      Logs.logImpl.warning('Analytics: Firebase not initialized');
     }
   }
 
   NavigationState.empty([this._empty = true, this.selectedTask]) {
     try {
-      Locator.analytics.logEvent(name: 'page_chanhed', parameters: {
+      Locator.analytics.logEvent(name: 'page_changed', parameters: {
         'current_page': 'edit_empty',
       }).then((_) {
-        Logs.logIns.writeLog('Logged emptyPage to firebase');
+        Logs.logImpl.logg('Analytics: emptyPage is logged to Firebase');
       });
     } catch (e) {
-      Logs.logIns.writeLog('Doesnt init Firebase');
+      Logs.logImpl.warning('Analytics: Firebase not initialized');
     }
   }
 }

@@ -23,7 +23,7 @@ class MyRouteInformationParser extends RouteInformationParser<NavigationState> {
 
     // /
     if (uri.pathSegments.isEmpty) {
-      Logs.logIns.writeLog('Start app without deeplink');
+      Logs.logImpl.logg('Navigator: Launch app without deeplink');
       return NavigationState.root();
     }
     // /task/<id>
@@ -31,7 +31,7 @@ class MyRouteInformationParser extends RouteInformationParser<NavigationState> {
       final itemId = uri.pathSegments[1];
 
       if (uri.pathSegments[0] == Routes.task) {
-        Logs.logIns.writeLog('Start app with $itemId deeplink path');
+        Logs.logImpl.logg('Navigator: Launch app with $itemId deeplink path');
         return NavigationState.item(itemId);
       }
 
@@ -40,14 +40,14 @@ class MyRouteInformationParser extends RouteInformationParser<NavigationState> {
 
     if (uri.pathSegments.length == 1) {
       final path = uri.pathSegments[0];
-      Logs.logIns.writeLog('Start app with $path deeplink path');
+      Logs.logImpl.logg('Navigator: Launch app with $path deeplink path');
       if (path == Routes.task) {
         return NavigationState.empty();
       }
 
       return NavigationState.root();
     }
-    Logs.logIns.writeLog('Start app with empty deeplink path');
+    Logs.logImpl.logg('Navigator: Launch app with empty deeplink path');
     return NavigationState.root();
   }
 

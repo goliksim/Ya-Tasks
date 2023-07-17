@@ -30,7 +30,7 @@ class _TaskListPageState extends State<TaskListPage> {
         child: LayoutBuilder(
           builder: (context, constraints) {
             final tabletCond =
-                [constraints.maxHeight, constraints.maxWidth].reduce(max) > 800;
+                [constraints.maxHeight, constraints.maxWidth].reduce(max) > 900;
             return tabletPadding(
               condition: tabletCond,
               child: CustomScrollView(

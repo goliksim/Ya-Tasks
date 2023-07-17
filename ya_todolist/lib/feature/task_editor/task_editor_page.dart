@@ -95,7 +95,7 @@ class _TaskEditorPageState extends State<TaskEditorPage> {
                     constraints.maxWidth < constraints.maxHeight;
                 final tabletCond =
                     [constraints.maxHeight, constraints.maxWidth].reduce(max) >
-                        800;
+                        900;
                 return tabletPadding(
                   condition: tabletCond,
                   child: myEditorBuilder(
@@ -106,36 +106,39 @@ class _TaskEditorPageState extends State<TaskEditorPage> {
                           child: EditorTextField(
                               controller: controller,
                               condition: landscapeCond)),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: landscapeCond ? 16 : 0),
-                            child: Column(
-                              children: [
-                                PriorityChanger(
-                                    dropdownvalue: state.task.importance),
-                                Divider(
-                                  height: 0,
-                                  thickness: 1,
-                                  color: context.myColors!.separator,
-                                ),
-                                DeadLineSwitch(
-                                  deadlineDate: state.task.deadline,
-                                ),
-                                const SizedBox(height: 24),
-                              ],
+                      SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: landscapeCond ? 16 : 0),
+                              child: Column(
+                                children: [
+                                  PriorityChanger(
+                                      dropdownvalue: state.task.importance),
+                                  Divider(
+                                    height: 0,
+                                    thickness: 1,
+                                    color: context.myColors!.separator,
+                                  ),
+                                  DeadLineSwitch(
+                                    deadlineDate: state.task.deadline,
+                                  ),
+                                  const SizedBox(height: 24),
+                                ],
+                              ),
                             ),
-                          ),
-                          Divider(
-                            height: 0,
-                            thickness: 1,
-                            color: context.myColors!.separator,
-                          ),
-                          const SizedBox(height: 8),
-                          EditorDeleteButton(
-                              deleteTask: deleteTask, editMode: editMode),
-                        ],
+                            Divider(
+                              height: 0,
+                              thickness: 1,
+                              color: context.myColors!.separator,
+                            ),
+                            const SizedBox(height: 8),
+                            EditorDeleteButton(
+                                deleteTask: deleteTask, editMode: editMode),
+                          ],
+                        ),
                       ),
                     ],
                   ),

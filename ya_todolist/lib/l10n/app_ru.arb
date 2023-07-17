@@ -13,5 +13,9 @@
   "priorityBasic": "Нет",
   "priorityLow": "Низкая",
   "priorityHigh": "!! Высокая",
-  "deadlineTitle": "Сделать до"
+  "deadlineTitle": "Сделать до",
+  "confirmTitle": "Подтверждение",
+  "confirmText": "Вы действительно хотите удалить задачу?",
+  "confirmYes": "Да",
+  "confirmNo": "Нет"
 }

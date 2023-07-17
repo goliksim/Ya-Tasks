@@ -24,23 +24,23 @@ class Task with _$Task {
     @HiveField(2) @Default(Importance.basic) Importance importance,
     @JsonKey(fromJson: dateFromJson, toJson: dateToJson)
     @HiveField(3)
-        DateTime? deadline, //optional
+    DateTime? deadline, //optional
     @HiveField(4) @Default(false) bool done,
     @JsonKey(name: 'created_at', fromJson: dateFromJson, toJson: dateToJson)
     @HiveField(5)
-        DateTime? createdAt,
+    DateTime? createdAt,
     @JsonKey(name: 'changed_at', fromJson: dateFromJson, toJson: dateToJson)
     @HiveField(6)
-        DateTime? changedAt,
+    DateTime? changedAt,
     @JsonKey(name: 'last_updated_by')
     @Default('')
     @HiveField(7)
-        String lastUpdatedBy,
+    String lastUpdatedBy,
     @HiveField(8) @Default('#FFFFFF') String? color, //optional
     @JsonKey(includeFromJson: false, includeToJson: false)
     @HiveField(9)
     @Default(false)
-        bool deleted,
+    bool deleted,
   }) = _Task;
 
   factory Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);

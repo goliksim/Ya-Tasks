@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
 import 'package:ya_todolist/feature/task/bloc/tasks_bloc.dart';
-import 'package:ya_todolist/feature/task/data/domain/task_model.dart';
 import 'package:ya_todolist/feature/task/task_widget.dart';
 
 import 'new_task_field.dart';
@@ -40,9 +39,8 @@ class _MySliverListState extends State<MySliverList> {
                         key: _key,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        initialItemCount : tasks.length,
+                        initialItemCount: tasks.length,
                         itemBuilder: (context, index, animation) {
-
                           return SizeTransition(
                             sizeFactor: animation,
                             child: !(state.hideDone && tasks[index].done)

@@ -128,14 +128,15 @@ abstract class MyTheme {
       );
 
   static TextTheme myTextTheme = const TextTheme(
-    headline1:
+    displayLarge:
         TextStyle(fontSize: 32, height: 1.1875, fontWeight: FontWeight.w500),
-    headline2:
+    displayMedium:
         TextStyle(fontSize: 20, height: 1.6, fontWeight: FontWeight.w500),
-    button: TextStyle(fontSize: 14, height: 1.714, fontWeight: FontWeight.w500),
-    subtitle1:
+    labelLarge:
+        TextStyle(fontSize: 14, height: 1.714, fontWeight: FontWeight.w500),
+    titleMedium:
         TextStyle(fontSize: 16, height: 1.25, fontWeight: FontWeight.w400),
-    headline3:
+    displaySmall:
         TextStyle(fontSize: 14, height: 1.429, fontWeight: FontWeight.w400),
   );
 }

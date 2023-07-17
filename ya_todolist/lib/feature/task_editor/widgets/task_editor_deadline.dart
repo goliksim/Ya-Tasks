@@ -61,7 +61,7 @@ class _DeadLineSwitchState extends State<DeadLineSwitch> {
                 children: [
                   Text(
                     AppLocalizations.of(context).deadlineTitle,
-                    style: MyTheme.myTextTheme.subtitle1!
+                    style: MyTheme.myTextTheme.titleMedium!
                         .copyWith(color: context.myColors!.labelPrimary),
                   ),
                   //SizedBox(height: 4,),
@@ -69,7 +69,7 @@ class _DeadLineSwitchState extends State<DeadLineSwitch> {
                     Text(
                       DateFormat.yMMMMd(AppLocalizations.of(context).localeName)
                           .format(widget.deadlineDate!), //date
-                      style: MyTheme.myTextTheme.headline3!.copyWith(
+                      style: MyTheme.myTextTheme.displaySmall!.copyWith(
                         color: context.myColors!.blue,
                       ),
                     ),

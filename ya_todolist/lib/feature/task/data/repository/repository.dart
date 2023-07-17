@@ -16,34 +16,12 @@ class Repository extends DataInterface {
 
   @override
   Future<void> init() async {
-    Logs.logIns.writeLog('Start initializing...');
+    Logs.logImpl.logg('Repository: initialization start...');
     await localStorage.init();
     await networkStorage.init();
-    Logs.logIns.writeLog('Sucessful initialization!');
+    Logs.logImpl.fine('Repository: initialized!');
   }
 
-  Future<void> syncStorages() async {
-    Logs.logIns.writeLog('Storage synchronization...');
-    final net = await networkStorage.getTasks();
-    final locRev = await localStorage.readRev();
-    if (net != null) {
-      Logs.logIns
-          .writeLog('Loc_rev: $locRev, Net_rev: ${networkStorage.revision}');
-      if (networkStorage.revision! < locRev!) {
-        Logs.logIns.writeLog('Synchronization from localStorage...');
-        if (networkStorage.revision != 0) {
-          localStorage.revision = networkStorage.revision;
-          localStorage.writeRev(networkStorage.revision!);
-        }
-      } else {
-        Logs.logIns.writeLog('Synchronization from networkStorage...');
-        localStorage.writeInfo(net, networkStorage.revision!);
-      }
-    } else {
-      Logs.logIns
-          .writeLog('Synchronization from localStorage. ERROR IN NET...');
-    }
-  }
   /* Логика синхронизации 
   - грузим данные из облака и локалки
   - далее только, если ревизии разные
@@ -52,7 +30,6 @@ class Repository extends DataInterface {
   - обновляем таски, которые есть, если они обновлены позднее
   - удаляем таски из локалки, если их нет в беки или они удалены позднее последнего обновления бека  
   */
-
   Future<bool> checkChanges(
       List<Task> networkTasks, List<Task> localTasks) async {
     return (!localTasks.every(networkTasks.contains) ||
@@ -60,8 +37,8 @@ class Repository extends DataInterface {
   }
 
   Future<void> syncStoragesV2() async {
-    Logs.logIns.writeLog(
-        'Storage synchronization v2 [ Loc_rev: ${localStorage.revision}, Net_rev: ${networkStorage.revision} ]...');
+    Logs.logImpl.logg(
+        'Repository: Storage synchronization v2 [ Loc_rev - ${localStorage.revision}, Net_rev - ${networkStorage.revision} ]...');
     final localTasks = await localStorage.getTasks();
     late List<Task>? networkTasks;
     if (networkStorage.revision != null) {
@@ -93,22 +70,22 @@ class Repository extends DataInterface {
           for (final delTask in localTasks.where((e) => e.deleted).toList()) {
             await localStorage.deleteTask(delTask.id);
           }
-
-          Logs.logIns.writeLog('Successful merging!');
+          //localStorage.updateTasks(localTasks);
+          Logs.logImpl.logg('Repository: Successful merging!');
         } else {
-          Logs.logIns.writeLog(
-              'Synchronization from localStorage. ERROR IN NET LIST!');
+          Logs.logImpl.logg(
+              'Repository: Synchronization from localStorage. ERROR IN NET LIST!');
         }
         if (await networkStorage.updateTasks(await localStorage.getTasks())) {
           localStorage.revision = networkStorage.revision!;
           localStorage.writeRev(networkStorage.revision!);
         }
       } else {
-        Logs.logIns.writeLog('No need to sync');
+        Logs.logImpl.logg('Repository: No need to sync');
       }
     }
-
-    Logs.logIns.writeLog('Synchronization completed!');
+    
+    Logs.logImpl.fine('Repository: synchronization completed!');
   }
 
   @override

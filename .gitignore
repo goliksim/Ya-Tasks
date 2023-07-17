@@ -52,3 +52,4 @@ app.*.map.json
 /.vscode
 /build
 lib/feature/task_editor/widgets/task_priority_changer_old.dart
+init_logo.png

@@ -1,4 +1,5 @@
-import 'package:ya_todolist/app/di.dart';
+import 'dart:io';
+
 import 'package:ya_todolist/feature/task/data/domain/task_model.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -6,14 +7,13 @@ import 'package:mocktail/mocktail.dart';
 import 'package:flutter/material.dart';
 import '../test_constants.dart';
 import '../test_app.dart';
-import 'dart:io';
 
 void main() async {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
-  
+
   late RepositoryMock repositoryMock;
   setUp(() {
-    registerFallbackValue(TaskListTestConstants.taskList.first);
+    registerFallbackValue(TaskListTestConstants.taskList[0]);
     repositoryMock = RepositoryMock();
   });
   group('Group 1', () {

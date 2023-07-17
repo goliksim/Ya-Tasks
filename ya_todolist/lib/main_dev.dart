@@ -1,19 +1,19 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:ya_todolist/app/di.dart';
 import 'app/app.dart';
 import 'package:ya_todolist/common/logger.dart';
 
 void main() async {
-  Locator.init('DEV');
   runZonedGuarded(
-    () {
+    () async {
       //zoneBody /*обработка ошибок Firebase Crashlytics Bloc.observer, logger, stack_trace*/
+      await Locator.init('DEV');
+      runApp(const MyApp());
     },
     //exceptionWork
-    (error, stackTrace) => Logs.logIns.writeLog('Catch in mainZone $error'),
-  );
-  runApp(
-    const MyApp(),
+    (error, stackTrace) =>
+        Logs.logImpl.warning('MAIN: Catch in mainZone $error'),
   );
 }

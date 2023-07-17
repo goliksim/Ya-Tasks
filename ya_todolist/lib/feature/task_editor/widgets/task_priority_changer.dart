@@ -28,7 +28,7 @@ class PriorityChanger extends StatelessWidget {
           children: [
             Text(
               AppLocalizations.of(context).priority,
-              style: MyTheme.myTextTheme.subtitle1!
+              style: MyTheme.myTextTheme.titleMedium!
                   .copyWith(color: context.myColors!.labelPrimary),
             ),
             priorityText(dropdownvalue, context),
@@ -60,19 +60,19 @@ Widget priorityText(Importance priority, BuildContext context) {
   switch (priority) {
     case Importance.basic:
       return Text(AppLocalizations.of(context).priorityBasic,
-          style: MyTheme.myTextTheme.subtitle1!
+          style: MyTheme.myTextTheme.titleMedium!
               .copyWith(color: context.myColors!.tertiary));
     case Importance.low:
       return Text(AppLocalizations.of(context).priorityLow,
-          style: MyTheme.myTextTheme.subtitle1!
+          style: MyTheme.myTextTheme.titleMedium!
               .copyWith(color: context.myColors!.labelPrimary));
     case Importance.important:
       return Text(AppLocalizations.of(context).priorityHigh,
-          style: MyTheme.myTextTheme.subtitle1!
+          style: MyTheme.myTextTheme.titleMedium!
               .copyWith(color: context.myColors!.priority));
     default:
       return Text(AppLocalizations.of(context).priorityBasic,
-          style: MyTheme.myTextTheme.subtitle1!
+          style: MyTheme.myTextTheme.titleMedium!
               .copyWith(color: context.myColors!.tertiary));
   }
 }

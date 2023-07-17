@@ -12,7 +12,7 @@ class NetworkStorage extends DataInterface {
   @override
   Future<void> init() async {
     await getTasks();
-    Logs.logIns.writeLog(' newtworkStorage init.');
+    Logs.logImpl.fine('NetworkStorage: inited.');
   }
 
   Future<int?> getRev() async {
@@ -22,13 +22,14 @@ class NetworkStorage extends DataInterface {
         var jsonResponce = response.data!;
         revision = jsonResponce['revision'];
 
-        //Logs.logImpl.writeLog('Sucessful get tasksList from network');
+        //Logs.logImpl.logImpl.writeLog('Sucessful get tasksList from network');
         return revision!;
       }
-      Logs.logIns.writeLog('getTasks - STATUSCODE != 200');
+      Logs.logImpl.warning('NetworkStorage: getTasks - STATUSCODE != 200');
+
       return null;
     } catch (e) {
-      Logs.logIns.writeLog('NETWORK ERROR: $e');
+      Logs.logImpl.warning('NetworkStorage: NETWORK ERROR - $e');
     }
     return null;
   }
@@ -42,13 +43,13 @@ class NetworkStorage extends DataInterface {
       if (response.statusCode == 200) {
         var jsonResponce = response.data!;
         revision = jsonResponce['revision'] as int;
-        Logs.logIns.writeLog('Sucessful add task to network');
+        Logs.logImpl.logg('NetworkStorage: sucessful add task');
         return true;
       }
-      Logs.logIns.writeLog('addTask - STATUSCODE != 200');
+      Logs.logImpl.warning('NetworkStorage: addTask - STATUSCODE != 200');
       return false;
     } catch (e) {
-      Logs.logIns.writeLog('NETWORK ERROR: $e');
+      Logs.logImpl.warning('NetworkStorage: NETWORK ERROR - $e');
     }
     return false;
   }
@@ -62,13 +63,13 @@ class NetworkStorage extends DataInterface {
       if (response.statusCode == 200) {
         var jsonResponce = response.data!;
         revision = jsonResponce['revision'] as int;
-        Logs.logIns.writeLog('Sucessful delete task on network');
+        Logs.logImpl.logg('NetworkStorage: sucessful delete task');
         return true;
       }
-      Logs.logIns.writeLog('deleteTask - STATUSCODE != 200');
+      Logs.logImpl.warning('NetworkStorage: deleteTask - STATUSCODE != 200');
       return false;
     } catch (e) {
-      Logs.logIns.writeLog('NETWORK ERROR: $e');
+      Logs.logImpl.warning('NetworkStorage: NETWORK ERROR - $e');
     }
     return false;
   }
@@ -80,13 +81,13 @@ class NetworkStorage extends DataInterface {
       if (response.statusCode == 200) {
         var jsonResponce = response.data!;
         revision = jsonResponce['revision'];
-        Logs.logIns.writeLog('Sucessful get task from network');
+        Logs.logImpl.logg('NetworkStorage: sucessful get task');
         return Task.fromJson(jsonResponce['element']);
       }
-      Logs.logIns.writeLog('getTask - STATUSCODE != 200');
+      Logs.logImpl.warning('NetworkStorage: getTask - STATUSCODE != 200');
       return null;
     } catch (e) {
-      Logs.logIns.writeLog('NETWORK ERROR: $e');
+      Logs.logImpl.warning('NetworkStorage: NETWORK ERROR - $e');
     }
     return null;
   }
@@ -99,16 +100,16 @@ class NetworkStorage extends DataInterface {
         var jsonResponce = response.data!;
         revision = jsonResponce['revision'];
 
-        //Logs.logImpl.writeLog('Sucessful get tasksList from network');
+        //Logs.logImpl.logImpl.writeLog('Sucessful get tasksList from network');
         return [
           for (Map<String, dynamic> item in jsonResponce['list'])
             Task.fromJson(item)
         ];
       }
-      Logs.logIns.writeLog('getTasks - STATUSCODE != 200');
+      Logs.logImpl.warning('NetworkStorage: getTasks - STATUSCODE != 200');
       return null;
     } catch (e) {
-      Logs.logIns.writeLog('NETWORK ERROR: $e');
+      Logs.logImpl.warning('NetworkStorage: NETWORK ERROR - $e');
     }
     return null;
   }
@@ -124,13 +125,13 @@ class NetworkStorage extends DataInterface {
       if (response.statusCode == 200) {
         var jsonResponce = response.data!;
         revision = jsonResponce['revision'] as int;
-        Logs.logIns.writeLog('Sucessful update task on network');
+        Logs.logImpl.logg('NetworkStorage: sucessful update task');
         return true;
       }
-      Logs.logIns.writeLog('updateTask - STATUSCODE != 200');
+      Logs.logImpl.warning('NetworkStorage: updateTask - STATUSCODE != 200');
       return false;
     } catch (e) {
-      Logs.logIns.writeLog('NETWORK ERROR: $e');
+      Logs.logImpl.logg('NetworkStorage: NETWORK ERROR - $e');
     }
     return false;
   }
@@ -147,13 +148,13 @@ class NetworkStorage extends DataInterface {
         var jsonResponce = response.data!;
         revision = jsonResponce['revision'];
 
-        Logs.logIns.writeLog('Sucessful update tasksList on network');
+        Logs.logImpl.logg('NetworkStorage: sucessful update tasksList');
         return true;
       }
-      Logs.logIns.writeLog('updateTasks - STATUSCODE != 200');
+      Logs.logImpl.logg('NetworkStorage: updateTasks - STATUSCODE != 200');
       return false;
     } catch (e) {
-      Logs.logIns.writeLog('NETWORK ERROR: $e');
+      Logs.logImpl.logg('NetworkStorage: NETWORK ERROR - $e');
     }
     return false;
   }

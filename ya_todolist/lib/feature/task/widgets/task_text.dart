@@ -18,7 +18,7 @@ class TaskText extends StatelessWidget {
           maxLines: 3,
           softWrap: true,
           overflow: TextOverflow.ellipsis,
-          style: MyTheme.myTextTheme.subtitle1!.copyWith(
+          style: MyTheme.myTextTheme.titleMedium!.copyWith(
             decoration:
                 task.done ? TextDecoration.lineThrough : TextDecoration.none,
             color: !task.done
@@ -31,7 +31,7 @@ class TaskText extends StatelessWidget {
           Text(
             DateFormat.yMMMMd(AppLocalizations.of(context).localeName)
                 .format(task.deadline!), //date
-            style: MyTheme.myTextTheme.headline3!
+            style: MyTheme.myTextTheme.displaySmall!
                 .copyWith(color: context.myColors!.tertiary),
           ),
       ],

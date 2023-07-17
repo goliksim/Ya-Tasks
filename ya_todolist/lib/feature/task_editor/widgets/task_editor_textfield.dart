@@ -24,14 +24,14 @@ class EditorTextField extends StatelessWidget {
           child: TextField(
             controller: controller,
             decoration: InputDecoration(
-              hintStyle: MyTheme.myTextTheme.subtitle1!
+              hintStyle: MyTheme.myTextTheme.titleMedium!
                   .copyWith(color: context.myColors!.tertiary),
               hintText: AppLocalizations.of(context).editorHintText,
               border: InputBorder.none,
             ),
             minLines: condition ? 3 : 100,
             maxLines: condition ? 9 : 100,
-            style: MyTheme.myTextTheme.subtitle1!
+            style: MyTheme.myTextTheme.titleMedium!
                 .copyWith(color: context.myColors!.labelPrimary),
             textAlignVertical: TextAlignVertical.bottom,
           ),

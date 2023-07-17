@@ -28,7 +28,7 @@ class _NewTaskFieldState extends State<NewTaskField> {
       color: context.myColors!.backSecondary,
       child: TextField(
         textAlignVertical: TextAlignVertical.top,
-        style: MyTheme.myTextTheme.subtitle1!
+        style: MyTheme.myTextTheme.titleMedium!
             .copyWith(color: context.myColors!.labelPrimary),
         onSubmitted: (value) {
           if (value != '') {
@@ -49,7 +49,7 @@ class _NewTaskFieldState extends State<NewTaskField> {
           contentPadding: const EdgeInsets.fromLTRB(52, 12, 52, 12),
           border: InputBorder.none,
           hintText: AppLocalizations.of(context).newTaskField,
-          hintStyle: MyTheme.myTextTheme.subtitle1!
+          hintStyle: MyTheme.myTextTheme.titleMedium!
               .copyWith(color: context.myColors!.tertiary),
         ),
       ),

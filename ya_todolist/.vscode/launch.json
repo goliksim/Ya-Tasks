@@ -1,0 +1,29 @@
+{
+    // Используйте IntelliSense, чтобы узнать о возможных атрибутах.
+    // Наведите указатель мыши, чтобы просмотреть описания существующих атрибутов.
+    // Для получения дополнительной информации посетите: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "name": "[DEV] Ya Tasks",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main_dev.dart",
+            "toolArgs": ["--flavor", "dev",
+                "--dart-define=base_url=https://beta.mrdekk.ru/todobackend",
+                "--dart-define=token=unanachronous"
+            ]
+        },
+        {
+            "name": "Ya Tasks",
+            "request": "launch",
+            "type": "dart",
+            "program": "lib/main.dart",
+            "toolArgs": ["--flavor", "prod",
+                "--dart-define=base_url=https://beta.mrdekk.ru/todobackend",
+                "--dart-define=token=unanachronous"
+            ]
+            //"flutterMode": "profile"
+        }
+    ]
+}

@@ -30,7 +30,8 @@ class EditorAppbar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             child: Text(AppLocalizations.of(context).save,
-                textAlign: TextAlign.center, style: MyTheme.myTextTheme.button),
+                textAlign: TextAlign.center,
+                style: MyTheme.myTextTheme.labelLarge),
             onPressed: () {
               saveTask(context);
             },

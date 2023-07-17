@@ -39,7 +39,7 @@ class EditorDeleteButton extends StatelessWidget {
               ),
               Text(
                 AppLocalizations.of(context).delete,
-                style: MyTheme.myTextTheme.subtitle1!.copyWith(
+                style: MyTheme.myTextTheme.titleMedium!.copyWith(
                   color: (editMode)
                       ? context.myColors!.red
                       : context.myColors!.tertiary,

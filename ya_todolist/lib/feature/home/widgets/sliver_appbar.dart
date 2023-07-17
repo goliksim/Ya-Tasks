@@ -27,19 +27,20 @@ class _MySliverAppBarState extends State<MySliverAppBar> {
   Widget build(BuildContext context) {
     return BlocBuilder<TasksBloc, TasksState>(
       builder: (context, state) {
+        final bool landscapeBool = MediaQuery.of(context).size.width <
+            MediaQuery.of(context).size.height;
         return SliverAppBar(
           backgroundColor: context.myColors!.backPrimary,
           pinned: true,
           snap: false,
           floating: true,
-          expandedHeight: MediaQuery.of(context).size.width <
-                  MediaQuery.of(context).size.height
-              ? 160
-              : 56,
+          expandedHeight: landscapeBool ? 160 : 56,
           flexibleSpace: LayoutBuilder(
             builder: (context, constraints) {
               final expandRation = widget.calculateExpandRatio(constraints);
               final animation = AlwaysStoppedAnimation(expandRation);
+              final counter =
+                  state.myTasks.where((e) => e.done && !e.deleted).length;
               return Stack(
                 children: [
                   //InitialText
@@ -56,16 +57,14 @@ class _MySliverAppBarState extends State<MySliverAppBar> {
                         children: [
                           Text(
                             AppLocalizations.of(context).title,
-                            style: MyTheme.myTextTheme.headline1!.copyWith(
+                            style: MyTheme.myTextTheme.displayLarge!.copyWith(
                               color: context.myColors!.labelPrimary,
                             ),
                           ),
                           const SizedBox(height: 6),
-                          Text(
-                            '${AppLocalizations.of(context).tasksCompletedCount} ${state.myTasks.where((e) => e.done && !e.deleted).length}',
-                            style: MyTheme.myTextTheme.subtitle1!.copyWith(
-                              color: context.myColors!.tertiary,
-                            ),
+                          counterText(
+                            counter: counter,
+                            context: context,
                           ),
                         ],
                       ),
@@ -83,11 +82,26 @@ class _MySliverAppBarState extends State<MySliverAppBar> {
                         padding: const EdgeInsets.symmetric(horizontal: 24.0),
                         alignment: Alignment.centerLeft, //Align in container
                         height: widget._toolbarHeight,
-                        child: Text(
-                          AppLocalizations.of(context).title,
-                          style: MyTheme.myTextTheme.headline2!.copyWith(
-                            color: context.myColors!.labelPrimary,
-                          ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context).title,
+                              style:
+                                  MyTheme.myTextTheme.displayMedium!.copyWith(
+                                color: context.myColors!.labelPrimary,
+                              ),
+                            ),
+                            if (!landscapeBool)
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 0, 0, 3),
+                                child: counterText(
+                                  counter: counter,
+                                  context: context,
+                                ),
+                              ),
+                          ],
                         ),
                       ),
                     ),
@@ -127,3 +141,13 @@ class _MySliverAppBarState extends State<MySliverAppBar> {
     );
   }
 }
+
+Widget counterText({required int counter, required BuildContext context}) =>
+    (counter != 0)
+        ? Text(
+            '${AppLocalizations.of(context).tasksCompletedCount} $counter',
+            style: MyTheme.myTextTheme.titleMedium!.copyWith(
+              color: context.myColors!.tertiary,
+            ),
+          )
+        : const SizedBox();

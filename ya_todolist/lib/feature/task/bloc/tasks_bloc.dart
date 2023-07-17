@@ -48,7 +48,8 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
           rep: state.rep,
           routerDelegate: state.routerDelegate),
     );
-    Logs.logIns.writeLog('Load tasks to bloc:\n${finalList.join('\n')}');
+    Logs.logImpl
+        .logg('TasksBloc: loaded tasks to bloc -\n${finalList.join('\n')}');
   }
 
   Future<void> _insertTask(InsertTask event, Emitter<TasksState> emit) async {
@@ -62,7 +63,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
           rep: state.rep,
           routerDelegate: state.routerDelegate),
     );
-    Logs.logIns.writeLog('Insert task: ${event.task}');
+    Logs.logImpl.logg('TasksBloc: insert task - ${event.task}');
   }
 
   Future<void> _addTask(AddTask event, Emitter<TasksState> emit) async {
@@ -91,16 +92,16 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
         'imp_type': event.task.importance.name,
         'deadline': (event.task.deadline != null).toString(),
         'deadline_offset': (event.task.deadline != null)
-            ? event.task.deadline!.difference(DateTime.now()).inDays.toString()
+            ? event.task.deadline!.difference(event.task.createdAt!).inDays.toString()
             : 'none'
       }).then((_) {
-        Logs.logIns.writeLog('Logged task_added to firebase');
+        Logs.logImpl.logg('TasksBloc: task_added is logged to Firebase');
       });
     } catch (e) {
-      Logs.logIns.writeLog('Doesnt init Firebase');
+      Logs.logImpl.warning('TasksBloc: Firebase not initialized');
     }
 
-    Logs.logIns.writeLog('Task added: $newTask');
+    Logs.logImpl.fine('TasksBloc: task added - $newTask');
   }
 
   Future<void> _updateTask(UpdateTask event, Emitter<TasksState> emit) async {
@@ -123,7 +124,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
       ),
     );
     await state.rep.updateTask(newTask);
-    Logs.logIns.writeLog('Task updated: $newTask');
+    Logs.logImpl.fine('TasksBloc: Task updated: $newTask');
   }
 
   Future<void> _deleteTask(DeleteTask event, Emitter<TasksState> emit) async {
@@ -131,11 +132,12 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
 
     List<Task> updatedTasks = state.myTasks;
     if (deletedNet) {
-      Logs.logIns.writeLog('Delete task forever: ${event.task}');
+      Logs.logImpl.fine('TasksBloc: delete task forever - ${event.task}');
       updatedTasks =
           state.myTasks.where((task) => task.id != event.task.id).toList();
     } else {
-      Logs.logIns.writeLog('Network Error. Move to trash: ${event.task}');
+      Logs.logImpl
+          .warning('TasksBloc: Network Error, move to trash - ${event.task}');
       final trashTask = event.task.copyWith(deleted: true);
       updatedTasks = List<Task>.from(state.myTasks).map((task) {
         return task.id == event.task.id ? trashTask : task;
@@ -156,9 +158,11 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     try {
       Locator.analytics.logEvent(name: 'task_deleted', parameters: {
         'was_done': event.task.done.toString(),
+      }).then((_) {
+        Logs.logImpl.logg('TasksBloc: task_deleted is logged to Firebase');
       });
     } catch (e) {
-      Logs.logIns.writeLog('Doesnt init Firebase');
+      Logs.logImpl.warning('TasksBloc: Firebase not initialized');
     }
   }
 
@@ -172,7 +176,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
           rep: state.rep,
           routerDelegate: state.routerDelegate),
     );
-    Logs.logIns.writeLog(
-        'Done filter: completed myTasks ${!state.hideDone ? 'show' : 'unshow'}');
+    Logs.logImpl.logg(
+        'TasksBloc: Done filter - completed myTasks is${!state.hideDone ? 'showing' : 'not showing'}');
   }
 }

@@ -1,7 +1,5 @@
 // coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: type=lint
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'task_model.dart';
 
@@ -57,31 +55,24 @@ abstract class $TaskCopyWith<$Res> {
       _$TaskCopyWithImpl<$Res, Task>;
   @useResult
   $Res call(
-      {@HiveField(0)
-          String id,
-      @HiveField(1)
-          String text,
-      @HiveField(2)
-          Importance importance,
+      {@HiveField(0) String id,
+      @HiveField(1) String text,
+      @HiveField(2) Importance importance,
       @JsonKey(fromJson: dateFromJson, toJson: dateToJson)
       @HiveField(3)
-          DateTime? deadline,
-      @HiveField(4)
-          bool done,
+      DateTime? deadline,
+      @HiveField(4) bool done,
       @JsonKey(name: 'created_at', fromJson: dateFromJson, toJson: dateToJson)
       @HiveField(5)
-          DateTime? createdAt,
+      DateTime? createdAt,
       @JsonKey(name: 'changed_at', fromJson: dateFromJson, toJson: dateToJson)
       @HiveField(6)
-          DateTime? changedAt,
-      @JsonKey(name: 'last_updated_by')
-      @HiveField(7)
-          String lastUpdatedBy,
-      @HiveField(8)
-          String? color,
+      DateTime? changedAt,
+      @JsonKey(name: 'last_updated_by') @HiveField(7) String lastUpdatedBy,
+      @HiveField(8) String? color,
       @JsonKey(includeFromJson: false, includeToJson: false)
       @HiveField(9)
-          bool deleted});
+      bool deleted});
 }
 
 /// @nodoc
@@ -160,31 +151,24 @@ abstract class _$$_TaskCopyWith<$Res> implements $TaskCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@HiveField(0)
-          String id,
-      @HiveField(1)
-          String text,
-      @HiveField(2)
-          Importance importance,
+      {@HiveField(0) String id,
+      @HiveField(1) String text,
+      @HiveField(2) Importance importance,
       @JsonKey(fromJson: dateFromJson, toJson: dateToJson)
       @HiveField(3)
-          DateTime? deadline,
-      @HiveField(4)
-          bool done,
+      DateTime? deadline,
+      @HiveField(4) bool done,
       @JsonKey(name: 'created_at', fromJson: dateFromJson, toJson: dateToJson)
       @HiveField(5)
-          DateTime? createdAt,
+      DateTime? createdAt,
       @JsonKey(name: 'changed_at', fromJson: dateFromJson, toJson: dateToJson)
       @HiveField(6)
-          DateTime? changedAt,
-      @JsonKey(name: 'last_updated_by')
-      @HiveField(7)
-          String lastUpdatedBy,
-      @HiveField(8)
-          String? color,
+      DateTime? changedAt,
+      @JsonKey(name: 'last_updated_by') @HiveField(7) String lastUpdatedBy,
+      @HiveField(8) String? color,
       @JsonKey(includeFromJson: false, includeToJson: false)
       @HiveField(9)
-          bool deleted});
+      bool deleted});
 }
 
 /// @nodoc
@@ -257,31 +241,24 @@ class __$$_TaskCopyWithImpl<$Res> extends _$TaskCopyWithImpl<$Res, _$_Task>
 @HiveType(typeId: 1, adapterName: 'TaskAdapter')
 class _$_Task extends _Task {
   const _$_Task(
-      {@HiveField(0)
-          this.id = '',
-      @HiveField(1)
-          this.text = '',
-      @HiveField(2)
-          this.importance = Importance.basic,
+      {@HiveField(0) this.id = '',
+      @HiveField(1) this.text = '',
+      @HiveField(2) this.importance = Importance.basic,
       @JsonKey(fromJson: dateFromJson, toJson: dateToJson)
       @HiveField(3)
-          this.deadline,
-      @HiveField(4)
-          this.done = false,
+      this.deadline,
+      @HiveField(4) this.done = false,
       @JsonKey(name: 'created_at', fromJson: dateFromJson, toJson: dateToJson)
       @HiveField(5)
-          this.createdAt,
+      this.createdAt,
       @JsonKey(name: 'changed_at', fromJson: dateFromJson, toJson: dateToJson)
       @HiveField(6)
-          this.changedAt,
-      @JsonKey(name: 'last_updated_by')
-      @HiveField(7)
-          this.lastUpdatedBy = '',
-      @HiveField(8)
-          this.color = '#FFFFFF',
+      this.changedAt,
+      @JsonKey(name: 'last_updated_by') @HiveField(7) this.lastUpdatedBy = '',
+      @HiveField(8) this.color = '#FFFFFF',
       @JsonKey(includeFromJson: false, includeToJson: false)
       @HiveField(9)
-          this.deleted = false})
+      this.deleted = false})
       : super._();
 
   factory _$_Task.fromJson(Map<String, dynamic> json) => _$$_TaskFromJson(json);
@@ -372,31 +349,26 @@ class _$_Task extends _Task {
 
 abstract class _Task extends Task {
   const factory _Task(
-      {@HiveField(0)
-          final String id,
-      @HiveField(1)
-          final String text,
-      @HiveField(2)
-          final Importance importance,
+      {@HiveField(0) final String id,
+      @HiveField(1) final String text,
+      @HiveField(2) final Importance importance,
       @JsonKey(fromJson: dateFromJson, toJson: dateToJson)
       @HiveField(3)
-          final DateTime? deadline,
-      @HiveField(4)
-          final bool done,
+      final DateTime? deadline,
+      @HiveField(4) final bool done,
       @JsonKey(name: 'created_at', fromJson: dateFromJson, toJson: dateToJson)
       @HiveField(5)
-          final DateTime? createdAt,
+      final DateTime? createdAt,
       @JsonKey(name: 'changed_at', fromJson: dateFromJson, toJson: dateToJson)
       @HiveField(6)
-          final DateTime? changedAt,
+      final DateTime? changedAt,
       @JsonKey(name: 'last_updated_by')
       @HiveField(7)
-          final String lastUpdatedBy,
-      @HiveField(8)
-          final String? color,
+      final String lastUpdatedBy,
+      @HiveField(8) final String? color,
       @JsonKey(includeFromJson: false, includeToJson: false)
       @HiveField(9)
-          final bool deleted}) = _$_Task;
+      final bool deleted}) = _$_Task;
   const _Task._() : super._();
 
   factory _Task.fromJson(Map<String, dynamic> json) = _$_Task.fromJson;
