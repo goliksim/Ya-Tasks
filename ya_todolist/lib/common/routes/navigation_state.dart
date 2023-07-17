@@ -1,3 +1,6 @@
+import 'package:ya_todolist/app/di.dart';
+import 'package:ya_todolist/common/logger.dart';
+
 class NavigationState {
   final bool? _empty;
   final String? selectedTask;
@@ -8,13 +11,39 @@ class NavigationState {
 
   bool get isUnknown => _empty == true;
 
-  NavigationState.root()
-      : _empty = false,
-        selectedTask = null;
+  NavigationState.root([this._empty = false, this.selectedTask]) {
+    try {
+      Locator.analytics.logEvent(name: 'page_changed', parameters: {
+        'current_page': 'root',
+      }).then((_) {
+        Logs.logIns.writeLog('Logged rootPage to firebase');
+      });
+    } catch (e) {
+      Logs.logIns.writeLog('Doesnt init Firebase');
+    }
+  }
 
-  NavigationState.item(this.selectedTask) : _empty = false;
+  NavigationState.item(this.selectedTask, [this._empty = false]) {
+    try {
+      Locator.analytics.logEvent(name: 'page_changed', parameters: {
+        'current_page': 'edit',
+      }).then((_) {
+        Logs.logIns.writeLog('Logged itemPage to firebase');
+      });
+    } catch (e) {
+      Logs.logIns.writeLog('Doesnt init Firebase');
+    }
+  }
 
-  NavigationState.empty()
-      : _empty = true,
-        selectedTask = null;
+  NavigationState.empty([this._empty = true, this.selectedTask]) {
+    try {
+      Locator.analytics.logEvent(name: 'page_chanhed', parameters: {
+        'current_page': 'edit_empty',
+      }).then((_) {
+        Logs.logIns.writeLog('Logged emptyPage to firebase');
+      });
+    } catch (e) {
+      Logs.logIns.writeLog('Doesnt init Firebase');
+    }
+  }
 }

@@ -47,7 +47,7 @@ class MyRouterDelegate extends RouterDelegate<NavigationState>
           return false;
         }
         state = NavigationState.root();
-        Logs.logImpl.writeLog('NAVIGATOR: Push to root');
+        Logs.logIns.writeLog('NAVIGATOR: Push to root');
         notifyListeners();
         return true;
       },
@@ -62,10 +62,10 @@ class MyRouterDelegate extends RouterDelegate<NavigationState>
 
   void showTaskEditor(String? taskID) {
     if (taskID == null) {
-      Logs.logImpl.writeLog('NAVIGATOR: Push to empty task');
+      Logs.logIns.writeLog('NAVIGATOR: Push to empty task');
       state = NavigationState.empty();
     } else {
-      Logs.logImpl.writeLog('NAVIGATOR: Push to item $taskID');
+      Logs.logIns.writeLog('NAVIGATOR: Push to item $taskID');
       state = NavigationState.item(taskID);
     }
     notifyListeners();

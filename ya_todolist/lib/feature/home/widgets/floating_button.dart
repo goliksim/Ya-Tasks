@@ -9,7 +9,7 @@ class MyFloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
-      onPressed: () {
+      onPressed: () async {
         BlocProvider.of<TasksBloc>(context)
             .state
             .routerDelegate

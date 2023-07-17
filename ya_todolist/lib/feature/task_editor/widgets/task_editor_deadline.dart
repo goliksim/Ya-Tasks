@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -21,20 +20,18 @@ class _DeadLineSwitchState extends State<DeadLineSwitch> {
       DateTime today = DateTime.now();
       showDatePicker(
         context: context,
-        initialDate:
-            BlocProvider.of<EditorBloc>(context).state.task.deadline ?? today,
+        initialDate: context.editState!.task.deadline ?? today,
         firstDate: today,
         lastDate: today.add(const Duration(days: 365 * 100)),
       ).then(
         (value) {
           if (value != null) {
-            BlocProvider.of<EditorBloc>(context)
-                .add(EditorUpdateDeadline(deadline: value));
+            context.editBloc!.add(EditorUpdateDeadline(deadline: value));
           }
         },
       );
     } else {
-      BlocProvider.of<EditorBloc>(context).add(const EditorDeleteDeadline());
+      context.editBloc!.add(const EditorDeleteDeadline());
     }
   }
 

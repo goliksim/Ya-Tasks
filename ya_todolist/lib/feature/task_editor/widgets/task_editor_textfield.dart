@@ -3,33 +3,53 @@ import 'package:ya_todolist/common/theme_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditorTextField extends StatelessWidget {
-  const EditorTextField({super.key, required this.controller});
+  const EditorTextField(
+      {super.key, required this.controller, required this.condition});
 
   final TextEditingController controller;
+  final bool condition;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: context.myColors!.backSecondary,
-          borderRadius: BorderRadius.circular(8.0)),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-        child: TextField(
-          controller: controller,
-          decoration: InputDecoration(
-            hintStyle: MyTheme.myTextTheme.subtitle1!
-                .copyWith(color: context.myColors!.tertiary),
-            hintText: AppLocalizations.of(context).editorHintText,
-            border: InputBorder.none,
+    return responsiveTextField(
+      //resizeToAvoidBottomInset: condition ? false: true,
+      //extendBody: true,
+      condition: condition,
+      child: Container(
+        decoration: BoxDecoration(
+            color: context.myColors!.backSecondary,
+            borderRadius: BorderRadius.circular(8.0)),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+          child: TextField(
+            controller: controller,
+            decoration: InputDecoration(
+              hintStyle: MyTheme.myTextTheme.subtitle1!
+                  .copyWith(color: context.myColors!.tertiary),
+              hintText: AppLocalizations.of(context).editorHintText,
+              border: InputBorder.none,
+            ),
+            minLines: condition ? 3 : 100,
+            maxLines: condition ? 9 : 100,
+            style: MyTheme.myTextTheme.subtitle1!
+                .copyWith(color: context.myColors!.labelPrimary),
+            textAlignVertical: TextAlignVertical.bottom,
           ),
-          minLines: 3,
-          maxLines: 7,
-          style: MyTheme.myTextTheme.subtitle1!
-              .copyWith(color: context.myColors!.labelPrimary),
-          textAlignVertical: TextAlignVertical.bottom,
         ),
       ),
     );
+  }
+}
+
+Widget responsiveTextField({required Widget child, required bool condition}) {
+  if (!condition) {
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      resizeToAvoidBottomInset: true,
+      body: child,
+      //extendBody: true
+    );
+  } else {
+    return child;
   }
 }

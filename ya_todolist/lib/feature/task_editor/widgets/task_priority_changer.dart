@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../task/domain/task_model.dart';
+import '../../task/data/domain/task_model.dart';
 import '../bloc/editor_bloc.dart';
 import '../bloc/editor_events.dart';
 
@@ -17,8 +16,7 @@ class PriorityChanger extends StatelessWidget {
       color: context.myColors!.backSecondary,
       initialValue: dropdownvalue,
       onSelected: (value) {
-        BlocProvider.of<EditorBloc>(context)
-            .add(EditorUpdatePriority(priority: value));
+        context.editBloc!.add(EditorUpdatePriority(priority: value));
       },
       itemBuilder: (context) => drownButtonList(context),
       child: Container(
@@ -71,7 +69,7 @@ Widget priorityText(Importance priority, BuildContext context) {
     case Importance.important:
       return Text(AppLocalizations.of(context).priorityHigh,
           style: MyTheme.myTextTheme.subtitle1!
-              .copyWith(color: context.myColors!.red));
+              .copyWith(color: context.myColors!.priority));
     default:
       return Text(AppLocalizations.of(context).priorityBasic,
           style: MyTheme.myTextTheme.subtitle1!

@@ -1,32 +1,23 @@
 import 'dart:developer';
-import 'dart:io';
-
-import 'package:path_provider/path_provider.dart';
-
-Future<String> get localPath async {
-  final directory = await getApplicationDocumentsDirectory();
-  return directory.path;
-}
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Logs {
-  static Logs logImpl = Logs();
+  static Logs logIns = Logs();
+  SharedPreferences? _prefs;
 
-  Future<File> get _localFile async {
-    final path = await localPath;
-    return File('$path/ya_todolist/todolist.log').create(recursive: true);
+  Future<SharedPreferences> get prefs async {
+    _prefs ??= await SharedPreferences.getInstance();
+    return _prefs!;
   }
 
-  Future<File> writeLog(String text) async {
-    final file = await _localFile;
+  Future<void> writeLog(String text) async {
+    final pref = await prefs;
+    DateTime date = DateTime.now();
+    String finalDateString =
+        '${DateFormat.yMd().format(date)} ${DateFormat.jms().format(date)}\t';
 
-    var date = DateTime.now();
-    String finalDateString = '${[date.year, date.month, date.day].join('/')} ${[
-      date.hour,
-      date.minute,
-      date.second
-    ].join(':')}.${date.millisecond}\t';
-    file.writeAsStringSync('$finalDateString$text\n', mode: FileMode.append);
+    pref.setString('log', finalDateString + text);
     log(finalDateString + text);
-    return file;
   }
 }

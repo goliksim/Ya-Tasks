@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
-import 'package:ya_todolist/feature/task/domain/task_model.dart';
+import 'package:ya_todolist/feature/task/data/domain/task_model.dart';
 
+import '../../app/di.dart';
 import 'bloc/tasks_bloc.dart';
 import 'widgets/checkbox.dart';
 import 'widgets/priority_widget.dart';
@@ -21,6 +22,11 @@ class _TaskWidgetState extends State<TaskWidget> {
   void updateDone() {
     BlocProvider.of<TasksBloc>(context)
         .add(UpdateTask(task: widget.task.copyWith(done: !widget.task.done)));
+    Locator.analytics.logEvent(name: 'task_done', parameters: {
+      'before_deadline': (widget.task.deadline != null)
+          ? DateTime.now().isBefore(widget.task.deadline!)
+          : 'none',
+    });
   }
 
   @override

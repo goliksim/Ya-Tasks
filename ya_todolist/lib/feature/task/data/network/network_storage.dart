@@ -1,37 +1,54 @@
 import 'package:ya_todolist/common/logger.dart';
 import 'package:ya_todolist/feature/task/data/domain/data_interface.dart';
-import 'package:ya_todolist/feature/task/domain/task_model.dart';
+import 'package:ya_todolist/feature/task/data/domain/task_model.dart';
 
 import 'network_settings.dart';
 
 class NetworkStorage extends DataInterface {
   final NetworkSettings networkSettings;
-  late int? revision;
+  int? revision;
 
-  NetworkStorage({
-    required this.networkSettings,
-  });
+  NetworkStorage({required this.networkSettings, this.revision});
   @override
   Future<void> init() async {
-    Logs.logImpl.writeLog('newtworkStorage initialization...');
     await getTasks();
+    Logs.logIns.writeLog(' newtworkStorage init.');
+  }
+
+  Future<int?> getRev() async {
+    try {
+      final response = await networkSettings.get('/list');
+      if (response.statusCode == 200) {
+        var jsonResponce = response.data!;
+        revision = jsonResponce['revision'];
+
+        //Logs.logImpl.writeLog('Sucessful get tasksList from network');
+        return revision!;
+      }
+      Logs.logIns.writeLog('getTasks - STATUSCODE != 200');
+      return null;
+    } catch (e) {
+      Logs.logIns.writeLog('NETWORK ERROR: $e');
+    }
+    return null;
   }
 
   @override
   Future<bool> addTask(Task task) async {
     final apiTask = <String, dynamic>{'element': task.toJson()};
     try {
-      final response = await networkSettings.post('/list', apiTask, revision!);
+      final rev = await getRev();
+      final response = await networkSettings.post('/list', apiTask, rev!);
       if (response.statusCode == 200) {
         var jsonResponce = response.data!;
         revision = jsonResponce['revision'] as int;
-        Logs.logImpl.writeLog('Sucessful add task to network');
+        Logs.logIns.writeLog('Sucessful add task to network');
         return true;
       }
-      Logs.logImpl.writeLog('addTask - STATUSCODE != 200');
+      Logs.logIns.writeLog('addTask - STATUSCODE != 200');
       return false;
     } catch (e) {
-      Logs.logImpl.writeLog('NETWORK ERROR: $e');
+      Logs.logIns.writeLog('NETWORK ERROR: $e');
     }
     return false;
   }
@@ -39,17 +56,19 @@ class NetworkStorage extends DataInterface {
   @override
   Future<bool> deleteTask(String id) async {
     try {
-      final response = await networkSettings.delete('/list/$id', revision!);
+      final rev = await getRev();
+      final response = await networkSettings.delete('/list/$id', rev!);
+
       if (response.statusCode == 200) {
         var jsonResponce = response.data!;
         revision = jsonResponce['revision'] as int;
-        Logs.logImpl.writeLog('Sucessful delete task on network');
+        Logs.logIns.writeLog('Sucessful delete task on network');
         return true;
       }
-      Logs.logImpl.writeLog('deleteTask - STATUSCODE != 200');
+      Logs.logIns.writeLog('deleteTask - STATUSCODE != 200');
       return false;
     } catch (e) {
-      Logs.logImpl.writeLog('NETWORK ERROR: $e');
+      Logs.logIns.writeLog('NETWORK ERROR: $e');
     }
     return false;
   }
@@ -61,13 +80,13 @@ class NetworkStorage extends DataInterface {
       if (response.statusCode == 200) {
         var jsonResponce = response.data!;
         revision = jsonResponce['revision'];
-        Logs.logImpl.writeLog('Sucessful get task from network');
+        Logs.logIns.writeLog('Sucessful get task from network');
         return Task.fromJson(jsonResponce['element']);
       }
-      Logs.logImpl.writeLog('getTask - STATUSCODE != 200');
+      Logs.logIns.writeLog('getTask - STATUSCODE != 200');
       return null;
     } catch (e) {
-      Logs.logImpl.writeLog('NETWORK ERROR: $e');
+      Logs.logIns.writeLog('NETWORK ERROR: $e');
     }
     return null;
   }
@@ -86,10 +105,10 @@ class NetworkStorage extends DataInterface {
             Task.fromJson(item)
         ];
       }
-      Logs.logImpl.writeLog('getTasks - STATUSCODE != 200');
+      Logs.logIns.writeLog('getTasks - STATUSCODE != 200');
       return null;
     } catch (e) {
-      Logs.logImpl.writeLog('NETWORK ERROR: $e');
+      Logs.logIns.writeLog('NETWORK ERROR: $e');
     }
     return null;
   }
@@ -98,19 +117,20 @@ class NetworkStorage extends DataInterface {
   Future<bool> updateTask(Task task) async {
     final apiTask = {'element': task.toJson()};
     try {
+      final rev = await getRev();
       final response =
-          await networkSettings.put('/list/${task.id}', apiTask, revision!);
+          await networkSettings.put('/list/${task.id}', apiTask, rev!);
 
       if (response.statusCode == 200) {
         var jsonResponce = response.data!;
         revision = jsonResponce['revision'] as int;
-        Logs.logImpl.writeLog('Sucessful update task on network');
+        Logs.logIns.writeLog('Sucessful update task on network');
         return true;
       }
-      Logs.logImpl.writeLog('updateTask - STATUSCODE != 200');
+      Logs.logIns.writeLog('updateTask - STATUSCODE != 200');
       return false;
     } catch (e) {
-      Logs.logImpl.writeLog('NETWORK ERROR: $e');
+      Logs.logIns.writeLog('NETWORK ERROR: $e');
     }
     return false;
   }
@@ -121,20 +141,19 @@ class NetworkStorage extends DataInterface {
       'list': tasks.map((task) => task.toJson()).toList(),
     };
     try {
-      final response =
-          await networkSettings.patch('/list', requestData, revision!);
-
+      final rev = await getRev();
+      final response = await networkSettings.patch('/list', requestData, rev!);
       if (response.statusCode == 200) {
         var jsonResponce = response.data!;
         revision = jsonResponce['revision'];
 
-        Logs.logImpl.writeLog('Sucessful update tasksList on network');
+        Logs.logIns.writeLog('Sucessful update tasksList on network');
         return true;
       }
-      Logs.logImpl.writeLog('updateTasks - STATUSCODE != 200');
+      Logs.logIns.writeLog('updateTasks - STATUSCODE != 200');
       return false;
     } catch (e) {
-      Logs.logImpl.writeLog('NETWORK ERROR: $e');
+      Logs.logIns.writeLog('NETWORK ERROR: $e');
     }
     return false;
   }

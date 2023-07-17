@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "824368866611",
+    "project_id": "ya-tasks-c9f06",
+    "storage_bucket": "ya-tasks-c9f06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:824368866611:android:4915de5d211566bd7f0a46",
+        "android_client_info": {
+          "package_name": "com.goliksim.yatodo.ya_todolist"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "824368866611-p4lti55k0svc10qe6pu54kaie1i3vugd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPZ-fetca_G2y0JiltUXMhXVdSZ2KlA4k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "824368866611-p4lti55k0svc10qe6pu54kaie1i3vugd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "824368866611-dv2aqf29623bi8pq3er7l77alomueq8k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.goliksim.yatodo.yaTodolist"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

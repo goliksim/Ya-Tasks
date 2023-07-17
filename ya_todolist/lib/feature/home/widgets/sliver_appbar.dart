@@ -10,9 +10,7 @@ class MySliverAppBar extends StatefulWidget {
   final double _expandedHeight = 132.0;
   final double _toolbarHeight = 56.0;
 
-  double calculateExpandRatio(
-    BoxConstraints constraints,
-  ) {
+  double calculateExpandRatio(BoxConstraints constraints) {
     double expandRation = (constraints.maxHeight - _toolbarHeight) /
         (_expandedHeight - _toolbarHeight);
     if (expandRation > 1) expandRation = 1.0;
@@ -34,7 +32,10 @@ class _MySliverAppBarState extends State<MySliverAppBar> {
           pinned: true,
           snap: false,
           floating: true,
-          expandedHeight: 160.0,
+          expandedHeight: MediaQuery.of(context).size.width <
+                  MediaQuery.of(context).size.height
+              ? 160
+              : 56,
           flexibleSpace: LayoutBuilder(
             builder: (context, constraints) {
               final expandRation = widget.calculateExpandRatio(constraints);
@@ -61,7 +62,7 @@ class _MySliverAppBarState extends State<MySliverAppBar> {
                           ),
                           const SizedBox(height: 6),
                           Text(
-                            '${AppLocalizations.of(context).tasksCompletedCount} ${state.myTasks.where((e) => e.done).length}',
+                            '${AppLocalizations.of(context).tasksCompletedCount} ${state.myTasks.where((e) => e.done && !e.deleted).length}',
                             style: MyTheme.myTextTheme.subtitle1!.copyWith(
                               color: context.myColors!.tertiary,
                             ),
@@ -85,7 +86,7 @@ class _MySliverAppBarState extends State<MySliverAppBar> {
                         child: Text(
                           AppLocalizations.of(context).title,
                           style: MyTheme.myTextTheme.headline2!.copyWith(
-                            color: context.myColors!.white,
+                            color: context.myColors!.labelPrimary,
                           ),
                         ),
                       ),

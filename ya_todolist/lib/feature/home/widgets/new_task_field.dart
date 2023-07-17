@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ya_todolist/feature/task/domain/task_model.dart';
+import 'package:ya_todolist/feature/task/data/domain/task_model.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../task/bloc/tasks_bloc.dart';
@@ -29,10 +29,18 @@ class _NewTaskFieldState extends State<NewTaskField> {
       child: TextField(
         textAlignVertical: TextAlignVertical.top,
         style: MyTheme.myTextTheme.subtitle1!
-            .copyWith(color: context.myColors!.white),
+            .copyWith(color: context.myColors!.labelPrimary),
         onSubmitted: (value) {
           if (value != '') {
-            context.read<TasksBloc>().add(AddTask(task: Task(text: value)));
+            context.read<TasksBloc>().add(
+                  AddTask(
+                    task: Task(
+                      text: value,
+                      createdAt: DateTime.now(),
+                      changedAt: DateTime.now(),
+                    ),
+                  ),
+                );
             controller.text = '';
           }
         },

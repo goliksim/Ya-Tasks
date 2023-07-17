@@ -6,6 +6,7 @@ extension MyThemeBuilder on BuildContext {
 
 class MyColors extends ThemeExtension<MyColors> {
   const MyColors({
+    required this.priority,
     required this.separator,
     required this.overlay,
     required this.labelPrimary,
@@ -23,6 +24,7 @@ class MyColors extends ThemeExtension<MyColors> {
     required this.elevated,
   });
 
+  final Color priority;
   final Color separator;
   final Color overlay;
   final Color labelPrimary;
@@ -51,24 +53,25 @@ class MyColors extends ThemeExtension<MyColors> {
 }
 
 abstract class MyTheme {
-  static ThemeData get lightData => ThemeData.light().copyWith(
+  static ThemeData lightData([String? color]) => ThemeData.light().copyWith(
         extensions: <ThemeExtension<dynamic>>[
-          const MyColors(
-            separator: Color(0x33000000),
-            overlay: Color(0x0F000000),
-            labelPrimary: Color(0xFF000000),
-            labelSecondary: Color(0x99000000),
-            tertiary: Color(0x4D000000),
-            disable: Color(0x26000000),
-            red: Color(0xFFFF3B30),
-            green: Color(0xFF34C759),
-            blue: Color(0xFF007AFF),
-            gray: Color(0xFF8E8E93),
-            grayLight: Color(0xFFD1D1D6),
-            white: Color(0xFFFFFFFF),
-            backPrimary: Color(0xFFF7F6F2),
-            backSecondary: Color(0xFFFFFFFF),
-            elevated: Color(0xFFFFFFFF),
+          MyColors(
+            priority: Color(int.parse(color ?? '0xFFFF3B30')),
+            separator: const Color(0x33000000),
+            overlay: const Color(0x0F000000),
+            labelPrimary: const Color(0xFF000000),
+            labelSecondary: const Color(0x99000000),
+            tertiary: const Color(0x4D000000),
+            disable: const Color(0x26000000),
+            red: const Color(0xFFFF3B30),
+            green: const Color(0xFF34C759),
+            blue: const Color(0xFF007AFF),
+            gray: const Color(0xFF8E8E93),
+            grayLight: const Color(0xFFD1D1D6),
+            white: const Color(0xFFFFFFFF),
+            backPrimary: const Color(0xFFF7F6F2),
+            backSecondary: const Color(0xFFFFFFFF),
+            elevated: const Color(0xFFFFFFFF),
           ),
         ],
         colorScheme: const ColorScheme.light(
@@ -85,24 +88,25 @@ abstract class MyTheme {
         ),
       );
 
-  static ThemeData get darkData => ThemeData.dark().copyWith(
+  static ThemeData darkData([String? color]) => ThemeData.dark().copyWith(
         extensions: <ThemeExtension<dynamic>>[
-          const MyColors(
-            separator: Color(0x33FFFFFF),
-            overlay: Color(0x52000000),
-            labelPrimary: Color(0xFFFFFFFF),
-            labelSecondary: Color(0x99FFFFFF),
-            tertiary: Color(0x66FFFFFF),
-            disable: Color(0x26FFFFFF),
-            red: Color(0xFFFF453A),
-            green: Color(0xFF32D74B),
-            blue: Color(0xFF0A84FF),
-            gray: Color(0xFF8E8E93),
-            grayLight: Color(0xFF48484A),
-            white: Color(0xFFFFFFFF),
-            backPrimary: Color(0xFF161618),
-            backSecondary: Color(0xFF252528),
-            elevated: Color(0xFF3C3C3F),
+          MyColors(
+            priority: Color(int.parse(color ?? '0xFFFF453A')),
+            separator: const Color(0x33FFFFFF),
+            overlay: const Color(0x52000000),
+            labelPrimary: const Color(0xFFFFFFFF),
+            labelSecondary: const Color(0x99FFFFFF),
+            tertiary: const Color(0x66FFFFFF),
+            disable: const Color(0x26FFFFFF),
+            red: const Color(0xFFFF453A),
+            green: const Color(0xFF32D74B),
+            blue: const Color(0xFF0A84FF),
+            gray: const Color(0xFF8E8E93),
+            grayLight: const Color(0xFF48484A),
+            white: const Color(0xFFFFFFFF),
+            backPrimary: const Color(0xFF161618),
+            backSecondary: const Color(0xFF252528),
+            elevated: const Color(0xFF3C3C3F),
           ),
         ],
         colorScheme: const ColorScheme.light(

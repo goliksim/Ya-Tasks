@@ -1,5 +1,5 @@
 import 'package:ya_todolist/common/logger.dart';
-import 'package:ya_todolist/feature/task/domain/task_model.dart';
+import 'package:ya_todolist/feature/task/data/domain/task_model.dart';
 
 import '../domain/data_interface.dart';
 import '../local/local_storage.dart';
@@ -14,69 +14,101 @@ class Repository extends DataInterface {
   final LocalStorage localStorage;
   final NetworkStorage networkStorage;
 
-  /*Future<bool> checkChanges() async {
-    final networkStorageTasks = (await networkStorage.getTasks()).data ?? [];
-    final localTasks = await localStorage.getTasks();
-    return !networkStorageTasks.every(localTasks.contains) ||
-        !localTasks.every(networkStorageTasks.contains);
-  }
-
-  Future<void> syncStorages() async {
-    final network = await networkStorage.getTasks();
-    if (await _persistenceUtil.getTasksRevision() != network.revision ||
-        await checkChanges()) {
-      await _persistenceUtil.saveTasksRevision(revision: network.revision ?? 0);
-      final localTasks = await getLocalTasks();
-
-      if (network.data != null) {
-        final localTasksMap = <String, Task>{
-          for (var task in localTasks) task.id: task
-        };
-        for (final task in network.data!) {
-          if (!localTasksMap.containsKey(task.id)) {
-            await localStorage.addTask(task);
-          } else {
-            final tempTask = localTasksMap[task.id];
-            if (tempTask!.changedAt.isBefore(task.changedAt)) {
-              await localStorage.updateTask(task);
-            } else if (tempTask.deleted != null && tempTask.deleted!) {
-              await localStorage.deleteTask(tempTask.id);
-            }
-          }
-        }
-      }
-      await networkStorage.syncTasks(await localStorage.getTasks());
-    }
-  }*/
-
   @override
   Future<void> init() async {
-    Logs.logImpl.writeLog('start initializing');
+    Logs.logIns.writeLog('Start initializing...');
     await localStorage.init();
     await networkStorage.init();
+    Logs.logIns.writeLog('Sucessful initialization!');
   }
 
   Future<void> syncStorages() async {
-    Logs.logImpl.writeLog('Storage synchronization...');
+    Logs.logIns.writeLog('Storage synchronization...');
     final net = await networkStorage.getTasks();
     final locRev = await localStorage.readRev();
     if (net != null) {
-      Logs.logImpl
+      Logs.logIns
           .writeLog('Loc_rev: $locRev, Net_rev: ${networkStorage.revision}');
       if (networkStorage.revision! < locRev!) {
-        Logs.logImpl.writeLog('Synchronization from localStorage...');
+        Logs.logIns.writeLog('Synchronization from localStorage...');
         if (networkStorage.revision != 0) {
           localStorage.revision = networkStorage.revision;
           localStorage.writeRev(networkStorage.revision!);
         }
       } else {
-        Logs.logImpl.writeLog('Synchronization from networkStorage...');
+        Logs.logIns.writeLog('Synchronization from networkStorage...');
         localStorage.writeInfo(net, networkStorage.revision!);
       }
     } else {
-      Logs.logImpl
+      Logs.logIns
           .writeLog('Synchronization from localStorage. ERROR IN NET...');
     }
+  }
+  /* Логика синхронизации 
+  - грузим данные из облака и локалки
+  - далее только, если ревизии разные
+  - создаем мапу по локальному хранилищу
+  - добавляем таски, которых нет в мапе
+  - обновляем таски, которые есть, если они обновлены позднее
+  - удаляем таски из локалки, если их нет в беки или они удалены позднее последнего обновления бека  
+  */
+
+  Future<bool> checkChanges(
+      List<Task> networkTasks, List<Task> localTasks) async {
+    return (!localTasks.every(networkTasks.contains) ||
+        !localTasks.every(networkTasks.contains));
+  }
+
+  Future<void> syncStoragesV2() async {
+    Logs.logIns.writeLog(
+        'Storage synchronization v2 [ Loc_rev: ${localStorage.revision}, Net_rev: ${networkStorage.revision} ]...');
+    final localTasks = await localStorage.getTasks();
+    late List<Task>? networkTasks;
+    if (networkStorage.revision != null) {
+      networkTasks = await networkStorage.getTasks();
+    } else {
+      networkTasks = null;
+    }
+
+    if (networkTasks != null) {
+      if (networkStorage.revision != localStorage.revision! ||
+          await checkChanges(networkTasks, localTasks)) {
+        if (networkTasks.isNotEmpty) {
+          final localTasksMap = <String, Task>{
+            for (var task in localTasks) task.id: task
+          };
+          for (final netTask in networkTasks) {
+            if (!localTasksMap.containsKey(netTask.id)) {
+              await localStorage.addTask(netTask);
+            } else {
+              final locTask = localTasksMap[netTask.id]!;
+              if (locTask.changedAt!.isBefore(netTask.changedAt!)) {
+                await localStorage.updateTask(netTask);
+              } else if (locTask.deleted) {
+                await localStorage.deleteTask(locTask.id);
+                localTasks.removeWhere((element) => element.id == locTask.id);
+              }
+            }
+          }
+          for (final delTask in localTasks.where((e) => e.deleted).toList()) {
+            await localStorage.deleteTask(delTask.id);
+          }
+
+          Logs.logIns.writeLog('Successful merging!');
+        } else {
+          Logs.logIns.writeLog(
+              'Synchronization from localStorage. ERROR IN NET LIST!');
+        }
+        if (await networkStorage.updateTasks(await localStorage.getTasks())) {
+          localStorage.revision = networkStorage.revision!;
+          localStorage.writeRev(networkStorage.revision!);
+        }
+      } else {
+        Logs.logIns.writeLog('No need to sync');
+      }
+    }
+
+    Logs.logIns.writeLog('Synchronization completed!');
   }
 
   @override
@@ -91,23 +123,25 @@ class Repository extends DataInterface {
 
   @override
   Future<bool> addTask(Task task) async {
-    localStorage.addTask(task);
-    networkStorage.addTask(task);
+    await localStorage.addTask(task);
+    await networkStorage.addTask(task);
     return true;
   }
 
   @override
   Future<bool> updateTask(Task task) async {
-    localStorage.updateTask(task);
-    networkStorage.updateTask(task);
+    await localStorage.updateTask(task);
+    await networkStorage.updateTask(task);
     return true;
   }
 
   @override
   Future<bool> deleteTask(String id) async {
-    localStorage.deleteTask(id);
-    networkStorage.deleteTask(id);
-    return true;
+    bool deletedNet = await networkStorage.deleteTask(id);
+    if (deletedNet) {
+      await localStorage.deleteTask(id);
+    }
+    return deletedNet;
   }
 
   @override

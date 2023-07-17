@@ -2,7 +2,7 @@
     package="com.goliksim.yatodo.ya_todolist">
    <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="ya_todolist"
+        android:label="@string/app_name"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

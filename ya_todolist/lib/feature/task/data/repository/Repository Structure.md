@@ -6,14 +6,13 @@ flowchart TD
 	end;
 	Rep_dis --> LS(LocalStorage) & NS(NetworkStorage);
 	
-	LS & NS ---| наследование | Api{{Api}} ;
+	LS & NS ---| наследование | Api{{Data Interface}} ;
 	Api --- Api_dis[Абстрактный класс с описанием\n функций работы с таксками:\n- getTasks\n- getTask\n- addTask\n- updateTask\n- deleteTask] ;
 	
 	subgraph  
-	NS --- NS_dis[Содержит NetworkUtil и PersistenceUtil\nОписывает функции для работы с бекэндом.];
-	NS_dis --> NU([NetworkUtil]) & PU([PersistenceUtil]);
+	NS --- NS_dis[Содержит NetworkSettings \nОписывает функции для работы с бекэндом.];
+	NS_dis --> NU([NetworkSettings]) ;
 	NU --- NU_dis[Cодержит урл, хеддеры и др. настройки];
-	PU --- PU_dis[Содержит ключ ревизии и id устройства];
 	end;
 	
 	subgraph  

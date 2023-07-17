@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../domain/task_model.dart';
+import '../data/domain/task_model.dart';
 
 class TaskText extends StatelessWidget {
   const TaskText({super.key, required this.task});

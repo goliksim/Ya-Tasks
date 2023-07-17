@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 
 class NetworkSettings {
+  //static const url = String.fromEnvironment('base_url');
+  //static const _mytoken = String.fromEnvironment('token');
   static const url = 'https://beta.mrdekk.ru/todobackend';
   static const _mytoken = 'unanachronous';
   static const timeoutTime = 3;
@@ -13,7 +15,7 @@ class NetworkSettings {
   //NetworkSettings({required persistenceUtil}) : _persistenceUtil = persistenceUtil;
   NetworkSettings();
 
-  Dio dioInstance(int revision) {
+  Dio get dioInstance {
     _dio ??= Dio(BaseOptions(
         baseUrl: url,
         connectTimeout: const Duration(seconds: timeoutTime),
@@ -21,39 +23,40 @@ class NetworkSettings {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'Authorization': 'Bearer $_mytoken',
-        }))
-      ..interceptors.add(
-        InterceptorsWrapper(
-          onRequest: (options, handler) async {
-            options.headers['X-Last-Known-Revision'] = revision;
-            handler.next(options);
-          },
-        ),
-      );
+        }));
     return _dio!;
   }
 
   Future<Response> get(String path) async {
-    return dioInstance(0).get(path);
+    var result = dioInstance.get(path);
+    return result;
   }
 
   Future<Response> post(
       String path, Map<String, dynamic> data, int revision) async {
-    return dioInstance(revision).post(path, data: data);
+    var dio = dioInstance;
+    dio.options.headers['X-Last-Known-Revision'] = revision;
+    return dio.post(path, data: data);
   }
 
   Future<Response> delete(String path, int revision) async {
-    return dioInstance(revision).delete(path);
+    var dio = dioInstance;
+    dio.options.headers['X-Last-Known-Revision'] = revision;
+    return dio.delete(path);
   }
 
   Future<Response> put(
       String path, Map<String, dynamic> data, int revision) async {
-    return dioInstance(revision).put(path, data: data);
+    var dio = dioInstance;
+    dio.options.headers['X-Last-Known-Revision'] = revision;
+    return dioInstance.put(path, data: data);
   }
 
   Future<Response> patch(
       String path, Map<String, dynamic> data, int revision) async {
-    return dioInstance(revision).patch(path, data: data);
+    var dio = dioInstance;
+    dio.options.headers['X-Last-Known-Revision'] = revision;
+    return dioInstance.patch(path, data: data);
   }
 
   /*Future<T> _request<T>(Future<T> Function() requestFunc) async {

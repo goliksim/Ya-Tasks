@@ -1,4 +1,4 @@
-import 'package:ya_todolist/feature/task/domain/task_model.dart';
+import 'package:ya_todolist/feature/task/data/domain/task_model.dart';
 
 abstract class DataInterface {
   Future<void> init();
