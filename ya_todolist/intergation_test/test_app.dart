@@ -25,7 +25,7 @@ class TestApp {
             theme: MyTheme.lightData(),
             darkTheme: MyTheme.darkData(),
             //themeMode: _themeManager.themeMode,
-            routerDelegate: context.taskState!.routerDelegate,
+            //routerDelegate: context.taskState!.routerDelegate,
             routeInformationParser: _routeInformationParser,
           );
         },

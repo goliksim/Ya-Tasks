@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
-import 'package:ya_todolist/common/widgets/tablet_padding.dart';
+import 'package:ya_todolist/common/widgets/responsive_widgets.dart';
 import 'package:ya_todolist/feature/home/widgets/floating_button.dart';
 
 import '../task/bloc/tasks_bloc.dart';
@@ -31,7 +31,7 @@ class _TaskListPageState extends State<TaskListPage> {
           builder: (context, constraints) {
             final tabletCond =
                 [constraints.maxHeight, constraints.maxWidth].reduce(max) > 900;
-            return tabletPadding(
+            return TabletPadding(
               condition: tabletCond,
               child: CustomScrollView(
                 physics: const BouncingScrollPhysics(),

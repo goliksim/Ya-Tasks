@@ -16,10 +16,10 @@ class Repository extends DataInterface {
 
   @override
   Future<void> init() async {
-    Logs.logImpl.logg('Repository: initialization start...');
+    Logs.logg('Repository: initialization start...');
     await localStorage.init();
     await networkStorage.init();
-    Logs.logImpl.fine('Repository: initialized!');
+    Logs.fine('Repository: initialized!');
   }
 
   /* Логика синхронизации 
@@ -36,8 +36,8 @@ class Repository extends DataInterface {
         !localTasks.every(networkTasks.contains));
   }
 
-  Future<void> syncStoragesV2() async {
-    Logs.logImpl.logg(
+  Future<void> syncStorages() async {
+    Logs.logg(
         'Repository: Storage synchronization v2 [ Loc_rev - ${localStorage.revision}, Net_rev - ${networkStorage.revision} ]...');
     final localTasks = await localStorage.getTasks();
     late List<Task>? networkTasks;
@@ -71,9 +71,9 @@ class Repository extends DataInterface {
             await localStorage.deleteTask(delTask.id);
           }
           //localStorage.updateTasks(localTasks);
-          Logs.logImpl.logg('Repository: Successful merging!');
+          Logs.logg('Repository: Successful merging!');
         } else {
-          Logs.logImpl.logg(
+          Logs.logg(
               'Repository: Synchronization from localStorage. ERROR IN NET LIST!');
         }
         if (await networkStorage.updateTasks(await localStorage.getTasks())) {
@@ -81,11 +81,11 @@ class Repository extends DataInterface {
           localStorage.writeRev(networkStorage.revision!);
         }
       } else {
-        Logs.logImpl.logg('Repository: No need to sync');
+        Logs.logg('Repository: No need to sync');
       }
     }
-    
-    Logs.logImpl.fine('Repository: synchronization completed!');
+
+    Logs.fine('Repository: synchronization completed!');
   }
 
   @override

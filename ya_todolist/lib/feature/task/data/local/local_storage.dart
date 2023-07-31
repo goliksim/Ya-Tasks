@@ -11,14 +11,14 @@ class LocalStorage implements DataInterface {
   late int? revision;
   String? userId;
 
-  LocalStorage({required this.localSettings, userId});
+  LocalStorage({required this.localSettings, this.userId});
 
   @override
   Future<void> init() async {
     await localSettings.init();
     await readRev();
     await readId();
-    Logs.logImpl.fine('LocalStorage: inited.');
+    Logs.fine('LocalStorage: inited.');
   }
 
   Future<String?> _getId() async {
@@ -44,7 +44,7 @@ class LocalStorage implements DataInterface {
     if (tmp != null) {
       userId = tmp;
     } else {
-      Logs.logImpl.warning('LocalStorage: CANNOT LOAD USER ID');
+      Logs.warning('LocalStorage: CANNOT LOAD USER ID');
       userId = await _getId();
 
       localSettings.putId('$userId');
@@ -57,14 +57,14 @@ class LocalStorage implements DataInterface {
     if (tmp != null) {
       revision = int.parse(tmp);
     } else {
-      Logs.logImpl.warning('LocalStorage: CANNOT LOAD STORAGE REV');
+      Logs.warning('LocalStorage: CANNOT LOAD STORAGE REV');
       revision = -1;
     }
     return revision;
   }
 
   Future<void> writeInfo(List<Task> savedTasks, int rev) async {
-    Logs.logImpl.logg('LocalStorage: tasks info saved');
+    Logs.logg('LocalStorage: tasks info saved');
     localSettings.patch(savedTasks);
     revision = rev;
     await writeRev(rev);
@@ -99,7 +99,7 @@ class LocalStorage implements DataInterface {
   Future<bool> addTask(Task task) async {
     localSettings.put(task);
     await writeRev(revision! + 1);
-    Logs.logImpl.logg('LocalStorage: Sucessful add task');
+    Logs.logg('LocalStorage: Sucessful add task');
     return true;
   }
 
@@ -107,7 +107,7 @@ class LocalStorage implements DataInterface {
   Future<bool> deleteTask(String id) async {
     localSettings.delete(id);
     await writeRev(revision! + 1);
-    Logs.logImpl.logg('LocalStorage: sucessful delete task $id');
+    Logs.logg('LocalStorage: sucessful delete task $id');
     return true;
   }
 
@@ -115,14 +115,14 @@ class LocalStorage implements DataInterface {
   Future<bool> updateTask(Task newTask) async {
     localSettings.updateTask(newTask);
     await writeRev(revision! + 1);
-    Logs.logImpl.logg('LocalStorage: sucessful update task');
+    Logs.logg('LocalStorage: sucessful update task');
     return true;
   }
 
   @override
   Future<bool> updateTasks(List<Task> tasks) async {
     await writeInfo(tasks, revision! + 1);
-    Logs.logImpl.logg('LocalStorage: sucessful update task');
+    Logs.logg('LocalStorage: sucessful update task');
     return true;
   }
 

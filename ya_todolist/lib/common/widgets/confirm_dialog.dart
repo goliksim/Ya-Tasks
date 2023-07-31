@@ -23,6 +23,7 @@ class ConfirmCloseCountDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      //elevation: 2,
       backgroundColor: context.myColors!.backPrimary,
       title: Text(
         AppLocalizations.of(context).confirmTitle,

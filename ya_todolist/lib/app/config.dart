@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:ya_todolist/common/logger.dart';
 
 class FirebaseConfig {
   final remoteConfig = FirebaseRemoteConfig.instance;
   static const String priorityColorDefault = 'FFFF3B30';
+  StreamSubscription? subscription;
 
   Future<void> remoteConfigUpdate(callback) async {
     //settings
@@ -18,11 +20,14 @@ class FirebaseConfig {
       callback(val);
     });
     //listen for update
-    remoteConfig.onConfigUpdated.listen((event) async {
+    if (subscription != null) {
+      await subscription!.cancel();
+      subscription = null;
+    }
+    subscription = remoteConfig.onConfigUpdated.listen((event) async {
       await getColor().then((val) {
         callback(val);
       });
-      callback(remoteConfig.getString(_ConfigFields.priorityColor));
     });
   }
 
@@ -30,10 +35,10 @@ class FirebaseConfig {
     try {
       await remoteConfig.fetchAndActivate();
       final tmp = remoteConfig.getString(_ConfigFields.priorityColor);
-      Logs.logImpl.fine('RemoteConfig: loaded with priorityColor - $tmp');
+      Logs.fine('RemoteConfig: loaded with priorityColor - $tmp');
       return tmp;
     } catch (e) {
-      Logs.logImpl.warning('RemoteConfig: fetchAndActivate problems!');
+      Logs.warning('RemoteConfig: fetchAndActivate problems!');
       return priorityColorDefault;
     }
   }

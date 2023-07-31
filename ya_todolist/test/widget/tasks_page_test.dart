@@ -1,13 +1,11 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
 import 'package:flutter/material.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../test_intergation/test_app.dart';
-import '../../test_intergation/test_constants.dart';
+import '../../intergation_test/test_app.dart';
+import '../../intergation_test/test_constants.dart';
 
 void main() async {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
   late RepositoryMock repositoryMock;
   setUp(() {
     registerFallbackValue(TaskListTestConstants.taskList[0]);

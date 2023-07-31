@@ -11,13 +11,6 @@ class LoadTasks extends TasksEvent {
   const LoadTasks();
 }
 
-class InsertTask extends TasksEvent {
-  final Task task;
-  final int index;
-
-  const InsertTask({required this.task, required this.index});
-}
-
 class AddTask extends TasksEvent {
   final Task task;
 
@@ -36,6 +29,15 @@ class UpdateTask extends TasksEvent {
   List<Object> get props => [task];
 }
 
+class DoneTask extends TasksEvent {
+  final Task task;
+
+  const DoneTask({required this.task});
+
+  @override
+  List<Object> get props => [task];
+}
+
 class DeleteTask extends TasksEvent {
   final Task task;
 
@@ -48,3 +50,10 @@ class DeleteTask extends TasksEvent {
 class DoneFilter extends TasksEvent {
   const DoneFilter();
 }
+
+/*class InsertTask extends TasksEvent {
+  final Task task;
+  final int index;
+
+  const InsertTask({required this.task, required this.index});
+}*/

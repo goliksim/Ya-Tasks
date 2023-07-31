@@ -64,6 +64,7 @@ android {
     }
 
     flavorDimensions "default"
+
     productFlavors {
         dev{
             dimension "default"

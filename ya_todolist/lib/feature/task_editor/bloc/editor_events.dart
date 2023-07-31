@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 
 import '../../task/data/domain/task_model.dart';
 
@@ -7,6 +8,16 @@ abstract class EditorEvent extends Equatable {
 
   @override
   List<Object> get props => [];
+}
+
+class EditorLoad extends EditorEvent {
+  final BuildContext context;
+  final String? id;
+
+  const EditorLoad({required this.id, required this.context});
+
+  @override
+  List<Object> get props => [context, id!];
 }
 
 class EditorUpdateText extends EditorEvent {

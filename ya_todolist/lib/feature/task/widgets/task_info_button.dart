@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ya_todolist/common/routes/navigator_inherited.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
-import 'package:ya_todolist/feature/task/bloc/tasks_bloc.dart';
 import '../data/domain/task_model.dart';
 
 class TaskInfoButton extends StatelessWidget {
@@ -19,8 +18,7 @@ class TaskInfoButton extends StatelessWidget {
         splashRadius: 1,
         padding: EdgeInsets.zero,
         onPressed: () {
-          BlocProvider.of<TasksBloc>(context)
-              .state
+          NavigationInherited.of(context)
               .routerDelegate
               .showTaskEditor(task.id);
         },

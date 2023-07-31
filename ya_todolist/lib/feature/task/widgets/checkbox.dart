@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
-
-import '../bloc/tasks_bloc.dart';
 import '../data/domain/task_model.dart';
 
 class MyCheckBox extends StatelessWidget {
-  const MyCheckBox({super.key, required this.task});
+  const MyCheckBox({super.key, required this.task, required this.updateDone});
   final Task task;
+  final void Function() updateDone;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -27,10 +25,7 @@ class MyCheckBox extends StatelessWidget {
         }),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
         value: task.done,
-        onChanged: ((_) {
-          BlocProvider.of<TasksBloc>(context)
-              .add(UpdateTask(task: task.copyWith(done: !task.done)));
-        }),
+        onChanged: ((_) => updateDone()),
       ),
     );
   }

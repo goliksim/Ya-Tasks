@@ -3,6 +3,7 @@ import 'package:ya_todolist/feature/home/task_list_page.dart';
 import 'package:ya_todolist/feature/task_editor/task_editor_page.dart';
 import 'package:ya_todolist/common/logger.dart';
 import 'navigation_state.dart';
+import 'route_observer.dart';
 
 class MyRouterDelegate extends RouterDelegate<NavigationState>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<NavigationState> {
@@ -17,12 +18,16 @@ class MyRouterDelegate extends RouterDelegate<NavigationState>
     return state ?? NavigationState.root();
   }
 
+  final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
+
   @override
   Widget build(BuildContext context) {
     return Navigator(
       key: navigatorKey,
+      observers: [MyRouteObserver()],
       pages: [
         MaterialPage(
+          name: 'root',
           child: TaskListPage(
             key: UniqueKey(),
             onItemTap: showTaskEditor,
@@ -30,14 +35,16 @@ class MyRouterDelegate extends RouterDelegate<NavigationState>
         ),
         if (state?.isTaskEditor == true)
           MaterialPage(
-            child: TaskEditorPage(
+            name: 'edit',
+            child: TaskEditorBuilder(
               key: UniqueKey(),
               taskID: state?.selectedTask,
             ),
           ),
         if (state?.isUnknown == true)
           MaterialPage(
-            child: TaskEditorPage(
+            name: 'edit_empty',
+            child: TaskEditorBuilder(
               key: UniqueKey(),
             ),
           ),
@@ -47,7 +54,7 @@ class MyRouterDelegate extends RouterDelegate<NavigationState>
           return false;
         }
         state = NavigationState.root();
-        Logs.logImpl.logg('Navigator: Push to root');
+        Logs.logg('Navigator: Push to root');
         notifyListeners();
         return true;
       },
@@ -62,10 +69,10 @@ class MyRouterDelegate extends RouterDelegate<NavigationState>
 
   void showTaskEditor(String? taskID) {
     if (taskID == null) {
-      Logs.logImpl.logg('Navigator: Push to empty task');
+      Logs.logg('Navigator: Push to empty task');
       state = NavigationState.empty();
     } else {
-      Logs.logImpl.logg('Navigator: Push to item $taskID');
+      Logs.logg('Navigator: Push to item $taskID');
       state = NavigationState.item(taskID);
     }
     notifyListeners();

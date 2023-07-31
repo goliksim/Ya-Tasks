@@ -125,6 +125,8 @@ void main() async {
         await tester.drag(
             find.byType(Dismissible).first, const Offset(-500, 0));
         await tester.pumpAndSettle();
+        await tester.tap(find.text('Confirm'));
+        await tester.pumpAndSettle();
         sleep(const Duration(seconds: 1));
       }
       await tester.pumpAndSettle();

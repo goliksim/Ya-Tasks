@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:ya_todolist/common/routes/navigator_inherited.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:ya_todolist/feature/task/bloc/tasks_bloc.dart';
 
 class EditorAppbar extends StatelessWidget implements PreferredSizeWidget {
   const EditorAppbar({required this.saveTask, super.key});
@@ -42,10 +41,7 @@ class EditorAppbar extends StatelessWidget implements PreferredSizeWidget {
         tooltip: AppLocalizations.of(context).closeButton,
         splashRadius: 24,
         onPressed: () {
-          BlocProvider.of<TasksBloc>(context)
-              .state
-              .routerDelegate
-              .popRoute(); //pop
+          NavigationInherited.of(context).routerDelegate.popRoute(); //pop
         },
         icon: Icon(
           Icons.close,

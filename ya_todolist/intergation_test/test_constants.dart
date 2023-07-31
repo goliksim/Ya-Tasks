@@ -45,7 +45,7 @@ class TaskListTestConstants {
         return;
       },
     );
-    when(() => mock.syncStoragesV2()).thenAnswer(
+    when(() => mock.syncStorages()).thenAnswer(
       (_) async {
         if (delay != null) {
           await Future.delayed(delay);
