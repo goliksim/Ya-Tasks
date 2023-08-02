@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../bloc/editor_bloc.dart';
-import '../bloc/editor_events.dart';
 
 class DeadLineSwitch extends StatefulWidget {
   const DeadLineSwitch({super.key, required this.deadlineDate});
@@ -15,6 +14,9 @@ class DeadLineSwitch extends StatefulWidget {
 }
 
 class _DeadLineSwitchState extends State<DeadLineSwitch> {
+
+  
+
   void updateDeadline(BuildContext context, [bool delete = false]) async {
     if (!delete) {
       DateTime today = DateTime.now();
@@ -36,7 +38,14 @@ class _DeadLineSwitchState extends State<DeadLineSwitch> {
   }
 
   @override
+  void initState() {
+    print('intiState');
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print('build deadline');
     return TextButton(
       style: TextButton.styleFrom(
         foregroundColor: context.myColors!.tertiary,

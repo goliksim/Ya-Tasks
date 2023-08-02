@@ -23,10 +23,17 @@ class MySliverAppBar extends StatefulWidget {
 }
 
 class _MySliverAppBarState extends State<MySliverAppBar> {
+  bool hideTasks = true;
+  int counter = 0;
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TasksBloc, TasksState>(
       builder: (context, state) {
+        if (state is TasksStateLoaded) {
+          hideTasks = state.hideDone;
+          counter = state.myTasks.where((e) => e.done && !e.deleted).length;
+        }
         final bool landscapeBool = MediaQuery.of(context).size.width <
             MediaQuery.of(context).size.height;
         return SliverAppBar(
@@ -39,8 +46,6 @@ class _MySliverAppBarState extends State<MySliverAppBar> {
             builder: (context, constraints) {
               final expandRation = widget.calculateExpandRatio(constraints);
               final animation = AlwaysStoppedAnimation(expandRation);
-              final counter =
-                  state.myTasks.where((e) => e.done && !e.deleted).length;
               return Stack(
                 children: [
                   //InitialText
@@ -121,11 +126,12 @@ class _MySliverAppBarState extends State<MySliverAppBar> {
                           splashRadius: 24.0,
                           onPressed: () async {
                             context.read<TasksBloc>().add(const DoneFilter());
+                            setState(() {
+                              hideTasks = !hideTasks;
+                            });
                           },
                           icon: Icon(
-                            state.hideDone
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+                            hideTasks ? Icons.visibility : Icons.visibility_off,
                             color: context.myColors!.blue,
                           ),
                         ),

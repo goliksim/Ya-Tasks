@@ -1,59 +1,11 @@
 part of 'tasks_bloc.dart';
 
-abstract class TasksEvent extends Equatable {
-  const TasksEvent();
-
-  @override
-  List<Object> get props => [];
+@freezed
+abstract class TasksEvent with _$TasksEvent {
+  const factory TasksEvent.load() = LoadTasks;
+  const factory TasksEvent.filter() = DoneFilter;
+  const factory TasksEvent.add({required Task task}) = AddTask;
+  const factory TasksEvent.update({required Task task}) = UpdateTask;
+  const factory TasksEvent.delete({required Task task}) = DeleteTask;
+  //const factory TasksEvent.insert({required this.task, required this.index}) = InsertTask;
 }
-
-class LoadTasks extends TasksEvent {
-  const LoadTasks();
-}
-
-class AddTask extends TasksEvent {
-  final Task task;
-
-  const AddTask({required this.task});
-
-  @override
-  List<Object> get props => [task];
-}
-
-class UpdateTask extends TasksEvent {
-  final Task task;
-
-  const UpdateTask({required this.task});
-
-  @override
-  List<Object> get props => [task];
-}
-
-class DoneTask extends TasksEvent {
-  final Task task;
-
-  const DoneTask({required this.task});
-
-  @override
-  List<Object> get props => [task];
-}
-
-class DeleteTask extends TasksEvent {
-  final Task task;
-
-  const DeleteTask({required this.task});
-
-  @override
-  List<Object> get props => [task];
-}
-
-class DoneFilter extends TasksEvent {
-  const DoneFilter();
-}
-
-/*class InsertTask extends TasksEvent {
-  final Task task;
-  final int index;
-
-  const InsertTask({required this.task, required this.index});
-}*/

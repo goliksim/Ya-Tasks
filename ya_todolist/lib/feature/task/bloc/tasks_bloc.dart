@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
@@ -8,7 +7,9 @@ import 'package:ya_todolist/app/analytics.dart';
 import 'package:ya_todolist/common/logger.dart';
 import 'package:ya_todolist/feature/task/data/repository/repository.dart';
 import '../data/domain/task_model.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
+part 'tasks_bloc.freezed.dart';
 part 'tasks_event.dart';
 part 'tasks_state.dart';
 
@@ -18,30 +19,27 @@ extension TaskBuilder on BuildContext {
 }
 
 class TasksBloc extends Bloc<TasksEvent, TasksState> {
-  TasksBloc({required routerDelegate, required repository})
-      : super(TasksState(
-            hideDone: true,
-            myTasks: const <Task>[],
-            loaded: false,
-            rep: repository)) {
+  TasksBloc({required repository})
+      : super(TasksState.initial(rep: repository)) {
     on<LoadTasks>(_loadTasks);
     on<AddTask>(_addTask);
     on<DeleteTask>(_deleteTask);
     on<UpdateTask>(_updateTask);
-    on<DoneTask>(_doneTask);
     on<DoneFilter>(_doneFilter);
     //on<InsertTask>(_insertTask);
   }
 
   Future<void> _loadTasks(LoadTasks event, Emitter<TasksState> emit) async {
-    await state.rep.init();
-    await state.rep.syncStorages();
-    final finalList = await state.rep.getTasks();
+    final initialState = state as TasksStateInitial;
+    await initialState.rep.init();
+    await initialState.rep.syncStorages();
+    final finalList = await initialState.rep.getTasks();
     emit(
-      TasksStateLoading(
-        hideDone: state.hideDone,
+      TasksState.loaded(
         myTasks: finalList!,
-        rep: state.rep,
+        hideDone: true,
+        loaded: true,
+        rep: initialState.rep,
       ),
     );
     Logs.logg(
@@ -49,90 +47,85 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   }
 
   Future<void> _addTask(AddTask event, Emitter<TasksState> emit) async {
-    final newTask = event.task.copyWith(
-      id: const Uuid().v4(),
-      createdAt: DateTime.now(),
-      changedAt: DateTime.now(),
-      lastUpdatedBy: state.rep.localStorage.userId!,
-    );
-    final updatedTasks = List<Task>.from(state.myTasks)..add(newTask);
-    emit(
-      TasksStateLoaded(
-        hideDone: state.hideDone,
-        myTasks: updatedTasks,
-        rep: state.rep,
-      ),
-    );
-    await state.rep.addTask(newTask);
-    Analytics.logEvent('task_added', newTask);
-    Logs.fine('TasksBloc: task added - $newTask');
+    if (state is TasksStateLoaded) {
+      final current = state as TasksStateLoaded;
+      final newTask = event.task.copyWith(
+        id: const Uuid().v4(),
+        createdAt: DateTime.now(),
+        changedAt: DateTime.now(),
+        lastUpdatedBy: current.rep.localStorage.userId!,
+      );
+      final updatedTasks = List<Task>.from(current.myTasks)..add(newTask);
+      emit(
+        current.copyWith(
+          myTasks: updatedTasks,
+        ),
+      );
+
+      await current.rep.addTask(newTask);
+      Analytics.logEvent('task_added', newTask);
+      Logs.fine('TasksBloc: task added - $newTask');
+    }
   }
 
   Future<void> _updateTask(UpdateTask event, Emitter<TasksState> emit) async {
-    final newTask = event.task.copyWith(
-      changedAt: DateTime.now(),
-      lastUpdatedBy: state.rep.localStorage.userId!,
-    );
-    final updatedTasks = List<Task>.from(state.myTasks).map((task) {
-      return task.id == event.task.id ? newTask : task;
-    }).toList();
-    emit(
-      TasksStateLoaded(
-        hideDone: state.hideDone,
-        myTasks: updatedTasks,
-        rep: state.rep,
-      ),
-    );
-    await state.rep.updateTask(newTask);
-    Logs.fine('TasksBloc: Task updated: $newTask');
-  }
-
-  Future<void> _doneTask(DoneTask event, Emitter<TasksState> emit) async {
-    final newTask = event.task.copyWith(
-      changedAt: DateTime.now(),
-      lastUpdatedBy: state.rep.localStorage.userId!,
-    );
-
-    await state.rep.updateTask(newTask);
-    Logs.fine('TasksBloc: Task updated: $newTask');
+    if (state is TasksStateLoaded) {
+      final current = state as TasksStateLoaded;
+      final newTask = event.task.copyWith(
+        changedAt: DateTime.now(),
+        lastUpdatedBy: current.rep.localStorage.userId!,
+      );
+      final updatedTasks = List<Task>.from(current.myTasks).map((task) {
+        return task.id == event.task.id ? newTask : task;
+      }).toList();
+      emit(
+        current.copyWith(
+          myTasks: updatedTasks,
+        ),
+      );
+      
+      await current.rep.updateTask(newTask);
+      Logs.fine('TasksBloc: Task updated: $newTask');
+    }
   }
 
   Future<void> _deleteTask(DeleteTask event, Emitter<TasksState> emit) async {
-    bool deletedNet = await state.rep.deleteTask(event.task.id.toString());
-    List<Task> updatedTasks = state.myTasks;
-    if (deletedNet) {
-      Logs.fine('TasksBloc: delete task forever - ${event.task}');
-      updatedTasks =
-          state.myTasks.where((task) => task.id != event.task.id).toList();
-    } else {
-      Logs.warning('TasksBloc: Network Error, move to trash - ${event.task}');
-      final trashTask = event.task.copyWith(deleted: true);
-      updatedTasks = List<Task>.from(state.myTasks).map((task) {
-        return task.id == event.task.id ? trashTask : task;
-      }).toList();
-      await state.rep.updateTask(trashTask);
+    if (state is TasksStateLoaded) {
+      final current = state as TasksStateLoaded;
+      bool deletedNet = await current.rep.deleteTask(event.task.id.toString());
+      List<Task> updatedTasks = current.myTasks;
+      if (deletedNet) {
+        Logs.fine('TasksBloc: delete task forever - ${event.task}');
+        updatedTasks =
+            current.myTasks.where((task) => task.id != event.task.id).toList();
+      } else {
+        Logs.warning('TasksBloc: Network Error, move to trash - ${event.task}');
+        final trashTask = event.task.copyWith(deleted: true);
+        updatedTasks = List<Task>.from(current.myTasks).map((task) {
+          return task.id == event.task.id ? trashTask : task;
+        }).toList();
+        await current.rep.updateTask(trashTask);
+      }
+      emit(
+        current.copyWith(
+          myTasks: updatedTasks,
+        ),
+      );
+      Analytics.logEvent('task_deleted', event.task);
     }
-    emit(
-      TasksStateLoaded(
-        hideDone: state.hideDone,
-        myTasks: updatedTasks,
-        rep: state.rep,
-      ),
-    );
-    Analytics.logEvent('task_deleted', event.task);
   }
 
   Future<void> _doneFilter(DoneFilter event, Emitter<TasksState> emit) async {
-    emit(
-      TasksState(
-        hideDone: !state.hideDone,
-        myTasks: state.myTasks,
-        loaded: state.loaded,
-        rep: state.rep,
-      ),
-    );
-    Logs.logg(
-        'TasksBloc: Done filter - completed myTasks is${!state.hideDone ? 'showing' : 'not showing'}');
+    if (state is TasksStateLoaded) {
+      final current = state as TasksStateLoaded;
+      emit(
+        current.copyWith(
+          hideDone: !current.hideDone,
+        ),
+      );
+      Logs.logg(
+          'TasksBloc: Done filter - completed myTasks is${!current.hideDone ? 'showing' : 'not showing'}');
+    }
   }
 
   /*Future<void> _insertTask(InsertTask event, Emitter<TasksState> emit) async {

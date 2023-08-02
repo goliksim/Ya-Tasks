@@ -46,5 +46,3 @@ class _RemoteConfigWidgetState extends State<RemoteConfigWidget> {
     );
   }
 }
-
-

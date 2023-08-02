@@ -10,8 +10,6 @@ import 'package:ya_todolist/feature/task_editor/widgets/task_editor_appbar.dart'
 
 import '../../common/theme_constants.dart';
 import 'bloc/editor_bloc.dart';
-import 'bloc/editor_events.dart';
-import 'bloc/editor_state.dart';
 import 'widgets/task_editor_deadline.dart';
 import 'widgets/task_editor_delete.dart';
 import 'widgets/task_editor_textfield.dart';
@@ -26,12 +24,10 @@ class TaskEditorBuilder extends StatelessWidget {
     return BlocProvider(
       key: UniqueKey(),
       create: (context) => EditorBloc(
-          currentTask:
-              Task(createdAt: DateTime.now(), changedAt: DateTime.now()),
           editMode: taskID != null),
       child: BlocBuilder<EditorBloc, EditorState>(
         builder: (context, state) {
-          return TaskEditorPage(taskID: taskID);
+          return TaskEditorPage(taskId: taskID,);
         },
       ),
     );
@@ -39,46 +35,71 @@ class TaskEditorBuilder extends StatelessWidget {
 }
 
 class TaskEditorPage extends StatefulWidget {
-  const TaskEditorPage({super.key, this.taskID});
-  final String? taskID;
+  const TaskEditorPage({super.key, required this.taskId});
+  final String? taskId;
 
   @override
   State<TaskEditorPage> createState() => _TaskEditorPageState();
 }
 
 class _TaskEditorPageState extends State<TaskEditorPage> {
+  final TextEditingController controller = TextEditingController();
+
   @override
-  void initState() {
+  void initState(){
     super.initState();
-    BlocProvider.of<EditorBloc>(context)
-        .add(EditorLoad(context: context, id: widget.taskID));
+    final state = context.editState!;
+    if (state is EditorStateInitial){
+      BlocProvider.of<EditorBloc>(context)
+        .add(EditorLoad(context: context, id: widget.taskId));
+        controller.value = TextEditingValue(text: state.editMode? ' ': '');
+        print('init init${controller.value} bool ${state.editMode}');
+    }
+    else{
+      controller.value = TextEditingValue(text: state.task.text);  
+      print('init loaded ${controller.value}');
+    }
+    
   }
+  
+
+  @override
+void didUpdateWidget(TaskEditorPage oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    controller.value = TextEditingValue(text: context.editState!.task.text);
+    print('did ${controller.value}');
+}
 
   void saveTask(BuildContext context) {
     final state = context.editState!;
-    Task tempTask = state.task.copyWith(text: state.textController.text);
-    if (tempTask.text.isNotEmpty) {
-      if (state.editMode == true) {
-        BlocProvider.of<TasksBloc>(context).add(
-          UpdateTask(task: tempTask),
-        );
-      } else {
-        BlocProvider.of<TasksBloc>(context).add(AddTask(task: tempTask));
+    if (state is EditorStateLoaded) {
+      Task tempTask = state.task.copyWith(text: controller.text);
+      if (tempTask.text.isNotEmpty) {
+        if (state.editMode == true) {
+          BlocProvider.of<TasksBloc>(context).add(
+            UpdateTask(task: tempTask),
+          );
+        } else {
+          BlocProvider.of<TasksBloc>(context).add(AddTask(task: tempTask));
+        }
+        NavigationInherited.of(context).routerDelegate.popRoute(); //pop
       }
-      NavigationInherited.of(context).routerDelegate.popRoute(); //pop
     }
   }
 
   void deleteTask(BuildContext context) {
     final state = context.editState!;
     if (state.editMode) {
-      context.read<TasksBloc>().add(DeleteTask(task: context.editState!.task));
-      NavigationInherited.of(context).routerDelegate.popRoute(); //pop
+      if (state is EditorStateLoaded) {
+        context.read<TasksBloc>().add(DeleteTask(task: state.task));
+        NavigationInherited.of(context).routerDelegate.popRoute(); //pop
+      }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+     print(controller.value);
     final state = context.editState!;
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -96,9 +117,14 @@ class _TaskEditorPageState extends State<TaskEditorPage> {
               children: [
                 Padding(
                     padding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
-                    child: EditorTextField(
-                        controller: state.textController,
-                        condition: landscapeCond)),
+                    child: Builder(
+                      builder: (context) {
+                        print(state.task.deadline);
+                        return EditorTextField(
+                            controller: controller,
+                            condition: landscapeCond);
+                      }
+                    )),
                 SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Column(
@@ -116,6 +142,7 @@ class _TaskEditorPageState extends State<TaskEditorPage> {
                               color: context.myColors!.separator,
                             ),
                             DeadLineSwitch(
+                              key:  UniqueKey(),
                               deadlineDate: state.task.deadline,
                             ),
                             const SizedBox(height: 24),
@@ -141,5 +168,3 @@ class _TaskEditorPageState extends State<TaskEditorPage> {
     );
   }
 }
-
-

@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
 import 'package:ya_todolist/common/widgets/responsive_widgets.dart';
 import 'package:ya_todolist/feature/home/widgets/floating_button.dart';
@@ -37,9 +38,11 @@ class _TaskListPageState extends State<TaskListPage> {
                 physics: const BouncingScrollPhysics(),
                 slivers: [
                   const MySliverAppBar(),
-                  context.taskState!.loaded
-                      ? const MySliverList()
-                      : const LoadingWidget(),
+                  context.watch<TasksBloc>().state.when(
+                        initial: (_) => const LoadingWidget(),
+                        loaded: (myTasks, rep, hideDone, loaded) =>
+                            const MySliverList(),
+                      ),
                 ],
               ),
             );

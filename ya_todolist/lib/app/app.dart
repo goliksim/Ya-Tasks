@@ -26,7 +26,6 @@ class MyApp extends StatelessWidget {
       child: FlavorBanner(
         child: BlocProvider<TasksBloc>(
           create: (context) => TasksBloc(
-            routerDelegate: MyRouterDelegate(),
             repository: Repository(
               networkStorage: NetworkStorage(
                 networkSettings: NetworkSettings(),

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'route_info_parser.dart';
 import 'router_delegate.dart';
 
-
 extension NavigationBuilder on BuildContext {
-  MyRouterDelegate? get routerDelegate => NavigationInherited.of(this).routerDelegate;
-  MyRouteInformationParser? get routeParser => NavigationInherited.of(this).routeInformationParser;
+  MyRouterDelegate? get routerDelegate =>
+      NavigationInherited.of(this).routerDelegate;
+  MyRouteInformationParser? get routeParser =>
+      NavigationInherited.of(this).routeInformationParser;
 }
 
 class NavigationInherited extends InheritedWidget {

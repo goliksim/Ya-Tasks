@@ -3,8 +3,6 @@ import 'package:ya_todolist/common/theme_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../task/data/domain/task_model.dart';
 import '../bloc/editor_bloc.dart';
-import '../bloc/editor_events.dart';
-
 class PriorityChanger extends StatelessWidget {
   const PriorityChanger({super.key, required this.dropdownvalue});
   final Importance dropdownvalue;

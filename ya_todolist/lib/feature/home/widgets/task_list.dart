@@ -19,6 +19,7 @@ class _MySliverListState extends State<MySliverList> {
   Widget build(BuildContext context) {
     return BlocBuilder<TasksBloc, TasksState>(
       builder: (context, state) {
+        state as TasksStateLoaded;
         final tasks = state.myTasks.where((e) => !e.deleted).toList();
         return SliverToBoxAdapter(
           child: Padding(
