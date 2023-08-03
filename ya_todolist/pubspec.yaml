@@ -2,7 +2,7 @@ name: ya_todolist
 description: Homework application for Yandex MDS (ШМР).
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.4.0+1
+version: 1.4.4+1
 
 environment:
   sdk: '>=3.0.3 <4.0.0'

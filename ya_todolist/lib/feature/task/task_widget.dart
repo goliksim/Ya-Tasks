@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ya_todolist/app/analytics.dart';
 import 'package:ya_todolist/common/widgets/confirm_dialog.dart';
 import 'package:ya_todolist/feature/task/data/domain/task_model.dart';
@@ -19,7 +18,7 @@ class TaskWidget extends StatefulWidget {
 
 class _TaskWidgetState extends State<TaskWidget> {
   void updateDone() async {
-    BlocProvider.of<TasksBloc>(context)
+    context.taskBloc!
         .add(UpdateTask(task: widget.task.copyWith(done: !widget.task.done)));
     Analytics.logEvent('task_done', widget.task);
   }
@@ -62,8 +61,7 @@ class _TaskWidgetState extends State<TaskWidget> {
                 return true;
               }
               if (confirmed) {
-                BlocProvider.of<TasksBloc>(context)
-                    .add(DeleteTask(task: widget.task));
+                context.taskBloc!.add(DeleteTask(task: widget.task));
                 return true;
               }
               return false;

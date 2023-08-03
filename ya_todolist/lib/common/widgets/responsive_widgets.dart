@@ -30,18 +30,15 @@ class EditorResponsiveBuilder extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start, children: children),
       );
     } else {
-      return Padding(
-        padding: const EdgeInsets.only(left: 16),
-        child: Row(
-            verticalDirection: VerticalDirection.down,
-            //mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: children.reversed
-                .map((e) => Expanded(
-                      child: e,
-                    ))
-                .toList()),
-      );
+      return Row(
+          verticalDirection: VerticalDirection.down,
+          //mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: children.reversed
+              .map((e) => Expanded(
+                    child: e,
+                  ))
+              .toList());
     }
   }
 }

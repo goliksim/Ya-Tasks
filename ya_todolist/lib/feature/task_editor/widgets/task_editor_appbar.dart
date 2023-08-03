@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:ya_todolist/common/routes/navigator_inherited.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:ya_todolist/feature/task_editor/bloc/editor_bloc.dart';
 
 class EditorAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const EditorAppbar({required this.saveTask, super.key});
+  const EditorAppbar({super.key});
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-
-  final void Function(BuildContext) saveTask;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,7 @@ class EditorAppbar extends StatelessWidget implements PreferredSizeWidget {
                 textAlign: TextAlign.center,
                 style: MyTheme.myTextTheme.labelLarge),
             onPressed: () {
-              saveTask(context);
+              context.editBloc!.add(EditorSaver(context: context));
             },
           ),
         ),

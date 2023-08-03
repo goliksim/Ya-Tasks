@@ -193,11 +193,12 @@ Complete
 
   </details>
 
-## **Homework 4.2** Created by goliksim on 19.07.2023
+## **Homework 4+** Created by goliksim from 19.07.2023
 
 <details>
 <summary><b>Посмотреть описание</b> </summary>
 <br/>
+Продолжил работать над приложением после дедлайна последнего дз. Постарался доделать все, что не успел, а также реализовать все советы, что собрал от менторов и учеников школы. 
 
 **APK** -> https://drive.google.com/file/d/1vz6fFl8yaO98TdlnHUFOJu3vEmGq0NZX/view?usp=sharing
 Инвайт код на Firebase `App Distribution` -> https://appdistribution.firebase.dev/i/0803458404047ead
@@ -209,6 +210,8 @@ Complete
 - Починил `Dissmisible`, теперь иконки ездят по фигме.
 - Добавил `navigatorObserver` и перенес аналитику страниц в него.
 - Перевел `bloc` классы на **freezed**
+- Реализовал **bloc to bloc communication** через `StreamSubscription`
+- Немного оптимизировал перерисовку виджетов
 - Небольшие доработки
 
   </details>

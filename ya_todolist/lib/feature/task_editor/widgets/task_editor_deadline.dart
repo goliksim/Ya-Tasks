@@ -14,9 +14,6 @@ class DeadLineSwitch extends StatefulWidget {
 }
 
 class _DeadLineSwitchState extends State<DeadLineSwitch> {
-
-  
-
   void updateDeadline(BuildContext context, [bool delete = false]) async {
     if (!delete) {
       DateTime today = DateTime.now();
@@ -39,13 +36,11 @@ class _DeadLineSwitchState extends State<DeadLineSwitch> {
 
   @override
   void initState() {
-    print('intiState');
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print('build deadline');
     return TextButton(
       style: TextButton.styleFrom(
         foregroundColor: context.myColors!.tertiary,

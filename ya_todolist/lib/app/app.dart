@@ -11,6 +11,7 @@ import 'package:ya_todolist/feature/task/data/local/local_storage.dart';
 import 'package:ya_todolist/feature/task/data/network/network_storage.dart';
 import 'package:ya_todolist/feature/task/data/repository/repository.dart';
 import 'package:flutter_flavor/flutter_flavor.dart';
+import 'package:ya_todolist/feature/task_editor/bloc/editor_bloc.dart';
 import '../common/theme_constants.dart';
 import '../feature/task/bloc/tasks_bloc.dart';
 
@@ -24,15 +25,23 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return RemoteConfigWidget(
       child: FlavorBanner(
-        child: BlocProvider<TasksBloc>(
-          create: (context) => TasksBloc(
-            repository: Repository(
-              networkStorage: NetworkStorage(
-                networkSettings: NetworkSettings(),
-              ),
-              localStorage: LocalStorage(localSettings: LocalSettings()),
+        child: MultiBlocProvider(
+          providers: [
+            BlocProvider<EditorBloc>(
+              create: (context) => EditorBloc(),
             ),
-          )..add(const LoadTasks()),
+            BlocProvider<TasksBloc>(
+                create: (blocContext) => TasksBloc(
+                      editorBloc: blocContext.read<EditorBloc>(),
+                      repository: Repository(
+                        networkStorage: NetworkStorage(
+                          networkSettings: NetworkSettings(),
+                        ),
+                        localStorage:
+                            LocalStorage(localSettings: LocalSettings()),
+                      ),
+                    )..add(const LoadTasks()))
+          ],
           child: NavigationInherited(
             routeInformationParser: MyRouteInformationParser(),
             routerDelegate: MyRouterDelegate(),

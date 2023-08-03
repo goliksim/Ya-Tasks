@@ -23,6 +23,9 @@ mixin _$EditorEvent {
     required TResult Function(Importance priority) priority,
     required TResult Function(DateTime deadline) deadline,
     required TResult Function() deleteDeadline,
+    required TResult Function(BuildContext context) save,
+    required TResult Function(BuildContext context) deleteTask,
+    required TResult Function() reset,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -32,6 +35,9 @@ mixin _$EditorEvent {
     TResult? Function(Importance priority)? priority,
     TResult? Function(DateTime deadline)? deadline,
     TResult? Function()? deleteDeadline,
+    TResult? Function(BuildContext context)? save,
+    TResult? Function(BuildContext context)? deleteTask,
+    TResult? Function()? reset,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -41,6 +47,9 @@ mixin _$EditorEvent {
     TResult Function(Importance priority)? priority,
     TResult Function(DateTime deadline)? deadline,
     TResult Function()? deleteDeadline,
+    TResult Function(BuildContext context)? save,
+    TResult Function(BuildContext context)? deleteTask,
+    TResult Function()? reset,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -51,6 +60,9 @@ mixin _$EditorEvent {
     required TResult Function(EditorUpdatePriority value) priority,
     required TResult Function(EditorUpdateDeadline value) deadline,
     required TResult Function(EditorDeleteDeadline value) deleteDeadline,
+    required TResult Function(EditorSaver value) save,
+    required TResult Function(EditorRemover value) deleteTask,
+    required TResult Function(EditorReset value) reset,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -60,6 +72,9 @@ mixin _$EditorEvent {
     TResult? Function(EditorUpdatePriority value)? priority,
     TResult? Function(EditorUpdateDeadline value)? deadline,
     TResult? Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult? Function(EditorSaver value)? save,
+    TResult? Function(EditorRemover value)? deleteTask,
+    TResult? Function(EditorReset value)? reset,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -69,6 +84,9 @@ mixin _$EditorEvent {
     TResult Function(EditorUpdatePriority value)? priority,
     TResult Function(EditorUpdateDeadline value)? deadline,
     TResult Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult Function(EditorSaver value)? save,
+    TResult Function(EditorRemover value)? deleteTask,
+    TResult Function(EditorReset value)? reset,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -169,6 +187,9 @@ class _$EditorLoad implements EditorLoad {
     required TResult Function(Importance priority) priority,
     required TResult Function(DateTime deadline) deadline,
     required TResult Function() deleteDeadline,
+    required TResult Function(BuildContext context) save,
+    required TResult Function(BuildContext context) deleteTask,
+    required TResult Function() reset,
   }) {
     return load(id, context);
   }
@@ -181,6 +202,9 @@ class _$EditorLoad implements EditorLoad {
     TResult? Function(Importance priority)? priority,
     TResult? Function(DateTime deadline)? deadline,
     TResult? Function()? deleteDeadline,
+    TResult? Function(BuildContext context)? save,
+    TResult? Function(BuildContext context)? deleteTask,
+    TResult? Function()? reset,
   }) {
     return load?.call(id, context);
   }
@@ -193,6 +217,9 @@ class _$EditorLoad implements EditorLoad {
     TResult Function(Importance priority)? priority,
     TResult Function(DateTime deadline)? deadline,
     TResult Function()? deleteDeadline,
+    TResult Function(BuildContext context)? save,
+    TResult Function(BuildContext context)? deleteTask,
+    TResult Function()? reset,
     required TResult orElse(),
   }) {
     if (load != null) {
@@ -209,6 +236,9 @@ class _$EditorLoad implements EditorLoad {
     required TResult Function(EditorUpdatePriority value) priority,
     required TResult Function(EditorUpdateDeadline value) deadline,
     required TResult Function(EditorDeleteDeadline value) deleteDeadline,
+    required TResult Function(EditorSaver value) save,
+    required TResult Function(EditorRemover value) deleteTask,
+    required TResult Function(EditorReset value) reset,
   }) {
     return load(this);
   }
@@ -221,6 +251,9 @@ class _$EditorLoad implements EditorLoad {
     TResult? Function(EditorUpdatePriority value)? priority,
     TResult? Function(EditorUpdateDeadline value)? deadline,
     TResult? Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult? Function(EditorSaver value)? save,
+    TResult? Function(EditorRemover value)? deleteTask,
+    TResult? Function(EditorReset value)? reset,
   }) {
     return load?.call(this);
   }
@@ -233,6 +266,9 @@ class _$EditorLoad implements EditorLoad {
     TResult Function(EditorUpdatePriority value)? priority,
     TResult Function(EditorUpdateDeadline value)? deadline,
     TResult Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult Function(EditorSaver value)? save,
+    TResult Function(EditorRemover value)? deleteTask,
+    TResult Function(EditorReset value)? reset,
     required TResult orElse(),
   }) {
     if (load != null) {
@@ -323,6 +359,9 @@ class _$EditorUpdateText implements EditorUpdateText {
     required TResult Function(Importance priority) priority,
     required TResult Function(DateTime deadline) deadline,
     required TResult Function() deleteDeadline,
+    required TResult Function(BuildContext context) save,
+    required TResult Function(BuildContext context) deleteTask,
+    required TResult Function() reset,
   }) {
     return text(this.text);
   }
@@ -335,6 +374,9 @@ class _$EditorUpdateText implements EditorUpdateText {
     TResult? Function(Importance priority)? priority,
     TResult? Function(DateTime deadline)? deadline,
     TResult? Function()? deleteDeadline,
+    TResult? Function(BuildContext context)? save,
+    TResult? Function(BuildContext context)? deleteTask,
+    TResult? Function()? reset,
   }) {
     return text?.call(this.text);
   }
@@ -347,6 +389,9 @@ class _$EditorUpdateText implements EditorUpdateText {
     TResult Function(Importance priority)? priority,
     TResult Function(DateTime deadline)? deadline,
     TResult Function()? deleteDeadline,
+    TResult Function(BuildContext context)? save,
+    TResult Function(BuildContext context)? deleteTask,
+    TResult Function()? reset,
     required TResult orElse(),
   }) {
     if (text != null) {
@@ -363,6 +408,9 @@ class _$EditorUpdateText implements EditorUpdateText {
     required TResult Function(EditorUpdatePriority value) priority,
     required TResult Function(EditorUpdateDeadline value) deadline,
     required TResult Function(EditorDeleteDeadline value) deleteDeadline,
+    required TResult Function(EditorSaver value) save,
+    required TResult Function(EditorRemover value) deleteTask,
+    required TResult Function(EditorReset value) reset,
   }) {
     return text(this);
   }
@@ -375,6 +423,9 @@ class _$EditorUpdateText implements EditorUpdateText {
     TResult? Function(EditorUpdatePriority value)? priority,
     TResult? Function(EditorUpdateDeadline value)? deadline,
     TResult? Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult? Function(EditorSaver value)? save,
+    TResult? Function(EditorRemover value)? deleteTask,
+    TResult? Function(EditorReset value)? reset,
   }) {
     return text?.call(this);
   }
@@ -387,6 +438,9 @@ class _$EditorUpdateText implements EditorUpdateText {
     TResult Function(EditorUpdatePriority value)? priority,
     TResult Function(EditorUpdateDeadline value)? deadline,
     TResult Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult Function(EditorSaver value)? save,
+    TResult Function(EditorRemover value)? deleteTask,
+    TResult Function(EditorReset value)? reset,
     required TResult orElse(),
   }) {
     if (text != null) {
@@ -477,6 +531,9 @@ class _$EditorUpdatePriority implements EditorUpdatePriority {
     required TResult Function(Importance priority) priority,
     required TResult Function(DateTime deadline) deadline,
     required TResult Function() deleteDeadline,
+    required TResult Function(BuildContext context) save,
+    required TResult Function(BuildContext context) deleteTask,
+    required TResult Function() reset,
   }) {
     return priority(this.priority);
   }
@@ -489,6 +546,9 @@ class _$EditorUpdatePriority implements EditorUpdatePriority {
     TResult? Function(Importance priority)? priority,
     TResult? Function(DateTime deadline)? deadline,
     TResult? Function()? deleteDeadline,
+    TResult? Function(BuildContext context)? save,
+    TResult? Function(BuildContext context)? deleteTask,
+    TResult? Function()? reset,
   }) {
     return priority?.call(this.priority);
   }
@@ -501,6 +561,9 @@ class _$EditorUpdatePriority implements EditorUpdatePriority {
     TResult Function(Importance priority)? priority,
     TResult Function(DateTime deadline)? deadline,
     TResult Function()? deleteDeadline,
+    TResult Function(BuildContext context)? save,
+    TResult Function(BuildContext context)? deleteTask,
+    TResult Function()? reset,
     required TResult orElse(),
   }) {
     if (priority != null) {
@@ -517,6 +580,9 @@ class _$EditorUpdatePriority implements EditorUpdatePriority {
     required TResult Function(EditorUpdatePriority value) priority,
     required TResult Function(EditorUpdateDeadline value) deadline,
     required TResult Function(EditorDeleteDeadline value) deleteDeadline,
+    required TResult Function(EditorSaver value) save,
+    required TResult Function(EditorRemover value) deleteTask,
+    required TResult Function(EditorReset value) reset,
   }) {
     return priority(this);
   }
@@ -529,6 +595,9 @@ class _$EditorUpdatePriority implements EditorUpdatePriority {
     TResult? Function(EditorUpdatePriority value)? priority,
     TResult? Function(EditorUpdateDeadline value)? deadline,
     TResult? Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult? Function(EditorSaver value)? save,
+    TResult? Function(EditorRemover value)? deleteTask,
+    TResult? Function(EditorReset value)? reset,
   }) {
     return priority?.call(this);
   }
@@ -541,6 +610,9 @@ class _$EditorUpdatePriority implements EditorUpdatePriority {
     TResult Function(EditorUpdatePriority value)? priority,
     TResult Function(EditorUpdateDeadline value)? deadline,
     TResult Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult Function(EditorSaver value)? save,
+    TResult Function(EditorRemover value)? deleteTask,
+    TResult Function(EditorReset value)? reset,
     required TResult orElse(),
   }) {
     if (priority != null) {
@@ -631,6 +703,9 @@ class _$EditorUpdateDeadline implements EditorUpdateDeadline {
     required TResult Function(Importance priority) priority,
     required TResult Function(DateTime deadline) deadline,
     required TResult Function() deleteDeadline,
+    required TResult Function(BuildContext context) save,
+    required TResult Function(BuildContext context) deleteTask,
+    required TResult Function() reset,
   }) {
     return deadline(this.deadline);
   }
@@ -643,6 +718,9 @@ class _$EditorUpdateDeadline implements EditorUpdateDeadline {
     TResult? Function(Importance priority)? priority,
     TResult? Function(DateTime deadline)? deadline,
     TResult? Function()? deleteDeadline,
+    TResult? Function(BuildContext context)? save,
+    TResult? Function(BuildContext context)? deleteTask,
+    TResult? Function()? reset,
   }) {
     return deadline?.call(this.deadline);
   }
@@ -655,6 +733,9 @@ class _$EditorUpdateDeadline implements EditorUpdateDeadline {
     TResult Function(Importance priority)? priority,
     TResult Function(DateTime deadline)? deadline,
     TResult Function()? deleteDeadline,
+    TResult Function(BuildContext context)? save,
+    TResult Function(BuildContext context)? deleteTask,
+    TResult Function()? reset,
     required TResult orElse(),
   }) {
     if (deadline != null) {
@@ -671,6 +752,9 @@ class _$EditorUpdateDeadline implements EditorUpdateDeadline {
     required TResult Function(EditorUpdatePriority value) priority,
     required TResult Function(EditorUpdateDeadline value) deadline,
     required TResult Function(EditorDeleteDeadline value) deleteDeadline,
+    required TResult Function(EditorSaver value) save,
+    required TResult Function(EditorRemover value) deleteTask,
+    required TResult Function(EditorReset value) reset,
   }) {
     return deadline(this);
   }
@@ -683,6 +767,9 @@ class _$EditorUpdateDeadline implements EditorUpdateDeadline {
     TResult? Function(EditorUpdatePriority value)? priority,
     TResult? Function(EditorUpdateDeadline value)? deadline,
     TResult? Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult? Function(EditorSaver value)? save,
+    TResult? Function(EditorRemover value)? deleteTask,
+    TResult? Function(EditorReset value)? reset,
   }) {
     return deadline?.call(this);
   }
@@ -695,6 +782,9 @@ class _$EditorUpdateDeadline implements EditorUpdateDeadline {
     TResult Function(EditorUpdatePriority value)? priority,
     TResult Function(EditorUpdateDeadline value)? deadline,
     TResult Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult Function(EditorSaver value)? save,
+    TResult Function(EditorRemover value)? deleteTask,
+    TResult Function(EditorReset value)? reset,
     required TResult orElse(),
   }) {
     if (deadline != null) {
@@ -757,6 +847,9 @@ class _$EditorDeleteDeadline implements EditorDeleteDeadline {
     required TResult Function(Importance priority) priority,
     required TResult Function(DateTime deadline) deadline,
     required TResult Function() deleteDeadline,
+    required TResult Function(BuildContext context) save,
+    required TResult Function(BuildContext context) deleteTask,
+    required TResult Function() reset,
   }) {
     return deleteDeadline();
   }
@@ -769,6 +862,9 @@ class _$EditorDeleteDeadline implements EditorDeleteDeadline {
     TResult? Function(Importance priority)? priority,
     TResult? Function(DateTime deadline)? deadline,
     TResult? Function()? deleteDeadline,
+    TResult? Function(BuildContext context)? save,
+    TResult? Function(BuildContext context)? deleteTask,
+    TResult? Function()? reset,
   }) {
     return deleteDeadline?.call();
   }
@@ -781,6 +877,9 @@ class _$EditorDeleteDeadline implements EditorDeleteDeadline {
     TResult Function(Importance priority)? priority,
     TResult Function(DateTime deadline)? deadline,
     TResult Function()? deleteDeadline,
+    TResult Function(BuildContext context)? save,
+    TResult Function(BuildContext context)? deleteTask,
+    TResult Function()? reset,
     required TResult orElse(),
   }) {
     if (deleteDeadline != null) {
@@ -797,6 +896,9 @@ class _$EditorDeleteDeadline implements EditorDeleteDeadline {
     required TResult Function(EditorUpdatePriority value) priority,
     required TResult Function(EditorUpdateDeadline value) deadline,
     required TResult Function(EditorDeleteDeadline value) deleteDeadline,
+    required TResult Function(EditorSaver value) save,
+    required TResult Function(EditorRemover value) deleteTask,
+    required TResult Function(EditorReset value) reset,
   }) {
     return deleteDeadline(this);
   }
@@ -809,6 +911,9 @@ class _$EditorDeleteDeadline implements EditorDeleteDeadline {
     TResult? Function(EditorUpdatePriority value)? priority,
     TResult? Function(EditorUpdateDeadline value)? deadline,
     TResult? Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult? Function(EditorSaver value)? save,
+    TResult? Function(EditorRemover value)? deleteTask,
+    TResult? Function(EditorReset value)? reset,
   }) {
     return deleteDeadline?.call(this);
   }
@@ -821,6 +926,9 @@ class _$EditorDeleteDeadline implements EditorDeleteDeadline {
     TResult Function(EditorUpdatePriority value)? priority,
     TResult Function(EditorUpdateDeadline value)? deadline,
     TResult Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult Function(EditorSaver value)? save,
+    TResult Function(EditorRemover value)? deleteTask,
+    TResult Function(EditorReset value)? reset,
     required TResult orElse(),
   }) {
     if (deleteDeadline != null) {
@@ -835,25 +943,513 @@ abstract class EditorDeleteDeadline implements EditorEvent {
 }
 
 /// @nodoc
-mixin _$EditorState {
-  Task get task => throw _privateConstructorUsedError;
-  bool get editMode => throw _privateConstructorUsedError;
+abstract class _$$EditorSaverCopyWith<$Res> {
+  factory _$$EditorSaverCopyWith(
+          _$EditorSaver value, $Res Function(_$EditorSaver) then) =
+      __$$EditorSaverCopyWithImpl<$Res>;
+  @useResult
+  $Res call({BuildContext context});
+}
+
+/// @nodoc
+class __$$EditorSaverCopyWithImpl<$Res>
+    extends _$EditorEventCopyWithImpl<$Res, _$EditorSaver>
+    implements _$$EditorSaverCopyWith<$Res> {
+  __$$EditorSaverCopyWithImpl(
+      _$EditorSaver _value, $Res Function(_$EditorSaver) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? context = null,
+  }) {
+    return _then(_$EditorSaver(
+      context: null == context
+          ? _value.context
+          : context // ignore: cast_nullable_to_non_nullable
+              as BuildContext,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EditorSaver implements EditorSaver {
+  const _$EditorSaver({required this.context});
+
+  @override
+  final BuildContext context;
+
+  @override
+  String toString() {
+    return 'EditorEvent.save(context: $context)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EditorSaver &&
+            (identical(other.context, context) || other.context == context));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, context);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EditorSaverCopyWith<_$EditorSaver> get copyWith =>
+      __$$EditorSaverCopyWithImpl<_$EditorSaver>(this, _$identity);
+
+  @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Task task, bool editMode) initial,
-    required TResult Function(bool editMode, Task task) loaded,
+    required TResult Function(String? id, BuildContext context) load,
+    required TResult Function(String text) text,
+    required TResult Function(Importance priority) priority,
+    required TResult Function(DateTime deadline) deadline,
+    required TResult Function() deleteDeadline,
+    required TResult Function(BuildContext context) save,
+    required TResult Function(BuildContext context) deleteTask,
+    required TResult Function() reset,
+  }) {
+    return save(context);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String? id, BuildContext context)? load,
+    TResult? Function(String text)? text,
+    TResult? Function(Importance priority)? priority,
+    TResult? Function(DateTime deadline)? deadline,
+    TResult? Function()? deleteDeadline,
+    TResult? Function(BuildContext context)? save,
+    TResult? Function(BuildContext context)? deleteTask,
+    TResult? Function()? reset,
+  }) {
+    return save?.call(context);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? id, BuildContext context)? load,
+    TResult Function(String text)? text,
+    TResult Function(Importance priority)? priority,
+    TResult Function(DateTime deadline)? deadline,
+    TResult Function()? deleteDeadline,
+    TResult Function(BuildContext context)? save,
+    TResult Function(BuildContext context)? deleteTask,
+    TResult Function()? reset,
+    required TResult orElse(),
+  }) {
+    if (save != null) {
+      return save(context);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EditorLoad value) load,
+    required TResult Function(EditorUpdateText value) text,
+    required TResult Function(EditorUpdatePriority value) priority,
+    required TResult Function(EditorUpdateDeadline value) deadline,
+    required TResult Function(EditorDeleteDeadline value) deleteDeadline,
+    required TResult Function(EditorSaver value) save,
+    required TResult Function(EditorRemover value) deleteTask,
+    required TResult Function(EditorReset value) reset,
+  }) {
+    return save(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(EditorLoad value)? load,
+    TResult? Function(EditorUpdateText value)? text,
+    TResult? Function(EditorUpdatePriority value)? priority,
+    TResult? Function(EditorUpdateDeadline value)? deadline,
+    TResult? Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult? Function(EditorSaver value)? save,
+    TResult? Function(EditorRemover value)? deleteTask,
+    TResult? Function(EditorReset value)? reset,
+  }) {
+    return save?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EditorLoad value)? load,
+    TResult Function(EditorUpdateText value)? text,
+    TResult Function(EditorUpdatePriority value)? priority,
+    TResult Function(EditorUpdateDeadline value)? deadline,
+    TResult Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult Function(EditorSaver value)? save,
+    TResult Function(EditorRemover value)? deleteTask,
+    TResult Function(EditorReset value)? reset,
+    required TResult orElse(),
+  }) {
+    if (save != null) {
+      return save(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EditorSaver implements EditorEvent {
+  const factory EditorSaver({required final BuildContext context}) =
+      _$EditorSaver;
+
+  BuildContext get context;
+  @JsonKey(ignore: true)
+  _$$EditorSaverCopyWith<_$EditorSaver> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$EditorRemoverCopyWith<$Res> {
+  factory _$$EditorRemoverCopyWith(
+          _$EditorRemover value, $Res Function(_$EditorRemover) then) =
+      __$$EditorRemoverCopyWithImpl<$Res>;
+  @useResult
+  $Res call({BuildContext context});
+}
+
+/// @nodoc
+class __$$EditorRemoverCopyWithImpl<$Res>
+    extends _$EditorEventCopyWithImpl<$Res, _$EditorRemover>
+    implements _$$EditorRemoverCopyWith<$Res> {
+  __$$EditorRemoverCopyWithImpl(
+      _$EditorRemover _value, $Res Function(_$EditorRemover) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? context = null,
+  }) {
+    return _then(_$EditorRemover(
+      context: null == context
+          ? _value.context
+          : context // ignore: cast_nullable_to_non_nullable
+              as BuildContext,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EditorRemover implements EditorRemover {
+  const _$EditorRemover({required this.context});
+
+  @override
+  final BuildContext context;
+
+  @override
+  String toString() {
+    return 'EditorEvent.deleteTask(context: $context)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EditorRemover &&
+            (identical(other.context, context) || other.context == context));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, context);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EditorRemoverCopyWith<_$EditorRemover> get copyWith =>
+      __$$EditorRemoverCopyWithImpl<_$EditorRemover>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String? id, BuildContext context) load,
+    required TResult Function(String text) text,
+    required TResult Function(Importance priority) priority,
+    required TResult Function(DateTime deadline) deadline,
+    required TResult Function() deleteDeadline,
+    required TResult Function(BuildContext context) save,
+    required TResult Function(BuildContext context) deleteTask,
+    required TResult Function() reset,
+  }) {
+    return deleteTask(context);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String? id, BuildContext context)? load,
+    TResult? Function(String text)? text,
+    TResult? Function(Importance priority)? priority,
+    TResult? Function(DateTime deadline)? deadline,
+    TResult? Function()? deleteDeadline,
+    TResult? Function(BuildContext context)? save,
+    TResult? Function(BuildContext context)? deleteTask,
+    TResult? Function()? reset,
+  }) {
+    return deleteTask?.call(context);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? id, BuildContext context)? load,
+    TResult Function(String text)? text,
+    TResult Function(Importance priority)? priority,
+    TResult Function(DateTime deadline)? deadline,
+    TResult Function()? deleteDeadline,
+    TResult Function(BuildContext context)? save,
+    TResult Function(BuildContext context)? deleteTask,
+    TResult Function()? reset,
+    required TResult orElse(),
+  }) {
+    if (deleteTask != null) {
+      return deleteTask(context);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EditorLoad value) load,
+    required TResult Function(EditorUpdateText value) text,
+    required TResult Function(EditorUpdatePriority value) priority,
+    required TResult Function(EditorUpdateDeadline value) deadline,
+    required TResult Function(EditorDeleteDeadline value) deleteDeadline,
+    required TResult Function(EditorSaver value) save,
+    required TResult Function(EditorRemover value) deleteTask,
+    required TResult Function(EditorReset value) reset,
+  }) {
+    return deleteTask(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(EditorLoad value)? load,
+    TResult? Function(EditorUpdateText value)? text,
+    TResult? Function(EditorUpdatePriority value)? priority,
+    TResult? Function(EditorUpdateDeadline value)? deadline,
+    TResult? Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult? Function(EditorSaver value)? save,
+    TResult? Function(EditorRemover value)? deleteTask,
+    TResult? Function(EditorReset value)? reset,
+  }) {
+    return deleteTask?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EditorLoad value)? load,
+    TResult Function(EditorUpdateText value)? text,
+    TResult Function(EditorUpdatePriority value)? priority,
+    TResult Function(EditorUpdateDeadline value)? deadline,
+    TResult Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult Function(EditorSaver value)? save,
+    TResult Function(EditorRemover value)? deleteTask,
+    TResult Function(EditorReset value)? reset,
+    required TResult orElse(),
+  }) {
+    if (deleteTask != null) {
+      return deleteTask(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EditorRemover implements EditorEvent {
+  const factory EditorRemover({required final BuildContext context}) =
+      _$EditorRemover;
+
+  BuildContext get context;
+  @JsonKey(ignore: true)
+  _$$EditorRemoverCopyWith<_$EditorRemover> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$EditorResetCopyWith<$Res> {
+  factory _$$EditorResetCopyWith(
+          _$EditorReset value, $Res Function(_$EditorReset) then) =
+      __$$EditorResetCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$EditorResetCopyWithImpl<$Res>
+    extends _$EditorEventCopyWithImpl<$Res, _$EditorReset>
+    implements _$$EditorResetCopyWith<$Res> {
+  __$$EditorResetCopyWithImpl(
+      _$EditorReset _value, $Res Function(_$EditorReset) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$EditorReset implements EditorReset {
+  const _$EditorReset();
+
+  @override
+  String toString() {
+    return 'EditorEvent.reset()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$EditorReset);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String? id, BuildContext context) load,
+    required TResult Function(String text) text,
+    required TResult Function(Importance priority) priority,
+    required TResult Function(DateTime deadline) deadline,
+    required TResult Function() deleteDeadline,
+    required TResult Function(BuildContext context) save,
+    required TResult Function(BuildContext context) deleteTask,
+    required TResult Function() reset,
+  }) {
+    return reset();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String? id, BuildContext context)? load,
+    TResult? Function(String text)? text,
+    TResult? Function(Importance priority)? priority,
+    TResult? Function(DateTime deadline)? deadline,
+    TResult? Function()? deleteDeadline,
+    TResult? Function(BuildContext context)? save,
+    TResult? Function(BuildContext context)? deleteTask,
+    TResult? Function()? reset,
+  }) {
+    return reset?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? id, BuildContext context)? load,
+    TResult Function(String text)? text,
+    TResult Function(Importance priority)? priority,
+    TResult Function(DateTime deadline)? deadline,
+    TResult Function()? deleteDeadline,
+    TResult Function(BuildContext context)? save,
+    TResult Function(BuildContext context)? deleteTask,
+    TResult Function()? reset,
+    required TResult orElse(),
+  }) {
+    if (reset != null) {
+      return reset();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EditorLoad value) load,
+    required TResult Function(EditorUpdateText value) text,
+    required TResult Function(EditorUpdatePriority value) priority,
+    required TResult Function(EditorUpdateDeadline value) deadline,
+    required TResult Function(EditorDeleteDeadline value) deleteDeadline,
+    required TResult Function(EditorSaver value) save,
+    required TResult Function(EditorRemover value) deleteTask,
+    required TResult Function(EditorReset value) reset,
+  }) {
+    return reset(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(EditorLoad value)? load,
+    TResult? Function(EditorUpdateText value)? text,
+    TResult? Function(EditorUpdatePriority value)? priority,
+    TResult? Function(EditorUpdateDeadline value)? deadline,
+    TResult? Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult? Function(EditorSaver value)? save,
+    TResult? Function(EditorRemover value)? deleteTask,
+    TResult? Function(EditorReset value)? reset,
+  }) {
+    return reset?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EditorLoad value)? load,
+    TResult Function(EditorUpdateText value)? text,
+    TResult Function(EditorUpdatePriority value)? priority,
+    TResult Function(EditorUpdateDeadline value)? deadline,
+    TResult Function(EditorDeleteDeadline value)? deleteDeadline,
+    TResult Function(EditorSaver value)? save,
+    TResult Function(EditorRemover value)? deleteTask,
+    TResult Function(EditorReset value)? reset,
+    required TResult orElse(),
+  }) {
+    if (reset != null) {
+      return reset(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EditorReset implements EditorEvent {
+  const factory EditorReset() = _$EditorReset;
+}
+
+/// @nodoc
+mixin _$EditorState {
+  Task get task => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Task task, TextEditingController controller)
+        initial,
+    required TResult Function(Task task, TextEditingController controller)
+        loaded,
+    required TResult Function(Task task) saveNew,
+    required TResult Function(Task task) saveOld,
+    required TResult Function(Task task) delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Task task, bool editMode)? initial,
-    TResult? Function(bool editMode, Task task)? loaded,
+    TResult? Function(Task task, TextEditingController controller)? initial,
+    TResult? Function(Task task, TextEditingController controller)? loaded,
+    TResult? Function(Task task)? saveNew,
+    TResult? Function(Task task)? saveOld,
+    TResult? Function(Task task)? delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Task task, bool editMode)? initial,
-    TResult Function(bool editMode, Task task)? loaded,
+    TResult Function(Task task, TextEditingController controller)? initial,
+    TResult Function(Task task, TextEditingController controller)? loaded,
+    TResult Function(Task task)? saveNew,
+    TResult Function(Task task)? saveOld,
+    TResult Function(Task task)? delete,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -861,18 +1457,27 @@ mixin _$EditorState {
   TResult map<TResult extends Object?>({
     required TResult Function(EditorStateInitial value) initial,
     required TResult Function(EditorStateLoaded value) loaded,
+    required TResult Function(EditorStateSaveNew value) saveNew,
+    required TResult Function(EditorStateSaveOld value) saveOld,
+    required TResult Function(EditorStateRemover value) delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(EditorStateInitial value)? initial,
     TResult? Function(EditorStateLoaded value)? loaded,
+    TResult? Function(EditorStateSaveNew value)? saveNew,
+    TResult? Function(EditorStateSaveOld value)? saveOld,
+    TResult? Function(EditorStateRemover value)? delete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(EditorStateInitial value)? initial,
     TResult Function(EditorStateLoaded value)? loaded,
+    TResult Function(EditorStateSaveNew value)? saveNew,
+    TResult Function(EditorStateSaveOld value)? saveOld,
+    TResult Function(EditorStateRemover value)? delete,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -888,7 +1493,7 @@ abstract class $EditorStateCopyWith<$Res> {
           EditorState value, $Res Function(EditorState) then) =
       _$EditorStateCopyWithImpl<$Res, EditorState>;
   @useResult
-  $Res call({Task task, bool editMode});
+  $Res call({Task task});
 
   $TaskCopyWith<$Res> get task;
 }
@@ -907,17 +1512,12 @@ class _$EditorStateCopyWithImpl<$Res, $Val extends EditorState>
   @override
   $Res call({
     Object? task = null,
-    Object? editMode = null,
   }) {
     return _then(_value.copyWith(
       task: null == task
           ? _value.task
           : task // ignore: cast_nullable_to_non_nullable
               as Task,
-      editMode: null == editMode
-          ? _value.editMode
-          : editMode // ignore: cast_nullable_to_non_nullable
-              as bool,
     ) as $Val);
   }
 
@@ -938,7 +1538,7 @@ abstract class _$$EditorStateInitialCopyWith<$Res>
       __$$EditorStateInitialCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Task task, bool editMode});
+  $Res call({Task task, TextEditingController controller});
 
   @override
   $TaskCopyWith<$Res> get task;
@@ -956,17 +1556,17 @@ class __$$EditorStateInitialCopyWithImpl<$Res>
   @override
   $Res call({
     Object? task = null,
-    Object? editMode = null,
+    Object? controller = null,
   }) {
     return _then(_$EditorStateInitial(
       task: null == task
           ? _value.task
           : task // ignore: cast_nullable_to_non_nullable
               as Task,
-      editMode: null == editMode
-          ? _value.editMode
-          : editMode // ignore: cast_nullable_to_non_nullable
-              as bool,
+      controller: null == controller
+          ? _value.controller
+          : controller // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
     ));
   }
 }
@@ -974,16 +1574,16 @@ class __$$EditorStateInitialCopyWithImpl<$Res>
 /// @nodoc
 
 class _$EditorStateInitial implements EditorStateInitial {
-  const _$EditorStateInitial({required this.task, required this.editMode});
+  const _$EditorStateInitial({required this.task, required this.controller});
 
   @override
   final Task task;
   @override
-  final bool editMode;
+  final TextEditingController controller;
 
   @override
   String toString() {
-    return 'EditorState.initial(task: $task, editMode: $editMode)';
+    return 'EditorState.initial(task: $task, controller: $controller)';
   }
 
   @override
@@ -992,12 +1592,12 @@ class _$EditorStateInitial implements EditorStateInitial {
         (other.runtimeType == runtimeType &&
             other is _$EditorStateInitial &&
             (identical(other.task, task) || other.task == task) &&
-            (identical(other.editMode, editMode) ||
-                other.editMode == editMode));
+            (identical(other.controller, controller) ||
+                other.controller == controller));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, task, editMode);
+  int get hashCode => Object.hash(runtimeType, task, controller);
 
   @JsonKey(ignore: true)
   @override
@@ -1009,30 +1609,41 @@ class _$EditorStateInitial implements EditorStateInitial {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Task task, bool editMode) initial,
-    required TResult Function(bool editMode, Task task) loaded,
+    required TResult Function(Task task, TextEditingController controller)
+        initial,
+    required TResult Function(Task task, TextEditingController controller)
+        loaded,
+    required TResult Function(Task task) saveNew,
+    required TResult Function(Task task) saveOld,
+    required TResult Function(Task task) delete,
   }) {
-    return initial(task, editMode);
+    return initial(task, controller);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Task task, bool editMode)? initial,
-    TResult? Function(bool editMode, Task task)? loaded,
+    TResult? Function(Task task, TextEditingController controller)? initial,
+    TResult? Function(Task task, TextEditingController controller)? loaded,
+    TResult? Function(Task task)? saveNew,
+    TResult? Function(Task task)? saveOld,
+    TResult? Function(Task task)? delete,
   }) {
-    return initial?.call(task, editMode);
+    return initial?.call(task, controller);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Task task, bool editMode)? initial,
-    TResult Function(bool editMode, Task task)? loaded,
+    TResult Function(Task task, TextEditingController controller)? initial,
+    TResult Function(Task task, TextEditingController controller)? loaded,
+    TResult Function(Task task)? saveNew,
+    TResult Function(Task task)? saveOld,
+    TResult Function(Task task)? delete,
     required TResult orElse(),
   }) {
     if (initial != null) {
-      return initial(task, editMode);
+      return initial(task, controller);
     }
     return orElse();
   }
@@ -1042,6 +1653,9 @@ class _$EditorStateInitial implements EditorStateInitial {
   TResult map<TResult extends Object?>({
     required TResult Function(EditorStateInitial value) initial,
     required TResult Function(EditorStateLoaded value) loaded,
+    required TResult Function(EditorStateSaveNew value) saveNew,
+    required TResult Function(EditorStateSaveOld value) saveOld,
+    required TResult Function(EditorStateRemover value) delete,
   }) {
     return initial(this);
   }
@@ -1051,6 +1665,9 @@ class _$EditorStateInitial implements EditorStateInitial {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(EditorStateInitial value)? initial,
     TResult? Function(EditorStateLoaded value)? loaded,
+    TResult? Function(EditorStateSaveNew value)? saveNew,
+    TResult? Function(EditorStateSaveOld value)? saveOld,
+    TResult? Function(EditorStateRemover value)? delete,
   }) {
     return initial?.call(this);
   }
@@ -1060,6 +1677,9 @@ class _$EditorStateInitial implements EditorStateInitial {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(EditorStateInitial value)? initial,
     TResult Function(EditorStateLoaded value)? loaded,
+    TResult Function(EditorStateSaveNew value)? saveNew,
+    TResult Function(EditorStateSaveOld value)? saveOld,
+    TResult Function(EditorStateRemover value)? delete,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -1072,12 +1692,11 @@ class _$EditorStateInitial implements EditorStateInitial {
 abstract class EditorStateInitial implements EditorState {
   const factory EditorStateInitial(
       {required final Task task,
-      required final bool editMode}) = _$EditorStateInitial;
+      required final TextEditingController controller}) = _$EditorStateInitial;
 
   @override
   Task get task;
-  @override
-  bool get editMode;
+  TextEditingController get controller;
   @override
   @JsonKey(ignore: true)
   _$$EditorStateInitialCopyWith<_$EditorStateInitial> get copyWith =>
@@ -1092,7 +1711,7 @@ abstract class _$$EditorStateLoadedCopyWith<$Res>
       __$$EditorStateLoadedCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool editMode, Task task});
+  $Res call({Task task, TextEditingController controller});
 
   @override
   $TaskCopyWith<$Res> get task;
@@ -1109,18 +1728,18 @@ class __$$EditorStateLoadedCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? editMode = null,
     Object? task = null,
+    Object? controller = null,
   }) {
     return _then(_$EditorStateLoaded(
-      editMode: null == editMode
-          ? _value.editMode
-          : editMode // ignore: cast_nullable_to_non_nullable
-              as bool,
       task: null == task
           ? _value.task
           : task // ignore: cast_nullable_to_non_nullable
               as Task,
+      controller: null == controller
+          ? _value.controller
+          : controller // ignore: cast_nullable_to_non_nullable
+              as TextEditingController,
     ));
   }
 }
@@ -1128,16 +1747,16 @@ class __$$EditorStateLoadedCopyWithImpl<$Res>
 /// @nodoc
 
 class _$EditorStateLoaded implements EditorStateLoaded {
-  const _$EditorStateLoaded({required this.editMode, required this.task});
+  const _$EditorStateLoaded({required this.task, required this.controller});
 
   @override
-  final bool editMode;
-  @override
   final Task task;
+  @override
+  final TextEditingController controller;
 
   @override
   String toString() {
-    return 'EditorState.loaded(editMode: $editMode, task: $task)';
+    return 'EditorState.loaded(task: $task, controller: $controller)';
   }
 
   @override
@@ -1145,13 +1764,13 @@ class _$EditorStateLoaded implements EditorStateLoaded {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EditorStateLoaded &&
-            (identical(other.editMode, editMode) ||
-                other.editMode == editMode) &&
-            (identical(other.task, task) || other.task == task));
+            (identical(other.task, task) || other.task == task) &&
+            (identical(other.controller, controller) ||
+                other.controller == controller));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, editMode, task);
+  int get hashCode => Object.hash(runtimeType, task, controller);
 
   @JsonKey(ignore: true)
   @override
@@ -1162,30 +1781,41 @@ class _$EditorStateLoaded implements EditorStateLoaded {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(Task task, bool editMode) initial,
-    required TResult Function(bool editMode, Task task) loaded,
+    required TResult Function(Task task, TextEditingController controller)
+        initial,
+    required TResult Function(Task task, TextEditingController controller)
+        loaded,
+    required TResult Function(Task task) saveNew,
+    required TResult Function(Task task) saveOld,
+    required TResult Function(Task task) delete,
   }) {
-    return loaded(editMode, task);
+    return loaded(task, controller);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Task task, bool editMode)? initial,
-    TResult? Function(bool editMode, Task task)? loaded,
+    TResult? Function(Task task, TextEditingController controller)? initial,
+    TResult? Function(Task task, TextEditingController controller)? loaded,
+    TResult? Function(Task task)? saveNew,
+    TResult? Function(Task task)? saveOld,
+    TResult? Function(Task task)? delete,
   }) {
-    return loaded?.call(editMode, task);
+    return loaded?.call(task, controller);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Task task, bool editMode)? initial,
-    TResult Function(bool editMode, Task task)? loaded,
+    TResult Function(Task task, TextEditingController controller)? initial,
+    TResult Function(Task task, TextEditingController controller)? loaded,
+    TResult Function(Task task)? saveNew,
+    TResult Function(Task task)? saveOld,
+    TResult Function(Task task)? delete,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(editMode, task);
+      return loaded(task, controller);
     }
     return orElse();
   }
@@ -1195,6 +1825,9 @@ class _$EditorStateLoaded implements EditorStateLoaded {
   TResult map<TResult extends Object?>({
     required TResult Function(EditorStateInitial value) initial,
     required TResult Function(EditorStateLoaded value) loaded,
+    required TResult Function(EditorStateSaveNew value) saveNew,
+    required TResult Function(EditorStateSaveOld value) saveOld,
+    required TResult Function(EditorStateRemover value) delete,
   }) {
     return loaded(this);
   }
@@ -1204,6 +1837,9 @@ class _$EditorStateLoaded implements EditorStateLoaded {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(EditorStateInitial value)? initial,
     TResult? Function(EditorStateLoaded value)? loaded,
+    TResult? Function(EditorStateSaveNew value)? saveNew,
+    TResult? Function(EditorStateSaveOld value)? saveOld,
+    TResult? Function(EditorStateRemover value)? delete,
   }) {
     return loaded?.call(this);
   }
@@ -1213,6 +1849,9 @@ class _$EditorStateLoaded implements EditorStateLoaded {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(EditorStateInitial value)? initial,
     TResult Function(EditorStateLoaded value)? loaded,
+    TResult Function(EditorStateSaveNew value)? saveNew,
+    TResult Function(EditorStateSaveOld value)? saveOld,
+    TResult Function(EditorStateRemover value)? delete,
     required TResult orElse(),
   }) {
     if (loaded != null) {
@@ -1224,15 +1863,500 @@ class _$EditorStateLoaded implements EditorStateLoaded {
 
 abstract class EditorStateLoaded implements EditorState {
   const factory EditorStateLoaded(
-      {required final bool editMode,
-      required final Task task}) = _$EditorStateLoaded;
+      {required final Task task,
+      required final TextEditingController controller}) = _$EditorStateLoaded;
 
   @override
-  bool get editMode;
+  Task get task;
+  TextEditingController get controller;
+  @override
+  @JsonKey(ignore: true)
+  _$$EditorStateLoadedCopyWith<_$EditorStateLoaded> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$EditorStateSaveNewCopyWith<$Res>
+    implements $EditorStateCopyWith<$Res> {
+  factory _$$EditorStateSaveNewCopyWith(_$EditorStateSaveNew value,
+          $Res Function(_$EditorStateSaveNew) then) =
+      __$$EditorStateSaveNewCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({Task task});
+
+  @override
+  $TaskCopyWith<$Res> get task;
+}
+
+/// @nodoc
+class __$$EditorStateSaveNewCopyWithImpl<$Res>
+    extends _$EditorStateCopyWithImpl<$Res, _$EditorStateSaveNew>
+    implements _$$EditorStateSaveNewCopyWith<$Res> {
+  __$$EditorStateSaveNewCopyWithImpl(
+      _$EditorStateSaveNew _value, $Res Function(_$EditorStateSaveNew) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? task = null,
+  }) {
+    return _then(_$EditorStateSaveNew(
+      task: null == task
+          ? _value.task
+          : task // ignore: cast_nullable_to_non_nullable
+              as Task,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EditorStateSaveNew implements EditorStateSaveNew {
+  const _$EditorStateSaveNew({required this.task});
+
+  @override
+  final Task task;
+
+  @override
+  String toString() {
+    return 'EditorState.saveNew(task: $task)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EditorStateSaveNew &&
+            (identical(other.task, task) || other.task == task));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, task);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EditorStateSaveNewCopyWith<_$EditorStateSaveNew> get copyWith =>
+      __$$EditorStateSaveNewCopyWithImpl<_$EditorStateSaveNew>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Task task, TextEditingController controller)
+        initial,
+    required TResult Function(Task task, TextEditingController controller)
+        loaded,
+    required TResult Function(Task task) saveNew,
+    required TResult Function(Task task) saveOld,
+    required TResult Function(Task task) delete,
+  }) {
+    return saveNew(task);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Task task, TextEditingController controller)? initial,
+    TResult? Function(Task task, TextEditingController controller)? loaded,
+    TResult? Function(Task task)? saveNew,
+    TResult? Function(Task task)? saveOld,
+    TResult? Function(Task task)? delete,
+  }) {
+    return saveNew?.call(task);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Task task, TextEditingController controller)? initial,
+    TResult Function(Task task, TextEditingController controller)? loaded,
+    TResult Function(Task task)? saveNew,
+    TResult Function(Task task)? saveOld,
+    TResult Function(Task task)? delete,
+    required TResult orElse(),
+  }) {
+    if (saveNew != null) {
+      return saveNew(task);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EditorStateInitial value) initial,
+    required TResult Function(EditorStateLoaded value) loaded,
+    required TResult Function(EditorStateSaveNew value) saveNew,
+    required TResult Function(EditorStateSaveOld value) saveOld,
+    required TResult Function(EditorStateRemover value) delete,
+  }) {
+    return saveNew(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(EditorStateInitial value)? initial,
+    TResult? Function(EditorStateLoaded value)? loaded,
+    TResult? Function(EditorStateSaveNew value)? saveNew,
+    TResult? Function(EditorStateSaveOld value)? saveOld,
+    TResult? Function(EditorStateRemover value)? delete,
+  }) {
+    return saveNew?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EditorStateInitial value)? initial,
+    TResult Function(EditorStateLoaded value)? loaded,
+    TResult Function(EditorStateSaveNew value)? saveNew,
+    TResult Function(EditorStateSaveOld value)? saveOld,
+    TResult Function(EditorStateRemover value)? delete,
+    required TResult orElse(),
+  }) {
+    if (saveNew != null) {
+      return saveNew(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EditorStateSaveNew implements EditorState {
+  const factory EditorStateSaveNew({required final Task task}) =
+      _$EditorStateSaveNew;
+
   @override
   Task get task;
   @override
   @JsonKey(ignore: true)
-  _$$EditorStateLoadedCopyWith<_$EditorStateLoaded> get copyWith =>
+  _$$EditorStateSaveNewCopyWith<_$EditorStateSaveNew> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$EditorStateSaveOldCopyWith<$Res>
+    implements $EditorStateCopyWith<$Res> {
+  factory _$$EditorStateSaveOldCopyWith(_$EditorStateSaveOld value,
+          $Res Function(_$EditorStateSaveOld) then) =
+      __$$EditorStateSaveOldCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({Task task});
+
+  @override
+  $TaskCopyWith<$Res> get task;
+}
+
+/// @nodoc
+class __$$EditorStateSaveOldCopyWithImpl<$Res>
+    extends _$EditorStateCopyWithImpl<$Res, _$EditorStateSaveOld>
+    implements _$$EditorStateSaveOldCopyWith<$Res> {
+  __$$EditorStateSaveOldCopyWithImpl(
+      _$EditorStateSaveOld _value, $Res Function(_$EditorStateSaveOld) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? task = null,
+  }) {
+    return _then(_$EditorStateSaveOld(
+      task: null == task
+          ? _value.task
+          : task // ignore: cast_nullable_to_non_nullable
+              as Task,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EditorStateSaveOld implements EditorStateSaveOld {
+  const _$EditorStateSaveOld({required this.task});
+
+  @override
+  final Task task;
+
+  @override
+  String toString() {
+    return 'EditorState.saveOld(task: $task)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EditorStateSaveOld &&
+            (identical(other.task, task) || other.task == task));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, task);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EditorStateSaveOldCopyWith<_$EditorStateSaveOld> get copyWith =>
+      __$$EditorStateSaveOldCopyWithImpl<_$EditorStateSaveOld>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Task task, TextEditingController controller)
+        initial,
+    required TResult Function(Task task, TextEditingController controller)
+        loaded,
+    required TResult Function(Task task) saveNew,
+    required TResult Function(Task task) saveOld,
+    required TResult Function(Task task) delete,
+  }) {
+    return saveOld(task);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Task task, TextEditingController controller)? initial,
+    TResult? Function(Task task, TextEditingController controller)? loaded,
+    TResult? Function(Task task)? saveNew,
+    TResult? Function(Task task)? saveOld,
+    TResult? Function(Task task)? delete,
+  }) {
+    return saveOld?.call(task);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Task task, TextEditingController controller)? initial,
+    TResult Function(Task task, TextEditingController controller)? loaded,
+    TResult Function(Task task)? saveNew,
+    TResult Function(Task task)? saveOld,
+    TResult Function(Task task)? delete,
+    required TResult orElse(),
+  }) {
+    if (saveOld != null) {
+      return saveOld(task);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EditorStateInitial value) initial,
+    required TResult Function(EditorStateLoaded value) loaded,
+    required TResult Function(EditorStateSaveNew value) saveNew,
+    required TResult Function(EditorStateSaveOld value) saveOld,
+    required TResult Function(EditorStateRemover value) delete,
+  }) {
+    return saveOld(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(EditorStateInitial value)? initial,
+    TResult? Function(EditorStateLoaded value)? loaded,
+    TResult? Function(EditorStateSaveNew value)? saveNew,
+    TResult? Function(EditorStateSaveOld value)? saveOld,
+    TResult? Function(EditorStateRemover value)? delete,
+  }) {
+    return saveOld?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EditorStateInitial value)? initial,
+    TResult Function(EditorStateLoaded value)? loaded,
+    TResult Function(EditorStateSaveNew value)? saveNew,
+    TResult Function(EditorStateSaveOld value)? saveOld,
+    TResult Function(EditorStateRemover value)? delete,
+    required TResult orElse(),
+  }) {
+    if (saveOld != null) {
+      return saveOld(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EditorStateSaveOld implements EditorState {
+  const factory EditorStateSaveOld({required final Task task}) =
+      _$EditorStateSaveOld;
+
+  @override
+  Task get task;
+  @override
+  @JsonKey(ignore: true)
+  _$$EditorStateSaveOldCopyWith<_$EditorStateSaveOld> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$EditorStateRemoverCopyWith<$Res>
+    implements $EditorStateCopyWith<$Res> {
+  factory _$$EditorStateRemoverCopyWith(_$EditorStateRemover value,
+          $Res Function(_$EditorStateRemover) then) =
+      __$$EditorStateRemoverCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({Task task});
+
+  @override
+  $TaskCopyWith<$Res> get task;
+}
+
+/// @nodoc
+class __$$EditorStateRemoverCopyWithImpl<$Res>
+    extends _$EditorStateCopyWithImpl<$Res, _$EditorStateRemover>
+    implements _$$EditorStateRemoverCopyWith<$Res> {
+  __$$EditorStateRemoverCopyWithImpl(
+      _$EditorStateRemover _value, $Res Function(_$EditorStateRemover) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? task = null,
+  }) {
+    return _then(_$EditorStateRemover(
+      task: null == task
+          ? _value.task
+          : task // ignore: cast_nullable_to_non_nullable
+              as Task,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EditorStateRemover implements EditorStateRemover {
+  const _$EditorStateRemover({required this.task});
+
+  @override
+  final Task task;
+
+  @override
+  String toString() {
+    return 'EditorState.delete(task: $task)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EditorStateRemover &&
+            (identical(other.task, task) || other.task == task));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, task);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EditorStateRemoverCopyWith<_$EditorStateRemover> get copyWith =>
+      __$$EditorStateRemoverCopyWithImpl<_$EditorStateRemover>(
+          this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(Task task, TextEditingController controller)
+        initial,
+    required TResult Function(Task task, TextEditingController controller)
+        loaded,
+    required TResult Function(Task task) saveNew,
+    required TResult Function(Task task) saveOld,
+    required TResult Function(Task task) delete,
+  }) {
+    return delete(task);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(Task task, TextEditingController controller)? initial,
+    TResult? Function(Task task, TextEditingController controller)? loaded,
+    TResult? Function(Task task)? saveNew,
+    TResult? Function(Task task)? saveOld,
+    TResult? Function(Task task)? delete,
+  }) {
+    return delete?.call(task);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(Task task, TextEditingController controller)? initial,
+    TResult Function(Task task, TextEditingController controller)? loaded,
+    TResult Function(Task task)? saveNew,
+    TResult Function(Task task)? saveOld,
+    TResult Function(Task task)? delete,
+    required TResult orElse(),
+  }) {
+    if (delete != null) {
+      return delete(task);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EditorStateInitial value) initial,
+    required TResult Function(EditorStateLoaded value) loaded,
+    required TResult Function(EditorStateSaveNew value) saveNew,
+    required TResult Function(EditorStateSaveOld value) saveOld,
+    required TResult Function(EditorStateRemover value) delete,
+  }) {
+    return delete(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(EditorStateInitial value)? initial,
+    TResult? Function(EditorStateLoaded value)? loaded,
+    TResult? Function(EditorStateSaveNew value)? saveNew,
+    TResult? Function(EditorStateSaveOld value)? saveOld,
+    TResult? Function(EditorStateRemover value)? delete,
+  }) {
+    return delete?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EditorStateInitial value)? initial,
+    TResult Function(EditorStateLoaded value)? loaded,
+    TResult Function(EditorStateSaveNew value)? saveNew,
+    TResult Function(EditorStateSaveOld value)? saveOld,
+    TResult Function(EditorStateRemover value)? delete,
+    required TResult orElse(),
+  }) {
+    if (delete != null) {
+      return delete(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class EditorStateRemover implements EditorState {
+  const factory EditorStateRemover({required final Task task}) =
+      _$EditorStateRemover;
+
+  @override
+  Task get task;
+  @override
+  @JsonKey(ignore: true)
+  _$$EditorStateRemoverCopyWith<_$EditorStateRemover> get copyWith =>
       throw _privateConstructorUsedError;
 }

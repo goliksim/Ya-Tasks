@@ -11,12 +11,12 @@ class EditorTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return responsiveTextField(
       //resizeToAvoidBottomInset: condition ? false: true,
       //extendBody: true,
       condition: condition,
       child: Container(
+        margin: const EdgeInsets.fromLTRB(16, 0, 16, 12),
         decoration: BoxDecoration(
             color: context.myColors!.backSecondary,
             borderRadius: BorderRadius.circular(8.0)),

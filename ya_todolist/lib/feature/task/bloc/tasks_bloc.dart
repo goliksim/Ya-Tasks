@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:uuid/uuid.dart';
 import 'package:ya_todolist/app/analytics.dart';
 import 'package:ya_todolist/common/logger.dart';
 import 'package:ya_todolist/feature/task/data/repository/repository.dart';
+import 'package:ya_todolist/feature/task_editor/bloc/editor_bloc.dart';
 import '../data/domain/task_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -19,8 +22,24 @@ extension TaskBuilder on BuildContext {
 }
 
 class TasksBloc extends Bloc<TasksEvent, TasksState> {
-  TasksBloc({required repository})
+  final EditorBloc editorBloc;
+  late StreamSubscription streamSubscription;
+
+  TasksBloc({required this.editorBloc, required repository})
       : super(TasksState.initial(rep: repository)) {
+    streamSubscription = editorBloc.stream.listen((state) {
+      print(state.runtimeType);
+      if (state is EditorStateSaveNew) {
+        add(AddTask(task: state.task));
+      }
+      if (state is EditorStateSaveOld) {
+        add(UpdateTask(task: state.task));
+      }
+      if (state is EditorStateRemover) {
+        add(DeleteTask(task: state.task));
+      }
+    });
+
     on<LoadTasks>(_loadTasks);
     on<AddTask>(_addTask);
     on<DeleteTask>(_deleteTask);
@@ -83,7 +102,7 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
           myTasks: updatedTasks,
         ),
       );
-      
+
       await current.rep.updateTask(newTask);
       Logs.fine('TasksBloc: Task updated: $newTask');
     }

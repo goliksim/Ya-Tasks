@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
+import 'package:ya_todolist/feature/task_editor/bloc/editor_bloc.dart';
 
 class EditorDeleteButton extends StatelessWidget {
-  const EditorDeleteButton(
-      {super.key, required this.editMode, required this.deleteTask});
+  const EditorDeleteButton({super.key, required this.editMode});
   final bool editMode;
-  final void Function(BuildContext) deleteTask;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,9 @@ class EditorDeleteButton extends StatelessWidget {
         backgroundColor: Colors.transparent,
       ),
       onPressed: () {
-        deleteTask;
+        if (editMode) {
+          context.editBloc!.add(EditorRemover(context: context));
+        }
       },
       child: SizedBox(
         height: 48,
