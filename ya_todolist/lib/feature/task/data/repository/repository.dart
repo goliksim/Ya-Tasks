@@ -9,16 +9,18 @@ class Repository extends DataInterface {
   Repository({
     required this.networkStorage,
     required this.localStorage,
+    this.disableNet = false,
   });
 
   final LocalStorage localStorage;
   final NetworkStorage networkStorage;
+  final bool disableNet;
 
   @override
   Future<void> init() async {
     Logs.logg('Repository: initialization start...');
     await localStorage.init();
-    await networkStorage.init();
+    if (!disableNet) await networkStorage.init();
     Logs.fine('Repository: initialized!');
   }
 
@@ -37,55 +39,57 @@ class Repository extends DataInterface {
   }
 
   Future<void> syncStorages() async {
-    Logs.logg(
-        'Repository: Storage synchronization v2 [ Loc_rev - ${localStorage.revision}, Net_rev - ${networkStorage.revision} ]...');
-    final localTasks = await localStorage.getTasks();
-    late List<Task>? networkTasks;
-    if (networkStorage.revision != null) {
-      networkTasks = await networkStorage.getTasks();
-    } else {
-      networkTasks = null;
-    }
+    if (!disableNet) {
+      Logs.logg(
+          'Repository: Storage synchronization v2 [ Loc_rev - ${localStorage.revision}, Net_rev - ${networkStorage.revision} ]...');
+      final localTasks = await localStorage.getTasks();
+      late List<Task>? networkTasks;
+      if (networkStorage.revision != null) {
+        networkTasks = await networkStorage.getTasks();
+      } else {
+        networkTasks = null;
+      }
 
-    if (networkTasks != null) {
-      if (networkStorage.revision != localStorage.revision! ||
-          await checkChanges(networkTasks, localTasks)) {
-        if (networkTasks.isNotEmpty) {
-          final localTasksMap = <String, Task>{
-            for (var task in localTasks) task.id: task
-          };
-          for (final netTask in networkTasks) {
-            if (!localTasksMap.containsKey(netTask.id)) {
-              await localStorage.addTask(netTask);
-            } else {
-              final locTask = localTasksMap[netTask.id]!;
-              if (locTask.changedAt!.isBefore(netTask.changedAt!)) {
-                await localStorage.updateTask(netTask);
-              } else if (locTask.deleted) {
-                await localStorage.deleteTask(locTask.id);
-                localTasks.removeWhere((element) => element.id == locTask.id);
+      if (networkTasks != null) {
+        if (networkStorage.revision != localStorage.revision! ||
+            await checkChanges(networkTasks, localTasks)) {
+          if (networkTasks.isNotEmpty) {
+            final localTasksMap = <String, Task>{
+              for (var task in localTasks) task.id: task
+            };
+            for (final netTask in networkTasks) {
+              if (!localTasksMap.containsKey(netTask.id)) {
+                await localStorage.addTask(netTask);
+              } else {
+                final locTask = localTasksMap[netTask.id]!;
+                if (locTask.changedAt!.isBefore(netTask.changedAt!)) {
+                  await localStorage.updateTask(netTask);
+                } else if (locTask.deleted) {
+                  await localStorage.deleteTask(locTask.id);
+                  localTasks.removeWhere((element) => element.id == locTask.id);
+                }
               }
             }
+            for (final delTask in localTasks.where((e) => e.deleted).toList()) {
+              await localStorage.deleteTask(delTask.id);
+            }
+            //localStorage.updateTasks(localTasks);
+            Logs.logg('Repository: Successful merging!');
+          } else {
+            Logs.logg(
+                'Repository: Synchronization from localStorage. ERROR IN NET LIST!');
           }
-          for (final delTask in localTasks.where((e) => e.deleted).toList()) {
-            await localStorage.deleteTask(delTask.id);
+          if (await networkStorage.updateTasks(await localStorage.getTasks())) {
+            localStorage.revision = networkStorage.revision!;
+            localStorage.writeRev(networkStorage.revision!);
           }
-          //localStorage.updateTasks(localTasks);
-          Logs.logg('Repository: Successful merging!');
         } else {
-          Logs.logg(
-              'Repository: Synchronization from localStorage. ERROR IN NET LIST!');
+          Logs.logg('Repository: No need to sync');
         }
-        if (await networkStorage.updateTasks(await localStorage.getTasks())) {
-          localStorage.revision = networkStorage.revision!;
-          localStorage.writeRev(networkStorage.revision!);
-        }
-      } else {
-        Logs.logg('Repository: No need to sync');
       }
-    }
 
-    Logs.fine('Repository: synchronization completed!');
+      Logs.fine('Repository: synchronization completed!');
+    }
   }
 
   @override
@@ -101,30 +105,36 @@ class Repository extends DataInterface {
   @override
   Future<bool> addTask(Task task) async {
     await localStorage.addTask(task);
-    await networkStorage.addTask(task);
+    if (!disableNet) await networkStorage.addTask(task);
     return true;
   }
 
   @override
   Future<bool> updateTask(Task task) async {
     await localStorage.updateTask(task);
-    await networkStorage.updateTask(task);
+    if (!disableNet) await networkStorage.updateTask(task);
     return true;
   }
 
   @override
   Future<bool> deleteTask(String id) async {
-    bool deletedNet = await networkStorage.deleteTask(id);
-    if (deletedNet) {
+    if (!disableNet) {
+      bool deletedNet = await networkStorage.deleteTask(id);
+      if (deletedNet) {
+        await localStorage.deleteTask(id);
+        return deletedNet;
+      }
+    } else {
       await localStorage.deleteTask(id);
+      return true;
     }
-    return deletedNet;
+    return false;
   }
 
   @override
   Future<bool> updateTasks(List<Task> tasks) async {
     localStorage.updateTasks(tasks);
-    networkStorage.updateTasks(tasks);
+    if (!disableNet) networkStorage.updateTasks(tasks);
     return true;
   }
 }

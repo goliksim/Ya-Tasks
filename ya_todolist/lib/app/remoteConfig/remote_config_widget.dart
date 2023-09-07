@@ -4,7 +4,8 @@ import 'package:ya_todolist/app/config.dart';
 import 'remote_config_inherited.dart';
 
 class RemoteConfigWidget extends StatefulWidget {
-  const RemoteConfigWidget({super.key, required this.child});
+  const RemoteConfigWidget({super.key, required this.child, this.disabled = false});
+  final bool disabled;
   final Widget child;
   @override
   State<RemoteConfigWidget> createState() => _RemoteConfigWidgetState();
@@ -18,7 +19,7 @@ class _RemoteConfigWidgetState extends State<RemoteConfigWidget> {
   @override
   void initState() {
     super.initState();
-    getConfigColor();
+    if (!widget.disabled) getConfigColor();
   }
 
   Future<void> getConfigColor() async {

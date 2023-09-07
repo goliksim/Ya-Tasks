@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RemoteConfigWidget(
+      disabled: true,
       child: FlavorBanner(
         child: MultiBlocProvider(
           providers: [
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
                 create: (blocContext) => TasksBloc(
                       editorBloc: blocContext.read<EditorBloc>(),
                       repository: Repository(
+                        disableNet: true,
                         networkStorage: NetworkStorage(
                           networkSettings: NetworkSettings(),
                         ),
