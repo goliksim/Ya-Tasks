@@ -1,27 +1,30 @@
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:uuid/uuid.dart';
 import 'package:ya_todolist/common/logger.dart';
 import 'package:ya_todolist/feature/task/data/domain/data_interface.dart';
 import 'package:ya_todolist/feature/task/data/domain/task_model.dart';
-import 'package:ya_todolist/feature/task/data/local/local_settings.dart';
+import 'package:ya_todolist/feature/task/data/local/local_db.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 class LocalStorage implements DataInterface {
-  final LocalSettings localSettings;
+  final LocalDB db;
   late int? revision;
   String? userId;
 
-  LocalStorage({required this.localSettings, this.userId});
+  LocalStorage({required this.db, this.userId});
 
   @override
   Future<void> init() async {
-    await localSettings.init();
+    await db.init();
     await readRev();
     await readId();
     Logs.fine('LocalStorage: inited.');
   }
 
-  Future<String?> _getId() async {
+  static final String _uniqueId = const Uuid().v4();
+
+  Future<String?> getId() async {
     var deviceInfo = DeviceInfoPlugin();
     if (kIsWeb) {
       var webBrouserInfo = await deviceInfo.webBrowserInfo;
@@ -36,24 +39,24 @@ class LocalStorage implements DataInterface {
         return androidDeviceInfo.id; // unique ID on Android
       }
     }
-    return null;
+    return _uniqueId;
   }
 
   Future<String?> readId() async {
-    final tmp = localSettings.getId;
+    final tmp = db.getId;
     if (tmp != null) {
       userId = tmp;
     } else {
       Logs.warning('LocalStorage: CANNOT LOAD USER ID');
-      userId = await _getId();
+      userId = await getId();
 
-      localSettings.putId('$userId');
+      db.putId('$userId');
     }
     return userId;
   }
 
   Future<int?> readRev() async {
-    final tmp = localSettings.getRev;
+    final tmp = db.getRev;
     if (tmp != null) {
       revision = int.parse(tmp);
     } else {
@@ -65,29 +68,29 @@ class LocalStorage implements DataInterface {
 
   Future<void> writeInfo(List<Task> savedTasks, int rev) async {
     Logs.logg('LocalStorage: tasks info saved');
-    localSettings.patch(savedTasks);
+    db.patch(savedTasks);
     revision = rev;
     await writeRev(rev);
   }
 
   Future<void> writeRev(int rev) async {
-    localSettings.putRev('$rev');
+    db.putRev('$rev');
   }
 
   Future<void> deleteAllTasks() async {
-    localSettings.clearBox();
+    db.clearBox();
     await writeInfo([], revision! + 1);
   }
 
   @override
   Future<Task> getTask(String id) async {
-    final content = localSettings.getTask(id)!;
+    final content = db.getTask(id)!;
     return content;
   }
 
   @override
   Future<List<Task>> getTasks() async {
-    final content = localSettings.getTasks();
+    final content = db.getTasks();
     if (content != null) {
       return content;
     } else {
@@ -97,7 +100,7 @@ class LocalStorage implements DataInterface {
 
   @override
   Future<bool> addTask(Task task) async {
-    localSettings.put(task);
+    db.put(task);
     await writeRev(revision! + 1);
     Logs.logg('LocalStorage: Sucessful add task');
     return true;
@@ -105,7 +108,7 @@ class LocalStorage implements DataInterface {
 
   @override
   Future<bool> deleteTask(String id) async {
-    localSettings.delete(id);
+    db.delete(id);
     await writeRev(revision! + 1);
     Logs.logg('LocalStorage: sucessful delete task $id');
     return true;
@@ -113,7 +116,7 @@ class LocalStorage implements DataInterface {
 
   @override
   Future<bool> updateTask(Task newTask) async {
-    localSettings.updateTask(newTask);
+    db.updateTask(newTask);
     await writeRev(revision! + 1);
     Logs.logg('LocalStorage: sucessful update task');
     return true;

@@ -2,7 +2,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import '../domain/task_model.dart';
 
-class LocalSettings {
+class LocalDB {
   static const String _taskKey = 'TasksBox';
   static const String _configKey = 'configBox';
   Box<Task>? _taskBox;
@@ -41,6 +41,13 @@ class LocalSettings {
     //Hive.registerAdapter(ColorAdapter());
     _taskBox = await Hive.openBox<Task>(_taskKey);
     _configBox = await Hive.openBox<String>(_configKey);
+  }
+
+  Future<void> clearDB() async {
+    
+    await _taskBox?.deleteFromDisk();
+    await _configBox?.deleteFromDisk();
+    Hive.close();
   }
 
   Task? getTask(String id) {

@@ -6,7 +6,7 @@ import 'package:ya_todolist/app/remoteConfig/remote_config_widget.dart';
 import 'package:ya_todolist/common/routes/navigator_inherited.dart';
 import 'package:ya_todolist/common/routes/route_info_parser.dart';
 import 'package:ya_todolist/common/routes/router_delegate.dart';
-import 'package:ya_todolist/feature/task/data/local/local_settings.dart';
+import 'package:ya_todolist/feature/task/data/local/local_db.dart';
 import 'package:ya_todolist/feature/task/data/local/local_storage.dart';
 import 'package:ya_todolist/feature/task/data/network/network_storage.dart';
 import 'package:ya_todolist/feature/task/data/repository/repository.dart';
@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
                           networkSettings: NetworkSettings(),
                         ),
                         localStorage:
-                            LocalStorage(localSettings: LocalSettings()),
+                            LocalStorage(db: LocalDB()),
                       ),
                     )..add(const LoadTasks()))
           ],

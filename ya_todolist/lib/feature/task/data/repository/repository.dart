@@ -42,7 +42,7 @@ class Repository extends DataInterface {
     if (!disableNet) {
       Logs.logg(
           'Repository: Storage synchronization v2 [ Loc_rev - ${localStorage.revision}, Net_rev - ${networkStorage.revision} ]...');
-      final localTasks = await localStorage.getTasks();
+      var localTasks = await localStorage.getTasks();
       late List<Task>? networkTasks;
       if (networkStorage.revision != null) {
         networkTasks = await networkStorage.getTasks();
@@ -66,10 +66,11 @@ class Repository extends DataInterface {
                   await localStorage.updateTask(netTask);
                 } else if (locTask.deleted) {
                   await localStorage.deleteTask(locTask.id);
-                  localTasks.removeWhere((element) => element.id == locTask.id);
                 }
               }
             }
+            //Delete cache
+            localTasks = await localStorage.getTasks();
             for (final delTask in localTasks.where((e) => e.deleted).toList()) {
               await localStorage.deleteTask(delTask.id);
             }

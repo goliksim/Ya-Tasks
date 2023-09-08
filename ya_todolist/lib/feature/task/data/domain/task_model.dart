@@ -55,7 +55,7 @@ class Task with _$Task {
 //Тут мог быть JsonConverter, но он отказывается работать с hive ¯\_(⊙_⊙)_/¯
 
 DateTime? dateFromJson(int? value) =>
-    (value == null) ? null : DateTime.fromMillisecondsSinceEpoch(value * 1000);
+    (value == null) ? null : DateTime.fromMicrosecondsSinceEpoch(value);
 
 int? dateToJson(DateTime? value) =>
-    (value != null) ? value.millisecondsSinceEpoch ~/ 1000 : null;
+    (value != null) ? value.microsecondsSinceEpoch : null;

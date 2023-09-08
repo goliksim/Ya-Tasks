@@ -16,8 +16,8 @@ flowchart TD
 	end;
 	
 	subgraph  
-	LS --- LS_dis[Содержит LocalSettings\nОписывает функции для работы с базой данных.];
-	LS_dis --> BD([LocalSettings]);
+	LS --- LS_dis[Содержит LocalDB\nОписывает функции для работы с базой данных.];
+	LS_dis --> BD([LocalDB]);
 	BD --- BD_dis[Cодержит методы создания и обновления бд.];
 	end;
     
