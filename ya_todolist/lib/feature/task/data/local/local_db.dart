@@ -44,7 +44,6 @@ class LocalDB {
   }
 
   Future<void> clearDB() async {
-    
     await _taskBox?.deleteFromDisk();
     await _configBox?.deleteFromDisk();
     Hive.close();

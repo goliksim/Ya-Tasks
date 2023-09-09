@@ -39,8 +39,7 @@ class MyApp extends StatelessWidget {
                         networkStorage: NetworkStorage(
                           networkSettings: NetworkSettings(),
                         ),
-                        localStorage:
-                            LocalStorage(db: LocalDB()),
+                        localStorage: LocalStorage(db: LocalDB()),
                       ),
                     )..add(const LoadTasks()))
           ],

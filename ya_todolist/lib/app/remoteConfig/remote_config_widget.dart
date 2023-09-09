@@ -4,7 +4,8 @@ import 'package:ya_todolist/app/config.dart';
 import 'remote_config_inherited.dart';
 
 class RemoteConfigWidget extends StatefulWidget {
-  const RemoteConfigWidget({super.key, required this.child, this.disabled = false});
+  const RemoteConfigWidget(
+      {super.key, required this.child, this.disabled = false});
   final bool disabled;
   final Widget child;
   @override

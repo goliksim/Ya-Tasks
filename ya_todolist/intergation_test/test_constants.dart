@@ -44,7 +44,7 @@ class LocalMock extends Mock implements LocalStorage {
 
   @override
   Future<void> init() async {
-  list = _list;
+    list = _list;
   }
 
   @override
@@ -79,7 +79,6 @@ class LocalMock extends Mock implements LocalStorage {
 }
 
 class NetworkMock extends Mock implements NetworkStorage {
-
   @override
   int? revision;
 
