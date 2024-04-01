@@ -8,6 +8,7 @@ class MyFloatingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      mini: true,
       onPressed: () async {
         NavigationInherited.of(context).routerDelegate.showTaskEditor(null);
       },

@@ -4,8 +4,6 @@ import 'package:ya_todolist/common/theme_constants.dart';
 import 'package:ya_todolist/feature/task/bloc/tasks_bloc.dart';
 import 'package:ya_todolist/feature/task/task_widget.dart';
 
-import 'new_task_field.dart';
-
 class MySliverList extends StatefulWidget {
   const MySliverList({super.key});
 
@@ -21,43 +19,41 @@ class _MySliverListState extends State<MySliverList> {
       builder: (context, state) {
         state as TasksStateLoaded;
         final tasks = state.myTasks.where((e) => !e.deleted).toList();
+        //From end to start
+        final len = tasks.length - 1;
         return SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-            child: Material(
-              elevation: 2,
-              color: context.myColors!.backSecondary,
+          child: Material(
+            elevation: 2,
+            color: context.myColors!.backSecondary,
+            borderRadius: BorderRadius.circular(8),
+            child: ClipRRect(
               borderRadius: BorderRadius.circular(8),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Column(
-                    children: [
-                      AnimatedList(
-                        //buildDefaultDragHandles: false,
-                        //reverse: true,
-                        key: _key,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        initialItemCount: tasks.length,
-                        itemBuilder: (context, index, animation) {
-                          return SizeTransition(
-                            sizeFactor: animation,
-                            child: !(state.hideDone && tasks[index].done)
-                                ? TaskWidget(
-                                    key: ValueKey(tasks[index].id),
-                                    task: tasks[index],
-                                  )
-                                : SizedBox(
-                                    key: Key('$index'),
-                                  ),
-                          );
-                        },
-                      ),
-                      const NewTaskField(),
-                    ],
-                  ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: Column(
+                  children: [
+                    AnimatedList(
+                      //buildDefaultDragHandles: false,
+                      //reverse: true,
+                      key: _key,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      initialItemCount: tasks.length,
+                      itemBuilder: (context, index, animation) {
+                        return SizeTransition(
+                          sizeFactor: animation,
+                          child: !(state.hideDone && tasks[len - index].done)
+                              ? TaskWidget(
+                                  key: ValueKey(tasks[len - index].id),
+                                  task: tasks[len - index],
+                                )
+                              : SizedBox(
+                                  key: Key('${len - index}'),
+                                ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),

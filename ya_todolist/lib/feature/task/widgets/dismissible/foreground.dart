@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ya_todolist/common/routes/navigator_inherited.dart';
 import 'package:ya_todolist/feature/task/data/domain/task_model.dart';
 
 import '../checkbox.dart';
 import '../priority_widget.dart';
-import '../task_info_button.dart';
 import '../task_text.dart';
 
 class TaskForeground extends StatelessWidget {
@@ -14,25 +14,47 @@ class TaskForeground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          MyCheckBox(
-            task: task,
-            updateDone: updateDone,
+    return Column(
+      children: [
+        TextButton(
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
+            ),
           ),
-          const SizedBox(width: 12), // horizontal offset
-          PriorityWidget(priority: task.importance),
-          Expanded(
-            child: TaskText(task: task),
+          onPressed: () {
+            NavigationInherited.of(context)
+                .routerDelegate
+                .showTaskEditor(task.id);
+          },
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 16),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                MyCheckBox(
+                  task: task,
+                  updateDone: updateDone,
+                ),
+                const SizedBox(width: 12), // horizontal offset
+                PriorityWidget(priority: task.importance),
+                Expanded(
+                  child: TaskText(task: task),
+                ),
+                const SizedBox(width: 14), // horizontal offset
+                //TaskInfoButton(task: task),
+              ],
+            ),
           ),
-          const SizedBox(width: 14), // horizontal offset
-          TaskInfoButton(task: task),
-        ],
-      ),
+        ),
+        const Divider(
+          height: 1,
+          indent: 16,
+          endIndent: 16,
+        ),
+      ],
     );
   }
 }
