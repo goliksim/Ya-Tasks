@@ -96,8 +96,6 @@ class LocalStorageImpl implements DataInterface, TasksSubject {
   Future<List<Task>> getTasks() async {
     final content = db.getTasks();
     if (content != null) {
-      //SORTING BY DATE
-      content.sort((a, b) => a.changedAt.compareTo(b.changedAt));
       return TaskHiveModelToEntityMapper.mapList(content);
     } else {
       return [];
@@ -146,14 +144,7 @@ class LocalStorageImpl implements DataInterface, TasksSubject {
 
   @override
   Stream<List<Task>> observeAll() {
-    //SORTING BY DATE
-    final content = db.observeAll().map((tasks) {
-      tasks.sort((a, b) => a.changedAt.compareTo(b.changedAt));
-      return tasks;
-    });
-
-    final tasks = content.map((e) => TaskHiveModelToEntityMapper.mapList(e));
-    return tasks;
+    return db.observeAll().map((e) => TaskHiveModelToEntityMapper.mapList(e));
   }
 
   /*@override

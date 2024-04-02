@@ -19,8 +19,8 @@ mixin _$TasksEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() load,
-    required TResult Function(List<Task> tasks) loadFromStream,
-    required TResult Function() filter,
+    required TResult Function(List<Task> tasks) loadFromList,
+    required TResult Function(SortingType? sortingType) filter,
     required TResult Function(Task task) add,
     required TResult Function(Task task) update,
     required TResult Function(Task task) delete,
@@ -29,8 +29,8 @@ mixin _$TasksEvent {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? load,
-    TResult? Function(List<Task> tasks)? loadFromStream,
-    TResult? Function()? filter,
+    TResult? Function(List<Task> tasks)? loadFromList,
+    TResult? Function(SortingType? sortingType)? filter,
     TResult? Function(Task task)? add,
     TResult? Function(Task task)? update,
     TResult? Function(Task task)? delete,
@@ -39,8 +39,8 @@ mixin _$TasksEvent {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? load,
-    TResult Function(List<Task> tasks)? loadFromStream,
-    TResult Function()? filter,
+    TResult Function(List<Task> tasks)? loadFromList,
+    TResult Function(SortingType? sortingType)? filter,
     TResult Function(Task task)? add,
     TResult Function(Task task)? update,
     TResult Function(Task task)? delete,
@@ -50,8 +50,8 @@ mixin _$TasksEvent {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadTasks value) load,
-    required TResult Function(LoadStreamTasks value) loadFromStream,
-    required TResult Function(DoneFilter value) filter,
+    required TResult Function(LoadTasksList value) loadFromList,
+    required TResult Function(ChangeFilter value) filter,
     required TResult Function(AddTask value) add,
     required TResult Function(UpdateTask value) update,
     required TResult Function(DeleteTask value) delete,
@@ -60,8 +60,8 @@ mixin _$TasksEvent {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadTasks value)? load,
-    TResult? Function(LoadStreamTasks value)? loadFromStream,
-    TResult? Function(DoneFilter value)? filter,
+    TResult? Function(LoadTasksList value)? loadFromList,
+    TResult? Function(ChangeFilter value)? filter,
     TResult? Function(AddTask value)? add,
     TResult? Function(UpdateTask value)? update,
     TResult? Function(DeleteTask value)? delete,
@@ -70,8 +70,8 @@ mixin _$TasksEvent {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadTasks value)? load,
-    TResult Function(LoadStreamTasks value)? loadFromStream,
-    TResult Function(DoneFilter value)? filter,
+    TResult Function(LoadTasksList value)? loadFromList,
+    TResult Function(ChangeFilter value)? filter,
     TResult Function(AddTask value)? add,
     TResult Function(UpdateTask value)? update,
     TResult Function(DeleteTask value)? delete,
@@ -143,8 +143,8 @@ class _$LoadTasks with DiagnosticableTreeMixin implements LoadTasks {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() load,
-    required TResult Function(List<Task> tasks) loadFromStream,
-    required TResult Function() filter,
+    required TResult Function(List<Task> tasks) loadFromList,
+    required TResult Function(SortingType? sortingType) filter,
     required TResult Function(Task task) add,
     required TResult Function(Task task) update,
     required TResult Function(Task task) delete,
@@ -156,8 +156,8 @@ class _$LoadTasks with DiagnosticableTreeMixin implements LoadTasks {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? load,
-    TResult? Function(List<Task> tasks)? loadFromStream,
-    TResult? Function()? filter,
+    TResult? Function(List<Task> tasks)? loadFromList,
+    TResult? Function(SortingType? sortingType)? filter,
     TResult? Function(Task task)? add,
     TResult? Function(Task task)? update,
     TResult? Function(Task task)? delete,
@@ -169,8 +169,8 @@ class _$LoadTasks with DiagnosticableTreeMixin implements LoadTasks {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? load,
-    TResult Function(List<Task> tasks)? loadFromStream,
-    TResult Function()? filter,
+    TResult Function(List<Task> tasks)? loadFromList,
+    TResult Function(SortingType? sortingType)? filter,
     TResult Function(Task task)? add,
     TResult Function(Task task)? update,
     TResult Function(Task task)? delete,
@@ -186,8 +186,8 @@ class _$LoadTasks with DiagnosticableTreeMixin implements LoadTasks {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadTasks value) load,
-    required TResult Function(LoadStreamTasks value) loadFromStream,
-    required TResult Function(DoneFilter value) filter,
+    required TResult Function(LoadTasksList value) loadFromList,
+    required TResult Function(ChangeFilter value) filter,
     required TResult Function(AddTask value) add,
     required TResult Function(UpdateTask value) update,
     required TResult Function(DeleteTask value) delete,
@@ -199,8 +199,8 @@ class _$LoadTasks with DiagnosticableTreeMixin implements LoadTasks {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadTasks value)? load,
-    TResult? Function(LoadStreamTasks value)? loadFromStream,
-    TResult? Function(DoneFilter value)? filter,
+    TResult? Function(LoadTasksList value)? loadFromList,
+    TResult? Function(ChangeFilter value)? filter,
     TResult? Function(AddTask value)? add,
     TResult? Function(UpdateTask value)? update,
     TResult? Function(DeleteTask value)? delete,
@@ -212,8 +212,8 @@ class _$LoadTasks with DiagnosticableTreeMixin implements LoadTasks {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadTasks value)? load,
-    TResult Function(LoadStreamTasks value)? loadFromStream,
-    TResult Function(DoneFilter value)? filter,
+    TResult Function(LoadTasksList value)? loadFromList,
+    TResult Function(ChangeFilter value)? filter,
     TResult Function(AddTask value)? add,
     TResult Function(UpdateTask value)? update,
     TResult Function(DeleteTask value)? delete,
@@ -231,20 +231,20 @@ abstract class LoadTasks implements TasksEvent {
 }
 
 /// @nodoc
-abstract class _$$LoadStreamTasksCopyWith<$Res> {
-  factory _$$LoadStreamTasksCopyWith(
-          _$LoadStreamTasks value, $Res Function(_$LoadStreamTasks) then) =
-      __$$LoadStreamTasksCopyWithImpl<$Res>;
+abstract class _$$LoadTasksListCopyWith<$Res> {
+  factory _$$LoadTasksListCopyWith(
+          _$LoadTasksList value, $Res Function(_$LoadTasksList) then) =
+      __$$LoadTasksListCopyWithImpl<$Res>;
   @useResult
   $Res call({List<Task> tasks});
 }
 
 /// @nodoc
-class __$$LoadStreamTasksCopyWithImpl<$Res>
-    extends _$TasksEventCopyWithImpl<$Res, _$LoadStreamTasks>
-    implements _$$LoadStreamTasksCopyWith<$Res> {
-  __$$LoadStreamTasksCopyWithImpl(
-      _$LoadStreamTasks _value, $Res Function(_$LoadStreamTasks) _then)
+class __$$LoadTasksListCopyWithImpl<$Res>
+    extends _$TasksEventCopyWithImpl<$Res, _$LoadTasksList>
+    implements _$$LoadTasksListCopyWith<$Res> {
+  __$$LoadTasksListCopyWithImpl(
+      _$LoadTasksList _value, $Res Function(_$LoadTasksList) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -252,7 +252,7 @@ class __$$LoadStreamTasksCopyWithImpl<$Res>
   $Res call({
     Object? tasks = null,
   }) {
-    return _then(_$LoadStreamTasks(
+    return _then(_$LoadTasksList(
       null == tasks
           ? _value._tasks
           : tasks // ignore: cast_nullable_to_non_nullable
@@ -263,10 +263,8 @@ class __$$LoadStreamTasksCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoadStreamTasks
-    with DiagnosticableTreeMixin
-    implements LoadStreamTasks {
-  const _$LoadStreamTasks(final List<Task> tasks) : _tasks = tasks;
+class _$LoadTasksList with DiagnosticableTreeMixin implements LoadTasksList {
+  const _$LoadTasksList(final List<Task> tasks) : _tasks = tasks;
 
   final List<Task> _tasks;
   @override
@@ -278,14 +276,14 @@ class _$LoadStreamTasks
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TasksEvent.loadFromStream(tasks: $tasks)';
+    return 'TasksEvent.loadFromList(tasks: $tasks)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'TasksEvent.loadFromStream'))
+      ..add(DiagnosticsProperty('type', 'TasksEvent.loadFromList'))
       ..add(DiagnosticsProperty('tasks', tasks));
   }
 
@@ -293,7 +291,7 @@ class _$LoadStreamTasks
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LoadStreamTasks &&
+            other is _$LoadTasksList &&
             const DeepCollectionEquality().equals(other._tasks, _tasks));
   }
 
@@ -304,48 +302,48 @@ class _$LoadStreamTasks
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$LoadStreamTasksCopyWith<_$LoadStreamTasks> get copyWith =>
-      __$$LoadStreamTasksCopyWithImpl<_$LoadStreamTasks>(this, _$identity);
+  _$$LoadTasksListCopyWith<_$LoadTasksList> get copyWith =>
+      __$$LoadTasksListCopyWithImpl<_$LoadTasksList>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() load,
-    required TResult Function(List<Task> tasks) loadFromStream,
-    required TResult Function() filter,
+    required TResult Function(List<Task> tasks) loadFromList,
+    required TResult Function(SortingType? sortingType) filter,
     required TResult Function(Task task) add,
     required TResult Function(Task task) update,
     required TResult Function(Task task) delete,
   }) {
-    return loadFromStream(tasks);
+    return loadFromList(tasks);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? load,
-    TResult? Function(List<Task> tasks)? loadFromStream,
-    TResult? Function()? filter,
+    TResult? Function(List<Task> tasks)? loadFromList,
+    TResult? Function(SortingType? sortingType)? filter,
     TResult? Function(Task task)? add,
     TResult? Function(Task task)? update,
     TResult? Function(Task task)? delete,
   }) {
-    return loadFromStream?.call(tasks);
+    return loadFromList?.call(tasks);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? load,
-    TResult Function(List<Task> tasks)? loadFromStream,
-    TResult Function()? filter,
+    TResult Function(List<Task> tasks)? loadFromList,
+    TResult Function(SortingType? sortingType)? filter,
     TResult Function(Task task)? add,
     TResult Function(Task task)? update,
     TResult Function(Task task)? delete,
     required TResult orElse(),
   }) {
-    if (loadFromStream != null) {
-      return loadFromStream(tasks);
+    if (loadFromList != null) {
+      return loadFromList(tasks);
     }
     return orElse();
   }
@@ -354,135 +352,178 @@ class _$LoadStreamTasks
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadTasks value) load,
-    required TResult Function(LoadStreamTasks value) loadFromStream,
-    required TResult Function(DoneFilter value) filter,
+    required TResult Function(LoadTasksList value) loadFromList,
+    required TResult Function(ChangeFilter value) filter,
     required TResult Function(AddTask value) add,
     required TResult Function(UpdateTask value) update,
     required TResult Function(DeleteTask value) delete,
   }) {
-    return loadFromStream(this);
+    return loadFromList(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadTasks value)? load,
-    TResult? Function(LoadStreamTasks value)? loadFromStream,
-    TResult? Function(DoneFilter value)? filter,
+    TResult? Function(LoadTasksList value)? loadFromList,
+    TResult? Function(ChangeFilter value)? filter,
     TResult? Function(AddTask value)? add,
     TResult? Function(UpdateTask value)? update,
     TResult? Function(DeleteTask value)? delete,
   }) {
-    return loadFromStream?.call(this);
+    return loadFromList?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadTasks value)? load,
-    TResult Function(LoadStreamTasks value)? loadFromStream,
-    TResult Function(DoneFilter value)? filter,
+    TResult Function(LoadTasksList value)? loadFromList,
+    TResult Function(ChangeFilter value)? filter,
     TResult Function(AddTask value)? add,
     TResult Function(UpdateTask value)? update,
     TResult Function(DeleteTask value)? delete,
     required TResult orElse(),
   }) {
-    if (loadFromStream != null) {
-      return loadFromStream(this);
+    if (loadFromList != null) {
+      return loadFromList(this);
     }
     return orElse();
   }
 }
 
-abstract class LoadStreamTasks implements TasksEvent {
-  const factory LoadStreamTasks(final List<Task> tasks) = _$LoadStreamTasks;
+abstract class LoadTasksList implements TasksEvent {
+  const factory LoadTasksList(final List<Task> tasks) = _$LoadTasksList;
 
   List<Task> get tasks;
   @JsonKey(ignore: true)
-  _$$LoadStreamTasksCopyWith<_$LoadStreamTasks> get copyWith =>
+  _$$LoadTasksListCopyWith<_$LoadTasksList> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$DoneFilterCopyWith<$Res> {
-  factory _$$DoneFilterCopyWith(
-          _$DoneFilter value, $Res Function(_$DoneFilter) then) =
-      __$$DoneFilterCopyWithImpl<$Res>;
+abstract class _$$ChangeFilterCopyWith<$Res> {
+  factory _$$ChangeFilterCopyWith(
+          _$ChangeFilter value, $Res Function(_$ChangeFilter) then) =
+      __$$ChangeFilterCopyWithImpl<$Res>;
+  @useResult
+  $Res call({SortingType? sortingType});
+
+  $SortingTypeCopyWith<$Res>? get sortingType;
 }
 
 /// @nodoc
-class __$$DoneFilterCopyWithImpl<$Res>
-    extends _$TasksEventCopyWithImpl<$Res, _$DoneFilter>
-    implements _$$DoneFilterCopyWith<$Res> {
-  __$$DoneFilterCopyWithImpl(
-      _$DoneFilter _value, $Res Function(_$DoneFilter) _then)
+class __$$ChangeFilterCopyWithImpl<$Res>
+    extends _$TasksEventCopyWithImpl<$Res, _$ChangeFilter>
+    implements _$$ChangeFilterCopyWith<$Res> {
+  __$$ChangeFilterCopyWithImpl(
+      _$ChangeFilter _value, $Res Function(_$ChangeFilter) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? sortingType = freezed,
+  }) {
+    return _then(_$ChangeFilter(
+      sortingType: freezed == sortingType
+          ? _value.sortingType
+          : sortingType // ignore: cast_nullable_to_non_nullable
+              as SortingType?,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SortingTypeCopyWith<$Res>? get sortingType {
+    if (_value.sortingType == null) {
+      return null;
+    }
+
+    return $SortingTypeCopyWith<$Res>(_value.sortingType!, (value) {
+      return _then(_value.copyWith(sortingType: value));
+    });
+  }
 }
 
 /// @nodoc
 
-class _$DoneFilter with DiagnosticableTreeMixin implements DoneFilter {
-  const _$DoneFilter();
+class _$ChangeFilter with DiagnosticableTreeMixin implements ChangeFilter {
+  const _$ChangeFilter({this.sortingType});
+
+  @override
+  final SortingType? sortingType;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TasksEvent.filter()';
+    return 'TasksEvent.filter(sortingType: $sortingType)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty('type', 'TasksEvent.filter'));
+    properties
+      ..add(DiagnosticsProperty('type', 'TasksEvent.filter'))
+      ..add(DiagnosticsProperty('sortingType', sortingType));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$DoneFilter);
+        (other.runtimeType == runtimeType &&
+            other is _$ChangeFilter &&
+            (identical(other.sortingType, sortingType) ||
+                other.sortingType == sortingType));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, sortingType);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ChangeFilterCopyWith<_$ChangeFilter> get copyWith =>
+      __$$ChangeFilterCopyWithImpl<_$ChangeFilter>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() load,
-    required TResult Function(List<Task> tasks) loadFromStream,
-    required TResult Function() filter,
+    required TResult Function(List<Task> tasks) loadFromList,
+    required TResult Function(SortingType? sortingType) filter,
     required TResult Function(Task task) add,
     required TResult Function(Task task) update,
     required TResult Function(Task task) delete,
   }) {
-    return filter();
+    return filter(sortingType);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? load,
-    TResult? Function(List<Task> tasks)? loadFromStream,
-    TResult? Function()? filter,
+    TResult? Function(List<Task> tasks)? loadFromList,
+    TResult? Function(SortingType? sortingType)? filter,
     TResult? Function(Task task)? add,
     TResult? Function(Task task)? update,
     TResult? Function(Task task)? delete,
   }) {
-    return filter?.call();
+    return filter?.call(sortingType);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? load,
-    TResult Function(List<Task> tasks)? loadFromStream,
-    TResult Function()? filter,
+    TResult Function(List<Task> tasks)? loadFromList,
+    TResult Function(SortingType? sortingType)? filter,
     TResult Function(Task task)? add,
     TResult Function(Task task)? update,
     TResult Function(Task task)? delete,
     required TResult orElse(),
   }) {
     if (filter != null) {
-      return filter();
+      return filter(sortingType);
     }
     return orElse();
   }
@@ -491,8 +532,8 @@ class _$DoneFilter with DiagnosticableTreeMixin implements DoneFilter {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadTasks value) load,
-    required TResult Function(LoadStreamTasks value) loadFromStream,
-    required TResult Function(DoneFilter value) filter,
+    required TResult Function(LoadTasksList value) loadFromList,
+    required TResult Function(ChangeFilter value) filter,
     required TResult Function(AddTask value) add,
     required TResult Function(UpdateTask value) update,
     required TResult Function(DeleteTask value) delete,
@@ -504,8 +545,8 @@ class _$DoneFilter with DiagnosticableTreeMixin implements DoneFilter {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadTasks value)? load,
-    TResult? Function(LoadStreamTasks value)? loadFromStream,
-    TResult? Function(DoneFilter value)? filter,
+    TResult? Function(LoadTasksList value)? loadFromList,
+    TResult? Function(ChangeFilter value)? filter,
     TResult? Function(AddTask value)? add,
     TResult? Function(UpdateTask value)? update,
     TResult? Function(DeleteTask value)? delete,
@@ -517,8 +558,8 @@ class _$DoneFilter with DiagnosticableTreeMixin implements DoneFilter {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadTasks value)? load,
-    TResult Function(LoadStreamTasks value)? loadFromStream,
-    TResult Function(DoneFilter value)? filter,
+    TResult Function(LoadTasksList value)? loadFromList,
+    TResult Function(ChangeFilter value)? filter,
     TResult Function(AddTask value)? add,
     TResult Function(UpdateTask value)? update,
     TResult Function(DeleteTask value)? delete,
@@ -531,8 +572,13 @@ class _$DoneFilter with DiagnosticableTreeMixin implements DoneFilter {
   }
 }
 
-abstract class DoneFilter implements TasksEvent {
-  const factory DoneFilter() = _$DoneFilter;
+abstract class ChangeFilter implements TasksEvent {
+  const factory ChangeFilter({final SortingType? sortingType}) = _$ChangeFilter;
+
+  SortingType? get sortingType;
+  @JsonKey(ignore: true)
+  _$$ChangeFilterCopyWith<_$ChangeFilter> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -616,8 +662,8 @@ class _$AddTask with DiagnosticableTreeMixin implements AddTask {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() load,
-    required TResult Function(List<Task> tasks) loadFromStream,
-    required TResult Function() filter,
+    required TResult Function(List<Task> tasks) loadFromList,
+    required TResult Function(SortingType? sortingType) filter,
     required TResult Function(Task task) add,
     required TResult Function(Task task) update,
     required TResult Function(Task task) delete,
@@ -629,8 +675,8 @@ class _$AddTask with DiagnosticableTreeMixin implements AddTask {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? load,
-    TResult? Function(List<Task> tasks)? loadFromStream,
-    TResult? Function()? filter,
+    TResult? Function(List<Task> tasks)? loadFromList,
+    TResult? Function(SortingType? sortingType)? filter,
     TResult? Function(Task task)? add,
     TResult? Function(Task task)? update,
     TResult? Function(Task task)? delete,
@@ -642,8 +688,8 @@ class _$AddTask with DiagnosticableTreeMixin implements AddTask {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? load,
-    TResult Function(List<Task> tasks)? loadFromStream,
-    TResult Function()? filter,
+    TResult Function(List<Task> tasks)? loadFromList,
+    TResult Function(SortingType? sortingType)? filter,
     TResult Function(Task task)? add,
     TResult Function(Task task)? update,
     TResult Function(Task task)? delete,
@@ -659,8 +705,8 @@ class _$AddTask with DiagnosticableTreeMixin implements AddTask {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadTasks value) load,
-    required TResult Function(LoadStreamTasks value) loadFromStream,
-    required TResult Function(DoneFilter value) filter,
+    required TResult Function(LoadTasksList value) loadFromList,
+    required TResult Function(ChangeFilter value) filter,
     required TResult Function(AddTask value) add,
     required TResult Function(UpdateTask value) update,
     required TResult Function(DeleteTask value) delete,
@@ -672,8 +718,8 @@ class _$AddTask with DiagnosticableTreeMixin implements AddTask {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadTasks value)? load,
-    TResult? Function(LoadStreamTasks value)? loadFromStream,
-    TResult? Function(DoneFilter value)? filter,
+    TResult? Function(LoadTasksList value)? loadFromList,
+    TResult? Function(ChangeFilter value)? filter,
     TResult? Function(AddTask value)? add,
     TResult? Function(UpdateTask value)? update,
     TResult? Function(DeleteTask value)? delete,
@@ -685,8 +731,8 @@ class _$AddTask with DiagnosticableTreeMixin implements AddTask {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadTasks value)? load,
-    TResult Function(LoadStreamTasks value)? loadFromStream,
-    TResult Function(DoneFilter value)? filter,
+    TResult Function(LoadTasksList value)? loadFromList,
+    TResult Function(ChangeFilter value)? filter,
     TResult Function(AddTask value)? add,
     TResult Function(UpdateTask value)? update,
     TResult Function(DeleteTask value)? delete,
@@ -791,8 +837,8 @@ class _$UpdateTask with DiagnosticableTreeMixin implements UpdateTask {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() load,
-    required TResult Function(List<Task> tasks) loadFromStream,
-    required TResult Function() filter,
+    required TResult Function(List<Task> tasks) loadFromList,
+    required TResult Function(SortingType? sortingType) filter,
     required TResult Function(Task task) add,
     required TResult Function(Task task) update,
     required TResult Function(Task task) delete,
@@ -804,8 +850,8 @@ class _$UpdateTask with DiagnosticableTreeMixin implements UpdateTask {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? load,
-    TResult? Function(List<Task> tasks)? loadFromStream,
-    TResult? Function()? filter,
+    TResult? Function(List<Task> tasks)? loadFromList,
+    TResult? Function(SortingType? sortingType)? filter,
     TResult? Function(Task task)? add,
     TResult? Function(Task task)? update,
     TResult? Function(Task task)? delete,
@@ -817,8 +863,8 @@ class _$UpdateTask with DiagnosticableTreeMixin implements UpdateTask {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? load,
-    TResult Function(List<Task> tasks)? loadFromStream,
-    TResult Function()? filter,
+    TResult Function(List<Task> tasks)? loadFromList,
+    TResult Function(SortingType? sortingType)? filter,
     TResult Function(Task task)? add,
     TResult Function(Task task)? update,
     TResult Function(Task task)? delete,
@@ -834,8 +880,8 @@ class _$UpdateTask with DiagnosticableTreeMixin implements UpdateTask {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadTasks value) load,
-    required TResult Function(LoadStreamTasks value) loadFromStream,
-    required TResult Function(DoneFilter value) filter,
+    required TResult Function(LoadTasksList value) loadFromList,
+    required TResult Function(ChangeFilter value) filter,
     required TResult Function(AddTask value) add,
     required TResult Function(UpdateTask value) update,
     required TResult Function(DeleteTask value) delete,
@@ -847,8 +893,8 @@ class _$UpdateTask with DiagnosticableTreeMixin implements UpdateTask {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadTasks value)? load,
-    TResult? Function(LoadStreamTasks value)? loadFromStream,
-    TResult? Function(DoneFilter value)? filter,
+    TResult? Function(LoadTasksList value)? loadFromList,
+    TResult? Function(ChangeFilter value)? filter,
     TResult? Function(AddTask value)? add,
     TResult? Function(UpdateTask value)? update,
     TResult? Function(DeleteTask value)? delete,
@@ -860,8 +906,8 @@ class _$UpdateTask with DiagnosticableTreeMixin implements UpdateTask {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadTasks value)? load,
-    TResult Function(LoadStreamTasks value)? loadFromStream,
-    TResult Function(DoneFilter value)? filter,
+    TResult Function(LoadTasksList value)? loadFromList,
+    TResult Function(ChangeFilter value)? filter,
     TResult Function(AddTask value)? add,
     TResult Function(UpdateTask value)? update,
     TResult Function(DeleteTask value)? delete,
@@ -966,8 +1012,8 @@ class _$DeleteTask with DiagnosticableTreeMixin implements DeleteTask {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() load,
-    required TResult Function(List<Task> tasks) loadFromStream,
-    required TResult Function() filter,
+    required TResult Function(List<Task> tasks) loadFromList,
+    required TResult Function(SortingType? sortingType) filter,
     required TResult Function(Task task) add,
     required TResult Function(Task task) update,
     required TResult Function(Task task) delete,
@@ -979,8 +1025,8 @@ class _$DeleteTask with DiagnosticableTreeMixin implements DeleteTask {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? load,
-    TResult? Function(List<Task> tasks)? loadFromStream,
-    TResult? Function()? filter,
+    TResult? Function(List<Task> tasks)? loadFromList,
+    TResult? Function(SortingType? sortingType)? filter,
     TResult? Function(Task task)? add,
     TResult? Function(Task task)? update,
     TResult? Function(Task task)? delete,
@@ -992,8 +1038,8 @@ class _$DeleteTask with DiagnosticableTreeMixin implements DeleteTask {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? load,
-    TResult Function(List<Task> tasks)? loadFromStream,
-    TResult Function()? filter,
+    TResult Function(List<Task> tasks)? loadFromList,
+    TResult Function(SortingType? sortingType)? filter,
     TResult Function(Task task)? add,
     TResult Function(Task task)? update,
     TResult Function(Task task)? delete,
@@ -1009,8 +1055,8 @@ class _$DeleteTask with DiagnosticableTreeMixin implements DeleteTask {
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(LoadTasks value) load,
-    required TResult Function(LoadStreamTasks value) loadFromStream,
-    required TResult Function(DoneFilter value) filter,
+    required TResult Function(LoadTasksList value) loadFromList,
+    required TResult Function(ChangeFilter value) filter,
     required TResult Function(AddTask value) add,
     required TResult Function(UpdateTask value) update,
     required TResult Function(DeleteTask value) delete,
@@ -1022,8 +1068,8 @@ class _$DeleteTask with DiagnosticableTreeMixin implements DeleteTask {
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(LoadTasks value)? load,
-    TResult? Function(LoadStreamTasks value)? loadFromStream,
-    TResult? Function(DoneFilter value)? filter,
+    TResult? Function(LoadTasksList value)? loadFromList,
+    TResult? Function(ChangeFilter value)? filter,
     TResult? Function(AddTask value)? add,
     TResult? Function(UpdateTask value)? update,
     TResult? Function(DeleteTask value)? delete,
@@ -1035,8 +1081,8 @@ class _$DeleteTask with DiagnosticableTreeMixin implements DeleteTask {
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(LoadTasks value)? load,
-    TResult Function(LoadStreamTasks value)? loadFromStream,
-    TResult Function(DoneFilter value)? filter,
+    TResult Function(LoadTasksList value)? loadFromList,
+    TResult Function(ChangeFilter value)? filter,
     TResult Function(AddTask value)? add,
     TResult Function(UpdateTask value)? update,
     TResult Function(DeleteTask value)? delete,
@@ -1064,24 +1110,24 @@ mixin _$TasksState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Repository rep) initial,
-    required TResult Function(
-            List<Task> myTasks, Repository rep, bool hideDone, bool loaded)
+    required TResult Function(List<Task> myTasks, Repository rep,
+            SortingType sortingType, bool loaded)
         loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Repository rep)? initial,
-    TResult? Function(
-            List<Task> myTasks, Repository rep, bool hideDone, bool loaded)?
+    TResult? Function(List<Task> myTasks, Repository rep,
+            SortingType sortingType, bool loaded)?
         loaded,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Repository rep)? initial,
-    TResult Function(
-            List<Task> myTasks, Repository rep, bool hideDone, bool loaded)?
+    TResult Function(List<Task> myTasks, Repository rep,
+            SortingType sortingType, bool loaded)?
         loaded,
     required TResult orElse(),
   }) =>
@@ -1221,8 +1267,8 @@ class _$TasksStateInitial
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Repository rep) initial,
-    required TResult Function(
-            List<Task> myTasks, Repository rep, bool hideDone, bool loaded)
+    required TResult Function(List<Task> myTasks, Repository rep,
+            SortingType sortingType, bool loaded)
         loaded,
   }) {
     return initial(rep);
@@ -1232,8 +1278,8 @@ class _$TasksStateInitial
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Repository rep)? initial,
-    TResult? Function(
-            List<Task> myTasks, Repository rep, bool hideDone, bool loaded)?
+    TResult? Function(List<Task> myTasks, Repository rep,
+            SortingType sortingType, bool loaded)?
         loaded,
   }) {
     return initial?.call(rep);
@@ -1243,8 +1289,8 @@ class _$TasksStateInitial
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Repository rep)? initial,
-    TResult Function(
-            List<Task> myTasks, Repository rep, bool hideDone, bool loaded)?
+    TResult Function(List<Task> myTasks, Repository rep,
+            SortingType sortingType, bool loaded)?
         loaded,
     required TResult orElse(),
   }) {
@@ -1306,7 +1352,13 @@ abstract class _$$TasksStateLoadedCopyWith<$Res>
       __$$TasksStateLoadedCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Task> myTasks, Repository rep, bool hideDone, bool loaded});
+  $Res call(
+      {List<Task> myTasks,
+      Repository rep,
+      SortingType sortingType,
+      bool loaded});
+
+  $SortingTypeCopyWith<$Res> get sortingType;
 }
 
 /// @nodoc
@@ -1322,7 +1374,7 @@ class __$$TasksStateLoadedCopyWithImpl<$Res>
   $Res call({
     Object? myTasks = null,
     Object? rep = null,
-    Object? hideDone = null,
+    Object? sortingType = null,
     Object? loaded = null,
   }) {
     return _then(_$TasksStateLoaded(
@@ -1334,15 +1386,23 @@ class __$$TasksStateLoadedCopyWithImpl<$Res>
           ? _value.rep
           : rep // ignore: cast_nullable_to_non_nullable
               as Repository,
-      hideDone: null == hideDone
-          ? _value.hideDone
-          : hideDone // ignore: cast_nullable_to_non_nullable
-              as bool,
+      sortingType: null == sortingType
+          ? _value.sortingType
+          : sortingType // ignore: cast_nullable_to_non_nullable
+              as SortingType,
       loaded: null == loaded
           ? _value.loaded
           : loaded // ignore: cast_nullable_to_non_nullable
               as bool,
     ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $SortingTypeCopyWith<$Res> get sortingType {
+    return $SortingTypeCopyWith<$Res>(_value.sortingType, (value) {
+      return _then(_value.copyWith(sortingType: value));
+    });
   }
 }
 
@@ -1354,7 +1414,7 @@ class _$TasksStateLoaded
   const _$TasksStateLoaded(
       {required final List<Task> myTasks,
       required this.rep,
-      required this.hideDone,
+      required this.sortingType,
       required this.loaded})
       : _myTasks = myTasks;
 
@@ -1368,15 +1428,15 @@ class _$TasksStateLoaded
 
   @override
   final Repository rep;
+//TODO MOVE REPOSITORY TO DI
   @override
-  final bool hideDone;
-//UI
+  final SortingType sortingType;
   @override
   final bool loaded;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'TasksState.loaded(myTasks: $myTasks, rep: $rep, hideDone: $hideDone, loaded: $loaded)';
+    return 'TasksState.loaded(myTasks: $myTasks, rep: $rep, sortingType: $sortingType, loaded: $loaded)';
   }
 
   @override
@@ -1386,7 +1446,7 @@ class _$TasksStateLoaded
       ..add(DiagnosticsProperty('type', 'TasksState.loaded'))
       ..add(DiagnosticsProperty('myTasks', myTasks))
       ..add(DiagnosticsProperty('rep', rep))
-      ..add(DiagnosticsProperty('hideDone', hideDone))
+      ..add(DiagnosticsProperty('sortingType', sortingType))
       ..add(DiagnosticsProperty('loaded', loaded));
   }
 
@@ -1397,14 +1457,14 @@ class _$TasksStateLoaded
             other is _$TasksStateLoaded &&
             const DeepCollectionEquality().equals(other._myTasks, _myTasks) &&
             (identical(other.rep, rep) || other.rep == rep) &&
-            (identical(other.hideDone, hideDone) ||
-                other.hideDone == hideDone) &&
+            (identical(other.sortingType, sortingType) ||
+                other.sortingType == sortingType) &&
             (identical(other.loaded, loaded) || other.loaded == loaded));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_myTasks), rep, hideDone, loaded);
+      const DeepCollectionEquality().hash(_myTasks), rep, sortingType, loaded);
 
   @JsonKey(ignore: true)
   @override
@@ -1416,35 +1476,35 @@ class _$TasksStateLoaded
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(Repository rep) initial,
-    required TResult Function(
-            List<Task> myTasks, Repository rep, bool hideDone, bool loaded)
+    required TResult Function(List<Task> myTasks, Repository rep,
+            SortingType sortingType, bool loaded)
         loaded,
   }) {
-    return loaded(myTasks, rep, hideDone, this.loaded);
+    return loaded(myTasks, rep, sortingType, this.loaded);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(Repository rep)? initial,
-    TResult? Function(
-            List<Task> myTasks, Repository rep, bool hideDone, bool loaded)?
+    TResult? Function(List<Task> myTasks, Repository rep,
+            SortingType sortingType, bool loaded)?
         loaded,
   }) {
-    return loaded?.call(myTasks, rep, hideDone, this.loaded);
+    return loaded?.call(myTasks, rep, sortingType, this.loaded);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(Repository rep)? initial,
-    TResult Function(
-            List<Task> myTasks, Repository rep, bool hideDone, bool loaded)?
+    TResult Function(List<Task> myTasks, Repository rep,
+            SortingType sortingType, bool loaded)?
         loaded,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(myTasks, rep, hideDone, this.loaded);
+      return loaded(myTasks, rep, sortingType, this.loaded);
     }
     return orElse();
   }
@@ -1485,13 +1545,13 @@ abstract class TasksStateLoaded implements TasksState {
   const factory TasksStateLoaded(
       {required final List<Task> myTasks,
       required final Repository rep,
-      required final bool hideDone,
+      required final SortingType sortingType,
       required final bool loaded}) = _$TasksStateLoaded;
 
   List<Task> get myTasks;
   @override
-  Repository get rep;
-  bool get hideDone; //UI
+  Repository get rep; //TODO MOVE REPOSITORY TO DI
+  SortingType get sortingType;
   bool get loaded;
   @override
   @JsonKey(ignore: true)

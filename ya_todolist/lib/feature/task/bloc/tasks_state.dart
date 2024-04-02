@@ -9,8 +9,8 @@ class TasksState with _$TasksState {
 
   const factory TasksState.loaded(
       {required List<Task> myTasks,
-      required Repository rep,
-      required bool hideDone, //UI
+      required Repository rep, //TODO MOVE REPOSITORY TO DI
+      required SortingType sortingType,
       required bool loaded}) = TasksStateLoaded;
 
   //const factory TasksState.update() = _TasksStateUpdate;

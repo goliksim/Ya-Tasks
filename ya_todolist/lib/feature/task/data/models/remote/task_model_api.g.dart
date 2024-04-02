@@ -36,7 +36,7 @@ Map<String, dynamic> _$$_TaskApiModelToJson(_$_TaskApiModel instance) =>
     };
 
 const _$ImportanceEnumMap = {
-  Importance.basic: 'basic',
   Importance.low: 'low',
+  Importance.basic: 'basic',
   Importance.important: 'important',
 };

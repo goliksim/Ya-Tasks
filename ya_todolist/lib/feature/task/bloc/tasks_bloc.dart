@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
 import 'package:ya_todolist/app/analytics.dart';
 import 'package:ya_todolist/common/logger.dart';
+import 'package:ya_todolist/feature/home/models/sorting_model.dart';
 import 'package:ya_todolist/feature/task/domain/repositories/repository.dart';
 import 'package:ya_todolist/feature/task_editor/bloc/editor_bloc.dart';
 import '../domain/models/task_entity.dart';
@@ -45,51 +46,49 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     );
     taskSubscription = repository.observeAll().listen((tasks) {
       print(tasks);
-      add(LoadStreamTasks(tasks));
+      add(LoadTasksList(tasks));
+      Logs.logg(
+          'TasksBloc: loaded from stream ${tasks.length} tasks to bloc -\n${tasks.length < 3 ? tasks.join('\n') : "${tasks.first.toString()}\n...\n${tasks.last.toString()}"}');
     });
 
-    on<LoadTasks>(_loadTasks);
-    on<LoadStreamTasks>(_loadStreamTasks);
+    on<LoadTasks>(_load);
+    on<LoadTasksList>(_loadTasksList);
     on<AddTask>(_addTask);
     on<DeleteTask>(_deleteTask);
     on<UpdateTask>(_updateTask);
-    on<DoneFilter>(_doneFilter);
+    on<ChangeFilter>(_changeFilter);
     //on<InsertTask>(_insertTask);
   }
 
-  Future<void> _loadStreamTasks(
-      LoadStreamTasks event, Emitter<TasksState> emit) async {
+  Future<void> _loadTasksList(
+      LoadTasksList event, Emitter<TasksState> emit) async {
     final finalList = event.tasks;
     emit(
       TasksState.loaded(
         myTasks: finalList,
-        hideDone: true,
+        sortingType: (state is TasksStateLoaded
+            ? (state as TasksStateLoaded).sortingType
+            : const SortingType(type: SortType.changedAt)),
         loaded: true,
         rep: state.rep,
       ),
     );
-    Logs.logg(
-        'TasksBloc: loaded from stream ${finalList.length} tasks to bloc -\n${finalList.length < 3 ? finalList.join('\n') : "${finalList.first}\n...\n${finalList.last}"}');
   }
 
-  Future<void> _loadTasks(LoadTasks event, Emitter<TasksState> emit) async {
+  Future<void> _load(LoadTasks event, Emitter<TasksState> emit) async {
     if (state is TasksStateInitial) {
       await state.rep.init();
     }
-
+    //TODO SORTING TYPE TO CONFIG
     if (state is TasksStateLoaded || state is TasksStateInitial) {
       await state.rep.syncStorages();
       final finalList = await state.rep.getTasks();
-      emit(
-        TasksState.loaded(
-          myTasks: finalList!,
-          hideDone: true,
-          loaded: true,
-          rep: state.rep,
-        ),
-      );
-      Logs.logg(
-          'TasksBloc: loaded ${finalList.length} tasks to bloc -\n${finalList.length < 3 ? finalList.join('\n') : "${finalList.first}\n...\n${finalList.last}"}');
+
+      if (finalList != null) {
+        add(LoadTasksList(finalList));
+        Logs.logg(
+            'TasksBloc: loaded from storage ${finalList.length} tasks to bloc -\n${finalList.length < 3 ? finalList.join('\n') : "${finalList.first}\n...\n${finalList.last}"}');
+      }
     }
   }
 
@@ -135,16 +134,16 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     }
   }
 
-  Future<void> _doneFilter(DoneFilter event, Emitter<TasksState> emit) async {
+  Future<void> _changeFilter(
+      ChangeFilter event, Emitter<TasksState> emit) async {
     if (state is TasksStateLoaded) {
       final current = state as TasksStateLoaded;
       emit(
         current.copyWith(
-          hideDone: !current.hideDone,
+          sortingType: event.sortingType ?? current.sortingType,
         ),
       );
-      Logs.logg(
-          'TasksBloc: Done filter - completed myTasks is${!current.hideDone ? 'showing' : 'not showing'}');
+      Logs.logg('TasksBloc: Change filter ');
     }
   }
 }

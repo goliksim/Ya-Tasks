@@ -2,7 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'task_entity.freezed.dart';
 
-enum Importance { basic, low, important }
+enum Importance { low, basic, important }
 
 @freezed
 class Task with _$Task {

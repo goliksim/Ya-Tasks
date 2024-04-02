@@ -17,5 +17,15 @@
   "confirmTitle": "Подтверждение",
   "confirmText": "Вы действительно хотите удалить задачу?",
   "confirmYes": "Да",
-  "confirmNo": "Нет"
+  "confirmNo": "Нет",
+  "filterHideDone": "Спрятать выполненные",
+  "filterShowDone": "Показать выполненные",
+  "filterSortASC": "По возрастанию",
+  "filterSortDESC": "По убыванию",
+  "filterSortByDeadline": "По дедлайну",
+  "filterSortByCreatedAt": "По дате создания",
+  "filterSortByChangedAt": "По дате изменения",
+  "filterSortByImportance": "По важности",
+  "filterSortByText": "По алфавиту",
+  "filterSortByDone": "По выполнению"
 }

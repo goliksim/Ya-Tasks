@@ -48,7 +48,7 @@ class _TaskListPageState extends State<TaskListPage> {
                             const MySliverAppBar(),
                             context.watch<TasksBloc>().state.when(
                                   initial: (_) => const LoadingWidget(),
-                                  loaded: (myTasks, rep, hideDone, loaded) =>
+                                  loaded: (myTasks, rep, sortingType, loaded) =>
                                       const MySliverList(),
                                 ),
                           ],
