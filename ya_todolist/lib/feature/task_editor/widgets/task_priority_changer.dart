@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ya_todolist/common/theme_constants.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../task/data/domain/task_model.dart';
+import '../../task/domain/models/task_entity.dart';
 import '../bloc/editor_bloc.dart';
 
 class PriorityChanger extends StatelessWidget {

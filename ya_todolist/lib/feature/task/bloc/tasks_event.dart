@@ -3,6 +3,7 @@ part of 'tasks_bloc.dart';
 @freezed
 abstract class TasksEvent with _$TasksEvent {
   const factory TasksEvent.load() = LoadTasks;
+  const factory TasksEvent.loadFromStream(List<Task> tasks) = LoadStreamTasks;
   const factory TasksEvent.filter() = DoneFilter;
   const factory TasksEvent.add({required Task task}) = AddTask;
   const factory TasksEvent.update({required Task task}) = UpdateTask;

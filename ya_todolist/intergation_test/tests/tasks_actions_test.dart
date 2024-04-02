@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:ya_todolist/feature/task/data/domain/task_model.dart';
+import 'package:ya_todolist/feature/task/domain/models/task_entity.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';

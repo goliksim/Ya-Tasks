@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter/material.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:ya_todolist/feature/task/data/domain/task_model.dart';
+import 'package:ya_todolist/feature/task/domain/models/task_entity.dart';
 
 import '../../intergation_test/test_app.dart';
 import '../../intergation_test/test_constants.dart';

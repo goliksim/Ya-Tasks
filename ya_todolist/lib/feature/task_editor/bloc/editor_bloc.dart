@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ya_todolist/common/routes/navigator_inherited.dart';
 import 'package:ya_todolist/feature/task/bloc/tasks_bloc.dart';
-import 'package:ya_todolist/feature/task/data/domain/task_model.dart';
+import 'package:ya_todolist/feature/task/domain/models/task_entity.dart';
 import 'package:ya_todolist/common/logger.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

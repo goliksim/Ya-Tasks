@@ -1,8 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:uuid/uuid.dart';
-import 'package:ya_todolist/feature/task/data/domain/task_model.dart';
-import 'package:ya_todolist/feature/task/data/local/local_db.dart';
-import 'package:ya_todolist/feature/task/data/local/local_storage.dart';
+import 'package:ya_todolist/feature/task/data/mappers/task_entity_to_hive_model_mapper.dart';
+import 'package:ya_todolist/feature/task/domain/models/task_entity.dart';
+import 'package:ya_todolist/feature/task/data/datasources/local_datasource_hive_impl.dart';
+import 'package:ya_todolist/feature/task/data/repositories/local_storage_impl.dart';
 
 import '../utils/mock_utils.dart';
 
@@ -35,7 +36,7 @@ void main() async {
     });
 
     test('Put new Task', () async {
-      db.put(newTask);
+      db.put(TaskEntityToHiveModelMapper.map(newTask));
 
       final task = db.getTask(newTaskId);
       expect(task!.id, isNotEmpty);
@@ -56,7 +57,7 @@ void main() async {
   });
   group('Storage tests', () {
     final db = LocalDB();
-    final loc = LocalStorage(db: db);
+    final loc = LocalStorageImpl(db: db);
 
     test('getId - returns null if not set', () async {
       final id = db.getId;

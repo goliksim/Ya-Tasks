@@ -13,6 +13,7 @@ void main() async {
       runApp(const MyApp());
     },
     //exceptionWork
-    (error, stackTrace) => Logs.warning('MAIN: Catch in mainZone $error'),
+    (error, stackTrace) =>
+        Logs.warning('MAIN: Catch in mainZone $error $stackTrace'),
   );
 }

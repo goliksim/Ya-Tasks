@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ya_todolist/feature/task/data/repository/repository.dart';
+import 'package:ya_todolist/feature/task/domain/repositories/repository.dart';
 
 import '../../intergation_test/test_constants.dart';
 import '../utils/mock_utils.dart';

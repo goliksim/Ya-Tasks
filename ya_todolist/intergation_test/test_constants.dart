@@ -1,13 +1,13 @@
 import 'package:mocktail/mocktail.dart';
-import 'package:ya_todolist/feature/task/data/domain/task_model.dart';
-import 'package:ya_todolist/feature/task/data/local/local_db.dart';
-import 'package:ya_todolist/feature/task/data/local/local_storage.dart';
-import 'package:ya_todolist/feature/task/data/network/network_storage.dart';
-import 'package:ya_todolist/feature/task/data/repository/repository.dart';
+import 'package:ya_todolist/feature/task/domain/models/task_entity.dart';
+import 'package:ya_todolist/feature/task/data/datasources/local_datasource_hive_impl.dart';
+import 'package:ya_todolist/feature/task/data/repositories/local_storage_impl.dart';
+import 'package:ya_todolist/feature/task/data/repositories/network_storage_impl.dart';
+import 'package:ya_todolist/feature/task/domain/repositories/repository.dart';
 
 class RepositoryMock extends Mock implements Repository {}
 
-class LocalMock extends Mock implements LocalStorage {
+class LocalMock extends Mock implements LocalStorageImpl {
   @override
   int? revision = 1;
 
@@ -78,7 +78,7 @@ class LocalMock extends Mock implements LocalStorage {
   }
 }
 
-class NetworkMock extends Mock implements NetworkStorage {
+class NetworkMock extends Mock implements NetworkStorageImpl {
   @override
   int? revision;
 
@@ -153,7 +153,7 @@ class TaskListTestConstants {
     List<Task>? taskList,
   }) {
     when(() => mock.localStorage).thenReturn(
-      LocalStorage(
+      LocalStorageImpl(
         userId: 'test_id',
         db: LocalDB(),
       ),

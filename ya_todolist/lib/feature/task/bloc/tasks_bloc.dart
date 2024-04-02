@@ -2,14 +2,15 @@
 
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:uuid/uuid.dart';
 import 'package:ya_todolist/app/analytics.dart';
 import 'package:ya_todolist/common/logger.dart';
-import 'package:ya_todolist/feature/task/data/repository/repository.dart';
+import 'package:ya_todolist/feature/task/domain/repositories/repository.dart';
 import 'package:ya_todolist/feature/task_editor/bloc/editor_bloc.dart';
-import '../data/domain/task_model.dart';
+import '../domain/models/task_entity.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'tasks_bloc.freezed.dart';
@@ -23,24 +24,32 @@ extension TaskBuilder on BuildContext {
 
 class TasksBloc extends Bloc<TasksEvent, TasksState> {
   final EditorBloc editorBloc;
-  late StreamSubscription streamSubscription;
+  late StreamSubscription editBlocSubscription;
+  late StreamSubscription taskSubscription;
 
-  TasksBloc({required this.editorBloc, required repository})
+  TasksBloc({required this.editorBloc, required Repository repository})
       : super(TasksState.initial(rep: repository)) {
-    streamSubscription = editorBloc.stream.listen((state) {
-      print(state.runtimeType);
-      if (state is EditorStateSaveNew) {
-        add(AddTask(task: state.task));
-      }
-      if (state is EditorStateSaveOld) {
-        add(UpdateTask(task: state.task));
-      }
-      if (state is EditorStateRemover) {
-        add(DeleteTask(task: state.task));
-      }
+    editBlocSubscription = editorBloc.stream.listen(
+      (state) {
+        print(state.runtimeType);
+        if (state is EditorStateSaveNew) {
+          add(AddTask(task: state.task));
+        }
+        if (state is EditorStateSaveOld) {
+          add(UpdateTask(task: state.task));
+        }
+        if (state is EditorStateRemover) {
+          add(DeleteTask(task: state.task));
+        }
+      },
+    );
+    taskSubscription = repository.observeAll().listen((tasks) {
+      print(tasks);
+      add(LoadStreamTasks(tasks));
     });
 
     on<LoadTasks>(_loadTasks);
+    on<LoadStreamTasks>(_loadStreamTasks);
     on<AddTask>(_addTask);
     on<DeleteTask>(_deleteTask);
     on<UpdateTask>(_updateTask);
@@ -48,21 +57,40 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
     //on<InsertTask>(_insertTask);
   }
 
-  Future<void> _loadTasks(LoadTasks event, Emitter<TasksState> emit) async {
-    final initialState = state as TasksStateInitial;
-    await initialState.rep.init();
-    await initialState.rep.syncStorages();
-    final finalList = await initialState.rep.getTasks();
+  Future<void> _loadStreamTasks(
+      LoadStreamTasks event, Emitter<TasksState> emit) async {
+    final finalList = event.tasks;
     emit(
       TasksState.loaded(
-        myTasks: finalList!,
+        myTasks: finalList,
         hideDone: true,
         loaded: true,
-        rep: initialState.rep,
+        rep: state.rep,
       ),
     );
     Logs.logg(
-        'TasksBloc: loaded ${finalList.length} tasks to bloc -\n${finalList.length < 3 ? finalList.join('\n') : "${finalList.first}\n...\n${finalList.last}"}');
+        'TasksBloc: loaded from stream ${finalList.length} tasks to bloc -\n${finalList.length < 3 ? finalList.join('\n') : "${finalList.first}\n...\n${finalList.last}"}');
+  }
+
+  Future<void> _loadTasks(LoadTasks event, Emitter<TasksState> emit) async {
+    if (state is TasksStateInitial) {
+      await state.rep.init();
+    }
+
+    if (state is TasksStateLoaded || state is TasksStateInitial) {
+      await state.rep.syncStorages();
+      final finalList = await state.rep.getTasks();
+      emit(
+        TasksState.loaded(
+          myTasks: finalList!,
+          hideDone: true,
+          loaded: true,
+          rep: state.rep,
+        ),
+      );
+      Logs.logg(
+          'TasksBloc: loaded ${finalList.length} tasks to bloc -\n${finalList.length < 3 ? finalList.join('\n') : "${finalList.first}\n...\n${finalList.last}"}');
+    }
   }
 
   Future<void> _addTask(AddTask event, Emitter<TasksState> emit) async {
@@ -74,14 +102,10 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
         changedAt: DateTime.now(),
         lastUpdatedBy: current.rep.localStorage.userId!,
       );
-      final updatedTasks = List<Task>.from(current.myTasks)..add(newTask);
-      emit(
-        current.copyWith(
-          myTasks: updatedTasks,
-        ),
-      );
 
       await current.rep.addTask(newTask);
+      //add(const LoadTasks());
+
       Analytics.logEvent('task_added', newTask);
       Logs.fine('TasksBloc: task added - $newTask');
     }
@@ -94,16 +118,9 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
         changedAt: DateTime.now(),
         lastUpdatedBy: current.rep.localStorage.userId!,
       );
-      final updatedTasks = List<Task>.from(current.myTasks).map((task) {
-        return task.id == event.task.id ? newTask : task;
-      }).toList();
-      emit(
-        current.copyWith(
-          myTasks: updatedTasks,
-        ),
-      );
-
       await current.rep.updateTask(newTask);
+      //add(const LoadTasks());
+
       Logs.fine('TasksBloc: Task updated: $newTask');
     }
   }
@@ -111,25 +128,9 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
   Future<void> _deleteTask(DeleteTask event, Emitter<TasksState> emit) async {
     if (state is TasksStateLoaded) {
       final current = state as TasksStateLoaded;
-      bool deletedNet = await current.rep.deleteTask(event.task.id.toString());
-      List<Task> updatedTasks = current.myTasks;
-      if (deletedNet) {
-        Logs.fine('TasksBloc: delete task forever - ${event.task}');
-        updatedTasks =
-            current.myTasks.where((task) => task.id != event.task.id).toList();
-      } else {
-        Logs.warning('TasksBloc: Network Error, move to trash - ${event.task}');
-        final trashTask = event.task.copyWith(deleted: true);
-        updatedTasks = List<Task>.from(current.myTasks).map((task) {
-          return task.id == event.task.id ? trashTask : task;
-        }).toList();
-        await current.rep.updateTask(trashTask);
-      }
-      emit(
-        current.copyWith(
-          myTasks: updatedTasks,
-        ),
-      );
+      await current.rep.deleteTask(event.task.id.toString());
+
+      //add(const LoadTasks());
       Analytics.logEvent('task_deleted', event.task);
     }
   }
@@ -146,17 +147,4 @@ class TasksBloc extends Bloc<TasksEvent, TasksState> {
           'TasksBloc: Done filter - completed myTasks is${!current.hideDone ? 'showing' : 'not showing'}');
     }
   }
-
-  /*Future<void> _insertTask(InsertTask event, Emitter<TasksState> emit) async {
-    final updatedTasks = List<Task>.from(state.myTasks)
-      ..insert(event.index, event.task);
-    emit(
-      TasksStateUpdate(
-          hideDone: state.hideDone,
-          myTasks: updatedTasks,
-          rep: state.rep,
-          routerDelegate: state.routerDelegate),
-    );
-    Logs.logg('TasksBloc: insert task - ${event.task}');
-  }*/
 }
